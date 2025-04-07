@@ -24,9 +24,20 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
 *.out
 *.app
+
+# Visual Studio 관련 파일 무시
+.vs/
+
+# 빌드 결과물
+*.exe
+*.obj
+*.pdb
+
+# 사용자 설정 파일
+*.user
+*.suo
