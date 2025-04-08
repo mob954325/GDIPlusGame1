@@ -12,6 +12,9 @@ Player::Player()
 	{
 		spriteRenderer[i] = SpriteRenderer();
 	}
+
+	collider = SpriteCollider();
+	r_collider = &collider;
 }
 
 void Player::Initialize()
@@ -66,37 +69,36 @@ void Player::Update()
 		default:
 			break;
 		}
+
 	}
 
 	moveDirection = Vector2(0.0f, 0.0f);
 	if (Input::IsKeyDown(VK_DOWN))
 	{
 		moveDirection = Vector2(moveDirection.x, 1.0f);
-		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
 	if (Input::IsKeyDown(VK_UP))
 	{
 		moveDirection = Vector2(moveDirection.x, -1.0f);
-		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
 	if (Input::IsKeyDown(VK_LEFT))
 	{
 		moveDirection = Vector2(-1.0f, moveDirection.y);
-		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
 	if (Input::IsKeyDown(VK_RIGHT))
 	{
 		moveDirection = Vector2(1.0f, moveDirection.y);
-		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
 
 	transform.Translate(moveDirection * Speed * GameTime::GetDeltaTime());
 
+	collider.UpdateValue(*this, spriteRenderer[0]);
 }
 
 void Player::Render(Gdiplus::Graphics* graphics)
 {
 	spriteRenderer[playerState].DrawImage(graphics, transform.position.x, transform.position.y);
+	collider.RenderCollider(graphics);
 }
 
 void Player::Uninitialize()

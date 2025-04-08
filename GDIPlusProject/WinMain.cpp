@@ -114,19 +114,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		Update();
 		Render();
 
-		if (Input::IsKeyDown('H'))
+		if (Input::IsKeyPressed('H'))
 		{
 			// 해상도 변경
 			GDIPlusManager::ShutDown();
 			Renderer::Uninitialize();
 
-			Renderer::Initialize(hwnd, 1200, 1200);
+			int w = GetSystemMetrics(SM_CXSCREEN);
+			int h = GetSystemMetrics(SM_CYSCREEN);
+
+			Renderer::Initialize(hwnd, w, h);
 			g_BackBufferDC = Renderer::GetBackBuffer();
 			g_FrontBufferDC = Renderer::GetFrontBuffer();
 
 			GDIPlusManager::Initialize();
 			MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
-			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, 1200,1200, SWP_NOMOVE);
+			//SetWindowLongPtr(hwnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, w, h, SWP_FRAMECHANGED);
 		}
 	}
 

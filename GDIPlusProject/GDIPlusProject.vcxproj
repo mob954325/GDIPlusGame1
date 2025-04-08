@@ -144,12 +144,14 @@
     <ClInclude Include="inc\Component\Transform.h" />
     <ClInclude Include="inc\Math\Vector2.h" />
     <ClInclude Include="inc\Objects\TestObject.h" />
+    <ClInclude Include="inc\Component\SpriteCollider.h" />
     <ClInclude Include="WinMain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Component\SpriteCollider.cpp" />
     <ClCompile Include="src\DebugUtility.cpp" />
     <ClCompile Include="src\Objects\Player.cpp" />
     <ClCompile Include="src\Component\GameObject.cpp" />

@@ -7,6 +7,9 @@ TestObject::TestObject()
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
+
+	target = NULL;
+	collider = SpriteCollider();
 }
 
 void TestObject::Initialize()
@@ -25,14 +28,27 @@ void TestObject::Update()
 		spriteRenderer.currFrame++;
 		spriteRenderer.currFrame %= spriteRenderer.imageFrameCount;
 	}
+
+	collider.UpdateValue(*this, spriteRenderer);
+	if (target != NULL)
+	{
+		bool check = collider.IsOverlap(collider, *target);
+		if (check) printf("%s, %s이 서로 충돌함", typeid(*this).name(), typeid(*this).name());
+	}
 }
 
 void TestObject::Render(Gdiplus::Graphics* graphics)
 {
 	spriteRenderer.DrawImage(graphics, transform.position.x, transform.position.y);
+	collider.RenderCollider(graphics);
 }
 
 void TestObject::Uninitialize()
 {
 	spriteRenderer.DeleteImage();
+}
+
+void TestObject::GetTargetCollider(SpriteCollider* targetCollider)
+{
+	target = targetCollider;
 }

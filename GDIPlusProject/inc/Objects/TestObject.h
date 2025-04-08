@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Component/GameObject.h"
 #include "Component/SpriteRenderer.h"
+#include "Component/SpriteCollider.h"
+#include "Objects/Player.h"
 
 #include "GameTime.h"
 
@@ -14,8 +16,12 @@ public:
 	void Render(Gdiplus::Graphics* graphics);
 	void Uninitialize();
 
+	void GetTargetCollider(SpriteCollider* targetCollider);
+
 protected:
 	SpriteRenderer spriteRenderer;
+	SpriteCollider collider;
+	SpriteCollider* target;
 
 	// time
 	float animationGameTimer;

@@ -16,7 +16,7 @@ public:
 	int currFrame;					// 현재 이미지 프레임 (GetImage에서 초기화)
 	int imageFrameCount;			// 이미지 프레임 개수
 	int imageWidth;					// 각 이미지 넓이
-	int imageHeight;
+	int imageHeight;				// 이미지 높이
 
 protected:
 	Gdiplus::Bitmap* imageBitMap;	// 이미지 비트맵

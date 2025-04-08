@@ -1,5 +1,7 @@
 ﻿#include "../../inc/Scenes/MenuScene.h"
 
+#include "Component/SpriteCollider.h"
+
 namespace MenuScene
 {
 	void CheckFileLoad(HWND hwnd, Gdiplus::Bitmap* bitmap);
@@ -13,6 +15,7 @@ namespace MenuScene
 	Player player;
 	TestObject testObj;
 
+	SpriteCollider collider;
 
 	void Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	{
@@ -24,6 +27,7 @@ namespace MenuScene
 
 		player.Initialize();
 		testObj.Initialize();
+		testObj.GetTargetCollider(player.r_collider);
 	}
 
 	void Update()
@@ -41,6 +45,8 @@ namespace MenuScene
 	void Uninitialize()
 	{
 		player.Uninitialize();
+		testObj.Uninitialize();
+		delete g_pBackBufferGraphics;
 	}
 
 	void CheckFileLoad(HWND hwnd, Gdiplus::Bitmap* bitmap)
