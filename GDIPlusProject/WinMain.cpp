@@ -2,7 +2,7 @@
 
 void Update();
 void Render();
-//void Uninitialize();
+// void Uninitialize();
 
 // WindowApi, Console
 LPCTSTR g_title = TEXT("20250403이성호");
@@ -44,11 +44,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		break;
-	case WM_KEYDOWN:
-		Input::IsKeyDown((int)wParam);
-		Input::IsKeyPressed((int)wParam);
-		Input::IsKeyReleased((int)wParam);
 		break;
 	}
 
@@ -118,6 +113,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		Update();
 		Render();
+
+		if (Input::IsKeyDown('H'))
+		{
+			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, 100,100, SWP_NOMOVE);
+		}
 	}
 
 	GDIPlusManager::ShutDown();

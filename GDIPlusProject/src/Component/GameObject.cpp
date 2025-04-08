@@ -7,8 +7,11 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	printf("%ws GameObject 소멸자 호출", name);
-	free(name);
+	if (name != NULL)
+	{
+		printf("%ws GameObject 소멸자 호출", name);
+		free(name);
+	}
 }
 
 void GameObject::SetDefault()

@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\DebugUtility.h" />
     <ClInclude Include="inc\Component\GameObject.h" />
     <ClInclude Include="inc\GameTime.h" />
     <ClInclude Include="inc\Manager\GDIPlusManager.h" />
@@ -141,20 +142,21 @@
     <ClInclude Include="inc\Component\SpriteRenderer.h" />
     <ClInclude Include="inc\Objects\Player.h" />
     <ClInclude Include="inc\Component\Transform.h" />
-    <ClInclude Include="inc\Vector2.h" />
+    <ClInclude Include="inc\Math\Vector2.h" />
     <ClInclude Include="WinMain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DebugUtility.cpp" />
     <ClCompile Include="src\Objects\Player.cpp" />
     <ClCompile Include="src\Component\GameObject.cpp" />
     <ClCompile Include="src\Manager\GDIPlusManager.cpp" />
     <ClCompile Include="src\Component\SpriteRenderer.cpp" />
     <ClCompile Include="src\Scenes\MenuScene.cpp" />
     <ClCompile Include="src\Component\Transform.cpp" />
-    <ClCompile Include="src\Vector2.cpp" />
+    <ClCompile Include="src\Math\Vector2.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

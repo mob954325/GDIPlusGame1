@@ -1,8 +1,9 @@
+D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\DebugUtility.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\DebugUtility.obj
 D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Objects\Player.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\Player.obj
 D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Component\GameObject.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\GameObject.obj
 D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Manager\GDIPlusManager.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\GDIPlusManager.obj
 D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Component\SpriteRenderer.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\SpriteRenderer.obj
 D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Scenes\MenuScene.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\MenuScene.obj
 D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Component\Transform.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\Transform.obj
-D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Vector2.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\Vector2.obj
+D:\lsh\Github\GDIPlusGame1\GDIPlusProject\src\Math\Vector2.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\Vector2.obj
 D:\lsh\Github\GDIPlusGame1\GDIPlusProject\WinMain.cpp;D:\lsh\Github\GDIPlusGame1\GDIPlusProject\GDIPlusProject\x64\Debug\WinMain.obj
