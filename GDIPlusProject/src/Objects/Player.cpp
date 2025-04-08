@@ -3,7 +3,9 @@
 Player::Player()
 {
 	animationGameTimer = 0.0f;
-	maxAnimationGameTime = 0.04f;
+	maxAnimationGameTime = 0.0f;
+	Speed = 0.0f;
+	moveDirection = Vector2(0.0f, 0.0f);
 
 	// 임시
 	for (int i = 0; i < 3; i++)
@@ -16,16 +18,18 @@ void Player::Initialize()
 {
 	SetDefault();
 
-	spriteRenderer[0].GetImage(L"./Resource/Idle_Sheet.png");
-	spriteRenderer[1].GetImage(L"./Resource/run_turnaround_Sheet.png");
-	spriteRenderer[2].GetImage(L"./Resource/Hurt_Sheet.png");
+	spriteRenderer[0].GetImage(L"./Resource/Player/Idle/Idle-Sheet.png");
+	spriteRenderer[1].GetImage(L"./Resource/Player/Run/Run-Sheet.png");
+	spriteRenderer[2].GetImage(L"./Resource/Player/Attack/Attack-Sheet.png");
 
-	spriteRenderer[0].GetImageInfo(L"Idle", L"./Resource/animSize.csv");
-	spriteRenderer[1].GetImageInfo(L"Turn", L"./Resource/animSize.csv");
-	spriteRenderer[2].GetImageInfo(L"Hit", L"./Resource/animSize.csv");
+	spriteRenderer[0].GetImageInfo(L"Idle", L"./Resource/Player/animSize.csv");
+	spriteRenderer[1].GetImageInfo(L"Run", L"./Resource/Player/animSize.csv");
+	spriteRenderer[2].GetImageInfo(L"Attack", L"./Resource/Player/animSize.csv");
 
 	animationGameTimer = 0.0f;
-	maxAnimationGameTime = 0.04f;
+	maxAnimationGameTime = 0.1f;
+
+	Speed = 25.0f;
 
 	// 안내 로그
 	printf("플레이어 상태 변경 : 스페이스바\n");
@@ -34,7 +38,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	int imageCount = 3;
 	animationGameTimer += GameTime::GetDeltaTime();
 	if (animationGameTimer > maxAnimationGameTime)
 	{
@@ -52,43 +55,43 @@ void Player::Update()
 		switch (playerState)
 		{
 		case 0:
-			printf("플레이어 회전\n");
-			break;
-		case 1:
 			printf("플레이어 대기\n");
 			break;
+		case 1:
+			printf("플레이어 달리기\n");
+			break;
 		case 2:
-			printf("플레이어 피격\n");
+			printf("플레이어 공격\n");
 			break;
 		default:
 			break;
 		}
 	}
 
+	moveDirection = Vector2(0.0f, 0.0f);
 	if (Input::IsKeyDown(VK_DOWN))
 	{
-		transform.Translate(0.0f, 50.0f * GameTime::GetDeltaTime());
-		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
-		printf("down\n");
+		moveDirection = Vector2(moveDirection.x, 1.0f);
+		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
 	if (Input::IsKeyDown(VK_UP))
 	{
-		transform.Translate(0.0f, -20.0f * GameTime::GetDeltaTime());
-		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
-		printf("up\n");
+		moveDirection = Vector2(moveDirection.x, -1.0f);
+		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
 	if (Input::IsKeyDown(VK_LEFT))
 	{
-		transform.Translate(-20.0f * GameTime::GetDeltaTime(), 0.0f);
-		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
-		printf("left\n");
+		moveDirection = Vector2(-1.0f, moveDirection.y);
+		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
 	if (Input::IsKeyDown(VK_RIGHT))
 	{
-		transform.Translate(20.0f * GameTime::GetDeltaTime(), 0.0f);
-		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
-		printf("right\n");
+		moveDirection = Vector2(1.0f, moveDirection.y);
+		printf("%f, %f\n", transform.position.x, transform.position.y);
 	}
+
+	transform.Translate(moveDirection * Speed * GameTime::GetDeltaTime());
+
 }
 
 void Player::Render(Gdiplus::Graphics* graphics)

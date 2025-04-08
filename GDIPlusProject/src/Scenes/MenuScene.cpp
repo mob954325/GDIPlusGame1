@@ -11,6 +11,7 @@ namespace MenuScene
 	Gdiplus::Graphics* g_pBackBufferGraphics;
 
 	Player player;
+	TestObject testObj;
 
 
 	void Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
@@ -22,15 +23,18 @@ namespace MenuScene
 		g_pBackBufferGraphics = Gdiplus::Graphics::FromHDC(g_BackBufferDC);
 
 		player.Initialize();
+		testObj.Initialize();
 	}
 
 	void Update()
 	{
+		testObj.Update();
 		player.Update();
 	}
 
 	void Render()
 	{
+		testObj.Render(g_pBackBufferGraphics);
 		player.Render(g_pBackBufferGraphics);
 	}
 

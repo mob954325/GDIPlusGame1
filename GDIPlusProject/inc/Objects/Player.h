@@ -21,6 +21,10 @@ protected:
 	SpriteRenderer spriteRenderer[3]; // 임시 개수 선언
 	int playerState = 0; // idle, turn, hurt
 
+	// state
+	Vector2 moveDirection;
+	float Speed;
+
 	// time
 	float animationGameTimer;
 	float maxAnimationGameTime;

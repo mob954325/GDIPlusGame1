@@ -11,6 +11,7 @@ LPCTSTR g_szClassName = TEXT("윈도우 클래스 이름");
 int g_width = 1024;
 int g_height = 768;
 
+
 HWND g_hwnd;
 HDC g_FrontBufferDC;    // 앞면 DC
 HDC g_BackBufferDC;    // 뒷면 DC
@@ -96,7 +97,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
 	GameTime::InitTime();
 
-
 	// 게임 루프
 	MSG msg = {};
 	while (true)
@@ -116,7 +116,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		if (Input::IsKeyDown('H'))
 		{
-			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, 100,100, SWP_NOMOVE);
+			// 해상도 변경
+			GDIPlusManager::ShutDown();
+			Renderer::Uninitialize();
+
+			Renderer::Initialize(hwnd, 1200, 1200);
+			g_BackBufferDC = Renderer::GetBackBuffer();
+			g_FrontBufferDC = Renderer::GetFrontBuffer();
+
+			GDIPlusManager::Initialize();
+			MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
+			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, 1200,1200, SWP_NOMOVE);
 		}
 	}
 
