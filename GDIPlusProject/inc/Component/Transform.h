@@ -1,14 +1,18 @@
-#pragma once
+ï»¿#pragma once
+#include "Math/Vector2.h"
 
 class Transform
 {
 public:
-	void SetTransform(float posX, float posY);
-	void Translate(float nextX, float nextY);
+	Transform();
 
-	// ÀÓ½Ã °ª
-	float x;
-	float y;
+	void SetTransform(float posX, float posY);
+	void SetTransform(Vector2 position);
+	void Translate(float nextX, float nextY);
+	void Translate(Vector2 position);
+
+	Vector2 position;
+	// ìž„ì‹œê°’
 	float scale;
 	float rotation;
 };

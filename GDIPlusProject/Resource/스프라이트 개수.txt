@@ -1,3 +1,0 @@
-hurt 7
-Idle 18
-turn 5

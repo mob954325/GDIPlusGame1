@@ -1,28 +1,46 @@
-#include "Objects/Player.h"
+ï»¿#include "Objects/Player.h"
+
+Player::Player()
+{
+	animationGameTimer = 0.0f;
+	maxAnimationGameTime = 0.0f;
+	Speed = 0.0f;
+	moveDirection = Vector2(0.0f, 0.0f);
+
+	// ì„ì‹œ
+	for (int i = 0; i < 3; i++)
+	{
+		spriteRenderer[i] = SpriteRenderer();
+	}
+
+	collider = SpriteCollider();
+	r_collider = &collider;
+}
 
 void Player::Initialize()
 {
 	SetDefault();
 
-	spriteRenderer[0].GetImage(L"./Resource/Idle_Sheet.png");
-	spriteRenderer[1].GetImage(L"./Resource/run_turnaround_Sheet.png");
-	spriteRenderer[2].GetImage(L"./Resource/Hurt_Sheet.png");
+	spriteRenderer[0].GetImage(L"./Resource/Player/Idle/Idle-Sheet.png");
+	spriteRenderer[1].GetImage(L"./Resource/Player/Run/Run-Sheet.png");
+	spriteRenderer[2].GetImage(L"./Resource/Player/Attack/Attack-Sheet.png");
 
-	spriteRenderer[0].GetImageInfo(L"Idle", L"./Resource/animSize.csv");
-	spriteRenderer[1].GetImageInfo(L"Turn", L"./Resource/animSize.csv");
-	spriteRenderer[2].GetImageInfo(L"Hit", L"./Resource/animSize.csv");
+	spriteRenderer[0].GetImageInfo(L"Idle", L"./Resource/Player/animSize.csv");
+	spriteRenderer[1].GetImageInfo(L"Run", L"./Resource/Player/animSize.csv");
+	spriteRenderer[2].GetImageInfo(L"Attack", L"./Resource/Player/animSize.csv");
 
 	animationGameTimer = 0.0f;
-	maxAnimationGameTime = 0.04f;
+	maxAnimationGameTime = 0.1f;
 
-	// ¾È³» ·Î±×
-	printf("ÇÃ·¹ÀÌ¾î »óÅÂ º¯°æ : ½ºÆäÀÌ½º¹Ù\n");
-	printf("ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ : È­»ìÇ¥ ¹æÇâÅ°\n");
+	Speed = 50.0f;
+
+	// ì•ˆë‚´ ë¡œê·¸
+	printf("í”Œë ˆì´ì–´ ìƒíƒœ ë³€ê²½ : ìŠ¤í˜ì´ìŠ¤ë°”\n");
+	printf("í”Œë ˆì´ì–´ ì›€ì§ì„ : í™”ì‚´í‘œ ë°©í–¥í‚¤\n");
 }
 
 void Player::Update()
 {
-	int imageCount = 3;
 	animationGameTimer += GameTime::GetDeltaTime();
 	if (animationGameTimer > maxAnimationGameTime)
 	{
@@ -40,48 +58,47 @@ void Player::Update()
 		switch (playerState)
 		{
 		case 0:
-			printf("ÇÃ·¹ÀÌ¾î È¸Àü\n");
+			printf("í”Œë ˆì´ì–´ ëŒ€ê¸°\n");
 			break;
 		case 1:
-			printf("ÇÃ·¹ÀÌ¾î ´ë±â\n");
+			printf("í”Œë ˆì´ì–´ ë‹¬ë¦¬ê¸°\n");
 			break;
 		case 2:
-			printf("ÇÃ·¹ÀÌ¾î ÇÇ°İ\n");
+			printf("í”Œë ˆì´ì–´ ê³µê²©\n");
 			break;
 		default:
 			break;
 		}
+
 	}
 
+	moveDirection = Vector2(0.0f, 0.0f);
 	if (Input::IsKeyDown(VK_DOWN))
 	{
-		transform.Translate(0.0f, 50.0f * GameTime::GetDeltaTime());
-		printf("%.2f, %.2f\n", transform.x, transform.y);
-		printf("down\n");
+		moveDirection = Vector2(moveDirection.x, 1.0f);
 	}
 	if (Input::IsKeyDown(VK_UP))
 	{
-		transform.Translate(0.0f, -20.0f * GameTime::GetDeltaTime());
-		printf("%.2f, %.2f\n", transform.x, transform.y);
-		printf("up\n");
+		moveDirection = Vector2(moveDirection.x, -1.0f);
 	}
 	if (Input::IsKeyDown(VK_LEFT))
 	{
-		transform.Translate(-20.0f * GameTime::GetDeltaTime(), 0.0f);
-		printf("%.2f, %.2f\n", transform.x, transform.y);
-		printf("left\n");
+		moveDirection = Vector2(-1.0f, moveDirection.y);
 	}
 	if (Input::IsKeyDown(VK_RIGHT))
 	{
-		transform.Translate(20.0f * GameTime::GetDeltaTime(), 0.0f);
-		printf("%.2f, %.2f\n", transform.x, transform.y);
-		printf("right\n");
+		moveDirection = Vector2(1.0f, moveDirection.y);
 	}
+
+	transform.Translate(moveDirection * Speed * GameTime::GetDeltaTime());
+
+	collider.UpdateValue(*this, spriteRenderer[0]);
 }
 
 void Player::Render(Gdiplus::Graphics* graphics)
 {
-	spriteRenderer[playerState].DrawImage(graphics, transform.x, transform.y);
+	spriteRenderer[playerState].DrawImage(graphics, (int)transform.position.x, (int)transform.position.y);
+	collider.RenderCollider(graphics);
 }
 
 void Player::Uninitialize()

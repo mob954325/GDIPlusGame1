@@ -1,13 +1,13 @@
-#include "Component/SpriteRenderer.h"
+ï»¿#include "Component/SpriteRenderer.h"
 
 bool SpriteRenderer::GetImage(const wchar_t* path)
 {
 	Gdiplus::Bitmap* bitmap = new Gdiplus::Bitmap(path);
 
-	// ÆÄÀÏ ·Îµå È®ÀÎ
+	// íŒŒì¼ ë¡œë“œ í™•ì¸
 	if (bitmap->GetLastStatus() != Gdiplus::Ok)
 	{
-		delete bitmap; // ·Îµå ½ÇÆĞ
+		delete bitmap; // ë¡œë“œ ì‹¤íŒ¨
 		return false;
 	}
 
@@ -21,9 +21,9 @@ bool SpriteRenderer::GetImage(const wchar_t* path)
 
 void SpriteRenderer::DrawImage(Gdiplus::Graphics* graphics, int posX, int posY)
 {
-	Gdiplus::Rect srcRect(imageWidth * currFrame, 0, imageWidth, imageHeight);	// ¼Ò½ºÀÇ ¿µ¿ª
-	Gdiplus::Rect destRect(posX, posY, srcRect.Width, srcRect.Height);			// È­¸é¿¡ ±×¸± ¿µ¿ª
-	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel); // ¼Ò½ºÀÇ ÀÏºÎºĞ¸¸À» ±×¸°´Ù.
+	Gdiplus::Rect srcRect(imageWidth * currFrame, 0, imageWidth, imageHeight);	// ì†ŒìŠ¤ì˜ ì˜ì—­
+	Gdiplus::Rect destRect(posX, posY, srcRect.Width, srcRect.Height);			// í™”ë©´ì— ê·¸ë¦´ ì˜ì—­
+	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel); // ì†ŒìŠ¤ì˜ ì¼ë¶€ë¶„ë§Œì„ ê·¸ë¦°ë‹¤.
 }
 
 void SpriteRenderer::DeleteImage()
@@ -36,18 +36,18 @@ void SpriteRenderer::GetImageInfo(const wchar_t* infoName, const wchar_t* path)
 	FILE* file = {};
 	_wfopen_s(&file, path, L"r");
 	wchar_t buffer[1024];
-	wchar_t* nextbuffer;
-	wchar_t* bufferToken;
+	wchar_t* nextbuffer = NULL;
+	wchar_t* bufferToken = NULL;
 	wchar_t seps[] = L",\t\n";
 
 	memset(buffer, 0, 1024);
 
-	// csv¿¡¼­ ÀÌ¹ÌÁö Á¤º¸ Ã£±â
+	// csvì—ì„œ ì´ë¯¸ì§€ ì •ë³´ ì°¾ê¸°
 	if (file)
 	{
 		if (fgetws(buffer, 1024, file))
 		{
-			// BOM ¹«½Ã
+			// BOM ë¬´ì‹œ
 			if ((unsigned char)buffer[0] == 0xEF &&
 				(unsigned char)buffer[1] == 0xBB &&
 				(unsigned char)buffer[2] == 0xBF)
@@ -55,11 +55,11 @@ void SpriteRenderer::GetImageInfo(const wchar_t* infoName, const wchar_t* path)
 				memmove(buffer, buffer + 3, (wcslen(buffer + 3) + 1) * sizeof(wchar_t));
 			}
 
-			// µ¥ÀÌÅÍ Ã£±â
+			// ë°ì´í„° ì°¾ê¸°
 			do
 			{
 				bufferToken = wcstok_s(buffer, seps, &nextbuffer);
-				if (wcscmp(bufferToken, infoName) == 0) // csv¿¡¼­ Ã£´Â ´Ü¾î°¡ Á¸ÀçÇÔ
+				if (wcscmp(bufferToken, infoName) == 0) // csvì—ì„œ ì°¾ëŠ” ë‹¨ì–´ê°€ ì¡´ì¬í•¨
 				{
 					for (int i = 0; i < 2; i++)
 					{

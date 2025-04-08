@@ -2,7 +2,7 @@
 
 void Update();
 void Render();
-void Uninitialize();
+// void Uninitialize();
 
 // WindowApi, Console
 LPCTSTR g_title = TEXT("20250403이성호");
@@ -10,6 +10,7 @@ LPCTSTR g_szClassName = TEXT("윈도우 클래스 이름");
 
 int g_width = 1024;
 int g_height = 768;
+
 
 HWND g_hwnd;
 HDC g_FrontBufferDC;    // 앞면 DC
@@ -44,11 +45,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		break;
-	case WM_KEYDOWN:
-		Input::IsKeyDown((int)wParam);
-		Input::IsKeyPressed((int)wParam);
-		Input::IsKeyReleased((int)wParam);
 		break;
 	}
 
@@ -101,7 +97,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
 	GameTime::InitTime();
 
-
 	// 게임 루프
 	MSG msg = {};
 	while (true)
@@ -118,6 +113,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		Update();
 		Render();
+
+		if (Input::IsKeyPressed('H'))
+		{
+			// 해상도 변경
+			GDIPlusManager::ShutDown();
+			Renderer::Uninitialize();
+
+			int w = GetSystemMetrics(SM_CXSCREEN);
+			int h = GetSystemMetrics(SM_CYSCREEN);
+
+			Renderer::Initialize(hwnd, w, h);
+			g_BackBufferDC = Renderer::GetBackBuffer();
+			g_FrontBufferDC = Renderer::GetFrontBuffer();
+
+			GDIPlusManager::Initialize();
+			MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
+			//SetWindowLongPtr(hwnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, w, h, SWP_FRAMECHANGED);
+		}
 	}
 
 	GDIPlusManager::ShutDown();

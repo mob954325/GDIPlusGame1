@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-// Custom Header =======================================
+// Manager =======================================
 
 #include "Manager/GDIPlusManager.h"
 #include "./inc/Scenes/MenuScene.h"

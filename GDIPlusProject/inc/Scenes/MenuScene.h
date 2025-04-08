@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Manager/GDIPlusManager.h"
 #include "Objects/Player.h"
+#include "Objects/TestObject.h"
 
 #include "../../inc/GameTime.h"
 #pragma comment(lib, "./lib/GameTime.lib")
