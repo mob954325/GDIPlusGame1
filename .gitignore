@@ -30,6 +30,9 @@
 *.out
 *.app
 
+# 디버그 릴리즈 파일 무시
+**/x64/
+
 # Visual Studio 관련 파일 무시
 .vs/
 
