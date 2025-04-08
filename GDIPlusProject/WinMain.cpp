@@ -2,7 +2,7 @@
 
 void Update();
 void Render();
-void Uninitialize();
+//void Uninitialize();
 
 // WindowApi, Console
 LPCTSTR g_title = TEXT("20250403이성호");
