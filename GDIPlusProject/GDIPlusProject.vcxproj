@@ -141,6 +141,7 @@
     <ClInclude Include="inc\Component\SpriteRenderer.h" />
     <ClInclude Include="inc\Objects\Player.h" />
     <ClInclude Include="inc\Component\Transform.h" />
+    <ClInclude Include="inc\Vector2.h" />
     <ClInclude Include="WinMain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="src\Component\SpriteRenderer.cpp" />
     <ClCompile Include="src\Scenes\MenuScene.cpp" />
     <ClCompile Include="src\Component\Transform.cpp" />
+    <ClCompile Include="src\Vector2.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

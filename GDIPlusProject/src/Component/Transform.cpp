@@ -1,13 +1,30 @@
-#include "Component/Transform.h"
+﻿#include "Component/Transform.h"
+
+Transform::Transform()
+{
+	position = Vector2();
+	scale = 1.0f;
+	rotation = 0.0f;
+}
 
 void Transform::SetTransform(float posX, float posY)
 {
-	x = posX;
-	y = posY;
+	position.x = posX;
+	position.y = posY;
+}
+
+void Transform::SetTransform(Vector2 position)
+{
+	this->position = position;
 }
 
 void Transform::Translate(float nextX, float nextY)
 {
-	x += nextX;
-	y += nextY;
+	position.x += nextX;
+	position.y += nextY;
+}
+
+void Transform::Translate(Vector2 position)
+{
+	this->position += position;
 }

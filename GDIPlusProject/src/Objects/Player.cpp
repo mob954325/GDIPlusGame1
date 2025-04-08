@@ -1,4 +1,16 @@
-#include "Objects/Player.h"
+ï»¿#include "Objects/Player.h"
+
+Player::Player()
+{
+	animationGameTimer = 0.0f;
+	maxAnimationGameTime = 0.04f;
+
+	// ìž„ì‹œ
+	for (int i = 0; i < 3; i++)
+	{
+		spriteRenderer[i] = SpriteRenderer();
+	}
+}
 
 void Player::Initialize()
 {
@@ -15,9 +27,9 @@ void Player::Initialize()
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.04f;
 
-	// ¾È³» ·Î±×
-	printf("ÇÃ·¹ÀÌ¾î »óÅÂ º¯°æ : ½ºÆäÀÌ½º¹Ù\n");
-	printf("ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ : È­»ìÇ¥ ¹æÇâÅ°\n");
+	// ì•ˆë‚´ ë¡œê·¸
+	printf("í”Œë ˆì´ì–´ ìƒíƒœ ë³€ê²½ : ìŠ¤íŽ˜ì´ìŠ¤ë°”\n");
+	printf("í”Œë ˆì´ì–´ ì›€ì§ìž„ : í™”ì‚´í‘œ ë°©í–¥í‚¤\n");
 }
 
 void Player::Update()
@@ -40,13 +52,13 @@ void Player::Update()
 		switch (playerState)
 		{
 		case 0:
-			printf("ÇÃ·¹ÀÌ¾î È¸Àü\n");
+			printf("í”Œë ˆì´ì–´ íšŒì „\n");
 			break;
 		case 1:
-			printf("ÇÃ·¹ÀÌ¾î ´ë±â\n");
+			printf("í”Œë ˆì´ì–´ ëŒ€ê¸°\n");
 			break;
 		case 2:
-			printf("ÇÃ·¹ÀÌ¾î ÇÇ°Ý\n");
+			printf("í”Œë ˆì´ì–´ í”¼ê²©\n");
 			break;
 		default:
 			break;
@@ -56,32 +68,32 @@ void Player::Update()
 	if (Input::IsKeyDown(VK_DOWN))
 	{
 		transform.Translate(0.0f, 50.0f * GameTime::GetDeltaTime());
-		printf("%.2f, %.2f\n", transform.x, transform.y);
+		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
 		printf("down\n");
 	}
 	if (Input::IsKeyDown(VK_UP))
 	{
 		transform.Translate(0.0f, -20.0f * GameTime::GetDeltaTime());
-		printf("%.2f, %.2f\n", transform.x, transform.y);
+		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
 		printf("up\n");
 	}
 	if (Input::IsKeyDown(VK_LEFT))
 	{
 		transform.Translate(-20.0f * GameTime::GetDeltaTime(), 0.0f);
-		printf("%.2f, %.2f\n", transform.x, transform.y);
+		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
 		printf("left\n");
 	}
 	if (Input::IsKeyDown(VK_RIGHT))
 	{
 		transform.Translate(20.0f * GameTime::GetDeltaTime(), 0.0f);
-		printf("%.2f, %.2f\n", transform.x, transform.y);
+		printf("%.2f, %.2f\n", transform.position.x, transform.position.y);
 		printf("right\n");
 	}
 }
 
 void Player::Render(Gdiplus::Graphics* graphics)
 {
-	spriteRenderer[playerState].DrawImage(graphics, transform.x, transform.y);
+	spriteRenderer[playerState].DrawImage(graphics, transform.position.x, transform.position.y);
 }
 
 void Player::Uninitialize()

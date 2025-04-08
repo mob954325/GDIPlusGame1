@@ -1,14 +1,18 @@
 ﻿#pragma once
+#include "Vector2.h"
 
 class Transform
 {
 public:
-	void SetTransform(float posX, float posY);
-	void Translate(float nextX, float nextY);
+	Transform();
 
-	// 임시 값
-	float x;
-	float y;
+	void SetTransform(float posX, float posY);
+	void SetTransform(Vector2 position);
+	void Translate(float nextX, float nextY);
+	void Translate(Vector2 position);
+
+	Vector2 position;
+	// 임시값
 	float scale;
 	float rotation;
 };

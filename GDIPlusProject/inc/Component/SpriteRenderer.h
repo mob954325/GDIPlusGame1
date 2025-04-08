@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <stdio.h>
 #include <windows.h>
@@ -13,11 +13,12 @@ public:
 	void DeleteImage();
 	void GetImageInfo(const wchar_t* infoName, const wchar_t* path);
 
-	int currFrame;					// ÇöÀç ÀÌ¹ÌÁö ÇÁ·¹ÀÓ (GetImage¿¡¼­ ÃÊ±âÈ­)
-	int imageFrameCount;			// ÀÌ¹ÌÁö ÇÁ·¹ÀÓ °³¼ö
-	int imageWidth;					// °¢ ÀÌ¹ÌÁö ³ĞÀÌ
+	int currFrame;					// í˜„ì¬ ì´ë¯¸ì§€ í”„ë ˆì„ (GetImageì—ì„œ ì´ˆê¸°í™”)
+	int imageFrameCount;			// ì´ë¯¸ì§€ í”„ë ˆì„ ê°œìˆ˜
+	int imageWidth;					// ê° ì´ë¯¸ì§€ ë„“ì´
 	int imageHeight;
+
 protected:
-	Gdiplus::Bitmap* imageBitMap;	// ÀÌ¹ÌÁö ºñÆ®¸Ê
+	Gdiplus::Bitmap* imageBitMap;	// ì´ë¯¸ì§€ ë¹„íŠ¸ë§µ
 };
 

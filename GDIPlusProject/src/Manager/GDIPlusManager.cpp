@@ -1,23 +1,23 @@
-#include "Manager/GDIPlusManager.h"
+﻿#include "Manager/GDIPlusManager.h"
 
-ULONG_PTR GDIPlusManager::g_GdiPlusToken = 0;
-Gdiplus::GdiplusStartupInput GDIPlusManager::gsi = {};
-bool GDIPlusManager::initialized = false;
+ULONG_PTR GDIPlusManager::s_GdiPlusToken = 0;
+Gdiplus::GdiplusStartupInput GDIPlusManager::s_gsi = {};
+bool GDIPlusManager::s_initialized = false;
 
 void GDIPlusManager::Initialize()
 {
-	if (!initialized)
+	if (!s_initialized)
 	{
-		Gdiplus::GdiplusStartup(&g_GdiPlusToken, &gsi, nullptr);
-		initialized = true;
+		Gdiplus::GdiplusStartup(&s_GdiPlusToken, &s_gsi, nullptr);
+		s_initialized = true;
 	}
 }
 
 void GDIPlusManager::ShutDown()
 {
-	if (initialized)
+	if (s_initialized)
 	{
-		Gdiplus::GdiplusShutdown(g_GdiPlusToken);
-		initialized = false;
+		Gdiplus::GdiplusShutdown(s_GdiPlusToken);
+		s_initialized = false;
 	}
 }
