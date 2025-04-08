@@ -18,7 +18,7 @@ void GameObject::SetDefault()
 
 void GameObject::SetName(wchar_t* targetName)
 {
-	int targetNameLength = wcslen(targetName);
+	int targetNameLength = (int)wcslen(targetName);
 	name = (wchar_t*)malloc((targetNameLength + 1) * sizeof(wchar_t));
 	name = targetName;
 }
