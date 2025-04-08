@@ -97,7 +97,7 @@ void Player::Update()
 
 void Player::Render(Gdiplus::Graphics* graphics)
 {
-	spriteRenderer[playerState].DrawImage(graphics, transform.position.x, transform.position.y);
+	spriteRenderer[playerState].DrawImage(graphics, (int)transform.position.x, (int)transform.position.y);
 	collider.RenderCollider(graphics);
 }
 

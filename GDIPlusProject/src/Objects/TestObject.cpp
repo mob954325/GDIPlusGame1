@@ -39,7 +39,7 @@ void TestObject::Update()
 
 void TestObject::Render(Gdiplus::Graphics* graphics)
 {
-	spriteRenderer.DrawImage(graphics, transform.position.x, transform.position.y);
+	spriteRenderer.DrawImage(graphics, (int)transform.position.x, (int)transform.position.y);
 	collider.RenderCollider(graphics);
 }
 
