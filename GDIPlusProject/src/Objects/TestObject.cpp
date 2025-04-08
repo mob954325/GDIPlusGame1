@@ -33,7 +33,7 @@ void TestObject::Update()
 	if (target != NULL)
 	{
 		bool check = collider.IsOverlap(collider, *target);
-		if (check) printf("%s, %s이 서로 충돌함", typeid(*this).name(), typeid(*this).name());
+		if (check) printf("%s, %s이 서로 충돌함\n", typeid(*this).name(), typeid(*this).name());
 	}
 }
 

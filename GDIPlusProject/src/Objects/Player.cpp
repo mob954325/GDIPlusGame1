@@ -32,7 +32,7 @@ void Player::Initialize()
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
 
-	Speed = 25.0f;
+	Speed = 50.0f;
 
 	// 안내 로그
 	printf("플레이어 상태 변경 : 스페이스바\n");
