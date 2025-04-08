@@ -12,8 +12,8 @@ public:
 	static void ShutDown();
 
 private:
-	static ULONG_PTR g_GdiPlusToken;
-	static Gdiplus::GdiplusStartupInput gsi;
-	static bool initialized;
+	static ULONG_PTR s_GdiPlusToken;
+	static Gdiplus::GdiplusStartupInput s_gsi;
+	static bool s_initialized;
 };
 

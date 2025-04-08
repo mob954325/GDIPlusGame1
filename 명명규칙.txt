@@ -25,13 +25,16 @@ C++ 프로젝트 명명 규칙 (핵심)
    - 예: `deltaTime`, `frameCount`
 
 6. **네임스페이스**
-   - 소문자 사용
-   - 예: `math`, `graphics`
+   - 파스칼 케이스 (PascalCase)
+   - 예: `Math`, `Graphics`
 
 7. **매크로**
    - 모두 대문자 + 언더스코어 (`UPPER_CASE`)
    - 예: `#define SCREEN_WIDTH 1280`
 
+8. **정적(static) 메서드**
+   - 함수 이름 앞에 `s_` 접두어를 붙임
+   - 예: `s_initialize()`, `s_getInstance()`
+
 
 (필요 시 항목 추가 예정)
-

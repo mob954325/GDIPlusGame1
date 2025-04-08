@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class Transform
 {
@@ -6,7 +6,7 @@ public:
 	void SetTransform(float posX, float posY);
 	void Translate(float nextX, float nextY);
 
-	// ÀÓ½Ã °ª
+	// ìž„ì‹œ ê°’
 	float x;
 	float y;
 	float scale;
