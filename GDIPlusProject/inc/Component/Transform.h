@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "Math/Vector2.h"
+#include "Component/Component.h"
 
-class Transform
+class Transform : public Component
 {
 public:
 	Transform();

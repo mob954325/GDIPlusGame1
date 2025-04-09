@@ -132,8 +132,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Component\Component.h" />
     <ClInclude Include="inc\DebugUtility.h" />
-    <ClInclude Include="inc\Component\GameObject.h" />
+    <ClInclude Include="inc\Objects\GameObject.h" />
     <ClInclude Include="inc\GameTime.h" />
     <ClInclude Include="inc\Manager\GDIPlusManager.h" />
     <ClInclude Include="inc\Input.h" />
@@ -151,10 +152,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Component\Component.cpp" />
     <ClCompile Include="src\Component\SpriteCollider.cpp" />
     <ClCompile Include="src\DebugUtility.cpp" />
     <ClCompile Include="src\Objects\Player.cpp" />
-    <ClCompile Include="src\Component\GameObject.cpp" />
+    <ClCompile Include="src\Objects\GameObject.cpp" />
     <ClCompile Include="src\Manager\GDIPlusManager.cpp" />
     <ClCompile Include="src\Component\SpriteRenderer.cpp" />
     <ClCompile Include="src\Scenes\MenuScene.cpp" />

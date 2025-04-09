@@ -4,8 +4,9 @@
 #include <windows.h>
 
 #include "Manager/GDIPlusManager.h"
+#include "Component/Component.h"
 
-class SpriteRenderer
+class SpriteRenderer : public Component
 {
 public:
 	bool GetImage(const wchar_t* path);

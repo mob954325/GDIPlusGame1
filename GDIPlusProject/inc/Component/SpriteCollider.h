@@ -1,9 +1,10 @@
 ﻿#pragma once
-#include "GameObject.h"
+#include "Objects/GameObject.h"
+#include "Component/Component.h"
 #include "SpriteRenderer.h"
 
 // 스프라이트 크기로 Colilder 크기를 지정하는 함수
-class SpriteCollider
+class SpriteCollider : public Component
 {
 public:
 #if _DEBUG

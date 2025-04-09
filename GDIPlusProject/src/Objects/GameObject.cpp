@@ -1,4 +1,4 @@
-﻿#include "Component/GameObject.h"
+﻿#include "Objects/GameObject.h"
 
 GameObject::GameObject()
 {
