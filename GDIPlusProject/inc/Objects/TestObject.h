@@ -1,27 +1,26 @@
 ﻿#pragma once
-#include "Component/GameObject.h"
+#include "Objects/GameObject.h"
 #include "Component/SpriteRenderer.h"
 #include "Component/SpriteCollider.h"
 #include "Objects/Player.h"
 
 #include "GameTime.h"
 
-class TestObject : GameObject
+class TestObject : public GameObject
 {
 public:
 	TestObject();
+	~TestObject();
 
 	void Initialize();
 	void Update();
 	void Render(Gdiplus::Graphics* graphics);
-	void Uninitialize();
 
-	void GetTargetCollider(SpriteCollider* targetCollider);
+	void OnColliderOverlap(SpriteCollider* other);
 
 protected:
-	SpriteRenderer spriteRenderer;
-	SpriteCollider collider;
-	SpriteCollider* target;
+	SpriteRenderer* spriteRenderer;
+	SpriteCollider* collider;
 
 	// time
 	float animationGameTimer;

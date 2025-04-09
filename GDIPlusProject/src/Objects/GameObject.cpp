@@ -3,10 +3,19 @@
 GameObject::GameObject()
 {
 	name = NULL;
+	transform = new Transform();
+	AddComponet(transform);
 }
 
 GameObject::~GameObject()
 {
+	// 컴포넌트 제거
+	int componentCount = (int)componentList.size();
+	for (int i = 0; i < componentCount; i++)
+	{
+		delete componentList[i];
+	}
+
 	if (name != NULL)
 	{
 		printf("%ws GameObject 소멸자 호출", name);
@@ -16,7 +25,7 @@ GameObject::~GameObject()
 
 void GameObject::SetDefault()
 {
-	transform.SetTransform(0.0f, 0.0f);
+	transform->SetTransform(0.0f, 0.0f);
 }
 
 void GameObject::SetName(wchar_t* targetName)

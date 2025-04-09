@@ -12,8 +12,8 @@ namespace MenuScene
 
 	Gdiplus::Graphics* g_pBackBufferGraphics;
 
-	Player player;
-	TestObject testObj;
+	Player* player;
+	TestObject* testObj;
 
 	SpriteCollider collider;
 
@@ -25,27 +25,34 @@ namespace MenuScene
 
 		g_pBackBufferGraphics = Gdiplus::Graphics::FromHDC(g_BackBufferDC);
 
-		player.Initialize();
-		testObj.Initialize();
-		testObj.GetTargetCollider(player.r_collider);
+		player = new Player();
+		player->Initialize();
+
+		testObj = new TestObject();
+		testObj->Initialize();
+	}
+
+	void PhysicsUpdate()
+	{
+		SpriteCollider* playerCollider = player->GetComponent<SpriteCollider>();
+		testObj->OnColliderOverlap(playerCollider);
 	}
 
 	void Update()
 	{
-		testObj.Update();
-		player.Update();
+		PhysicsUpdate(); // 임시
+		testObj->Update();
+		player->Update();
 	}
 
 	void Render()
 	{
-		testObj.Render(g_pBackBufferGraphics);
-		player.Render(g_pBackBufferGraphics);
+		testObj->Render(g_pBackBufferGraphics);
+		player->Render(g_pBackBufferGraphics);
 	}
 
 	void Uninitialize()
 	{
-		player.Uninitialize();
-		testObj.Uninitialize();
 		delete g_pBackBufferGraphics;
 	}
 

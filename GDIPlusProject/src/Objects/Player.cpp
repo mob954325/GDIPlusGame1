@@ -7,27 +7,36 @@ Player::Player()
 	Speed = 0.0f;
 	moveDirection = Vector2(0.0f, 0.0f);
 
-	// 임시
+	// 스프라이트 데이터 생성
 	for (int i = 0; i < 3; i++)
 	{
-		spriteRenderer[i] = SpriteRenderer();
+		spriteRenderer[i] = new SpriteRenderer();
+		AddComponet(spriteRenderer[i]);
 	}
 
-	collider = SpriteCollider();
-	r_collider = &collider;
+	// 그외 컴포넌트 생성
+	collider = new SpriteCollider();
+	AddComponet(collider);
+}
+
+Player::~Player()
+{
+	spriteRenderer[0]->DeleteImage();
+	spriteRenderer[1]->DeleteImage();
+	spriteRenderer[2]->DeleteImage();
 }
 
 void Player::Initialize()
 {
 	SetDefault();
 
-	spriteRenderer[0].GetImage(L"./Resource/Player/Idle/Idle-Sheet.png");
-	spriteRenderer[1].GetImage(L"./Resource/Player/Run/Run-Sheet.png");
-	spriteRenderer[2].GetImage(L"./Resource/Player/Attack/Attack-Sheet.png");
+	spriteRenderer[0]->GetImage(L"./Resource/Player/Idle/Idle-Sheet.png");
+	spriteRenderer[1]->GetImage(L"./Resource/Player/Run/Run-Sheet.png");
+	spriteRenderer[2]->GetImage(L"./Resource/Player/Attack/Attack-Sheet.png");
 
-	spriteRenderer[0].GetImageInfo(L"Idle", L"./Resource/Player/animSize.csv");
-	spriteRenderer[1].GetImageInfo(L"Run", L"./Resource/Player/animSize.csv");
-	spriteRenderer[2].GetImageInfo(L"Attack", L"./Resource/Player/animSize.csv");
+	spriteRenderer[0]->GetImageInfo(L"Idle", L"./Resource/Player/animSize.csv");
+	spriteRenderer[1]->GetImageInfo(L"Run", L"./Resource/Player/animSize.csv");
+	spriteRenderer[2]->GetImageInfo(L"Attack", L"./Resource/Player/animSize.csv");
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
@@ -46,8 +55,8 @@ void Player::Update()
 	{
 		animationGameTimer = 0.0f;
 
-		spriteRenderer[playerState].currFrame++;
-		spriteRenderer[playerState].currFrame %= spriteRenderer[playerState].imageFrameCount;
+		spriteRenderer[playerState]->currFrame++;
+		spriteRenderer[playerState]->currFrame %= spriteRenderer[playerState]->imageFrameCount;
 	}
 
 	if (Input::IsKeyPressed(VK_SPACE))
@@ -90,20 +99,13 @@ void Player::Update()
 		moveDirection = Vector2(1.0f, moveDirection.y);
 	}
 
-	transform.Translate(moveDirection * Speed * GameTime::GetDeltaTime());
+	transform->Translate(moveDirection * Speed * GameTime::GetDeltaTime());
 
-	collider.UpdateValue(*this, spriteRenderer[0]);
+	collider->UpdateValue(this, spriteRenderer[0]);
 }
 
 void Player::Render(Gdiplus::Graphics* graphics)
 {
-	spriteRenderer[playerState].DrawImage(graphics, (int)transform.position.x, (int)transform.position.y);
-	collider.RenderCollider(graphics);
-}
-
-void Player::Uninitialize()
-{
-	spriteRenderer[0].DeleteImage();
-	spriteRenderer[1].DeleteImage();
-	spriteRenderer[2].DeleteImage();
+	spriteRenderer[playerState]->DrawImage(graphics, (int)transform->position.x, (int)transform->position.y);
+	collider->RenderCollider(graphics);
 }

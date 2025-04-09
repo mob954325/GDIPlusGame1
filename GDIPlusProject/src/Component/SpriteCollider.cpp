@@ -16,19 +16,19 @@ SpriteCollider::~SpriteCollider()
 {
 }
 
-void SpriteCollider::UpdateValue(GameObject object, SpriteRenderer spriteRenderer)
+void SpriteCollider::UpdateValue(GameObject* object, SpriteRenderer* spriteRenderer)
 {
-	minX = object.transform.position.x;
-	maxX = minX + spriteRenderer.imageWidth;
+	minX = object->transform->position.x;
+	maxX = minX + spriteRenderer->imageWidth;
 
-	minY = object.transform.position.y;
-	maxY = minY + spriteRenderer.imageWidth;
+	minY = object->transform->position.y;
+	maxY = minY + spriteRenderer->imageWidth;
 }
 
-bool SpriteCollider::IsOverlap(SpriteCollider objectA, SpriteCollider objectB)
+bool SpriteCollider::IsOverlap(SpriteCollider* objectA, SpriteCollider* objectB)
 {
-	return objectA.minX < objectB.maxX && objectA.maxX > objectB.minX &&
-		   objectA.minY < objectB.maxY && objectA.maxY > objectB.minY;
+	return objectA->minX < objectB->maxX && objectA->maxX > objectB->minX &&
+		   objectA->minY < objectB->maxY && objectA->maxY > objectB->minY;
 }
 
 SpriteCollider* SpriteCollider::GetColliderComponent()
