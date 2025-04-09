@@ -1,13 +1,8 @@
 ﻿#pragma once
+#include "Manager/UtilityManager.h"
 #include "Objects/GameObject.h"
 #include "Component/SpriteRenderer.h"
 #include "Component/SpriteCollider.h"
-
-#include "Input.h"
-#pragma comment(lib, "./lib/Input.lib")
-
-#include "../../inc/GameTime.h"
-#pragma comment(lib, "./lib/GameTime.lib")
 
 class Player : public GameObject
 {

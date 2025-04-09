@@ -11,7 +11,6 @@ LPCTSTR g_szClassName = TEXT("윈도우 클래스 이름");
 int g_width = 1024;
 int g_height = 768;
 
-
 HWND g_hwnd;
 HDC g_FrontBufferDC;    // 앞면 DC
 HDC g_BackBufferDC;    // 뒷면 DC

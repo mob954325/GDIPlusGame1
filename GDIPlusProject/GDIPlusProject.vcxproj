@@ -132,6 +132,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Manager\UtilityManager.h" />
+    <ClInclude Include="inc\Scenes\BaseScene.h" />
     <ClInclude Include="inc\Component\Component.h" />
     <ClInclude Include="inc\DebugUtility.h" />
     <ClInclude Include="inc\Objects\GameObject.h" />
@@ -146,12 +148,14 @@
     <ClInclude Include="inc\Math\Vector2.h" />
     <ClInclude Include="inc\Objects\TestObject.h" />
     <ClInclude Include="inc\Component\SpriteCollider.h" />
+    <ClInclude Include="inc\Scenes\PlayScene.h" />
     <ClInclude Include="WinMain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scenes\PlayScene.cpp" />
     <ClCompile Include="src\Component\Component.cpp" />
     <ClCompile Include="src\Component\SpriteCollider.cpp" />
     <ClCompile Include="src\DebugUtility.cpp" />

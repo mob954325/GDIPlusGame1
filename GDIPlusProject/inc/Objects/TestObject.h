@@ -1,10 +1,9 @@
 ﻿#pragma once
-#include "Objects/GameObject.h"
+#include "Manager/UtilityManager.h"
 #include "Component/SpriteRenderer.h"
 #include "Component/SpriteCollider.h"
+#include "Objects/GameObject.h"
 #include "Objects/Player.h"
-
-#include "GameTime.h"
 
 class TestObject : public GameObject
 {

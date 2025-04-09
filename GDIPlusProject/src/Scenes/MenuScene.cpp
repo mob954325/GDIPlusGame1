@@ -1,6 +1,4 @@
-﻿#include "../../inc/Scenes/MenuScene.h"
-
-#include "Component/SpriteCollider.h"
+﻿#include "Scenes/MenuScene.h"
 
 namespace MenuScene
 {
