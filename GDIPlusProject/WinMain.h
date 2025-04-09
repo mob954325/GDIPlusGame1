@@ -8,6 +8,7 @@
 
 #include "Manager/GDIPlusManager.h"
 #include "./inc/Scenes/MenuScene.h"
+#include "DebugUtility.h"
 
 // Libraries ====================================
 #include "./inc/GameTime.h"

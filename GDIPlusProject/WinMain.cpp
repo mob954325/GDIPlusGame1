@@ -114,6 +114,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		Update();
 		Render();
 
+		CHECK_FPS();
+
+		// 임시 해상도 변경 테스트 함수
 		if (Input::IsKeyPressed('H'))
 		{
 			// 해상도 변경
