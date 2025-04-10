@@ -114,6 +114,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		Input::Update();
 		GameTime::UpdateTime();
+		sceneManager->GetCurrentScene()->PhysicsUpdate();
 		sceneManager->GetCurrentScene()->Update();
 		sceneManager->GetCurrentScene()->Render();
 

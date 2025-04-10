@@ -5,7 +5,9 @@ TestObject::TestObject()
 	transform->position = Vector2(100, 100);
 
 	spriteRenderer = new SpriteRenderer();
+	AddComponet(spriteRenderer);
 	collider = new SpriteCollider();
+	AddComponet(collider);
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;

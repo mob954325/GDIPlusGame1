@@ -43,3 +43,15 @@ void GameObject::GetName(wchar_t** bufferPtr)
 {
 	*bufferPtr = name;
 }
+
+void GameObject::Initialize()
+{
+}
+
+void GameObject::Update()
+{
+}
+
+void GameObject::Render(Gdiplus::Graphics* graphics)
+{
+}

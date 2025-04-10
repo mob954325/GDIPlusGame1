@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <stdio.h>
+#include <iostream>
 #include <windows.h>
 
 #include "Manager/GDIPlusManager.h"

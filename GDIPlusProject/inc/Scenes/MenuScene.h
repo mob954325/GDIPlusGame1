@@ -20,7 +20,4 @@ protected:
 	HDC g_FrontBufferDC;    // 앞면 DC
 	HDC g_BackBufferDC;    // 뒷면 DC
 	Gdiplus::Graphics* g_pBackBufferGraphics;
-
-	Player* player;
-	TestObject* testObj;
 };

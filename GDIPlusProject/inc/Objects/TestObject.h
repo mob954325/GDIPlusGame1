@@ -11,9 +11,9 @@ public:
 	TestObject();
 	~TestObject();
 
-	void Initialize();
-	void Update();
-	void Render(Gdiplus::Graphics* graphics);
+	void Initialize() override;
+	void Update() override;
+	void Render(Gdiplus::Graphics* graphics) override;
 
 	void OnColliderOverlap(SpriteCollider* other);
 

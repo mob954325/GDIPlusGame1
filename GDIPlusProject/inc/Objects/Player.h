@@ -9,9 +9,9 @@ class Player : public GameObject
 public:
 	Player();
 	~Player();
-	void Initialize();
-	void Update();
-	void Render(Gdiplus::Graphics* graphics);
+	void Initialize() override;
+	void Update() override;
+	void Render(Gdiplus::Graphics* graphics) override;
 
 protected:
 	SpriteRenderer* spriteRenderer[3]; // 임시 개수 선언

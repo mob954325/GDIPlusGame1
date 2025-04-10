@@ -16,6 +16,10 @@ public:
 	void SetName(wchar_t* targetName);
 	void GetName(wchar_t** bufferPtr);
 
+	virtual void Initialize();
+	virtual void Update();
+	virtual void Render(Gdiplus::Graphics* graphics);
+
 	template<typename T>
 	T* GetComponent();
 
@@ -45,6 +49,6 @@ inline T* GameObject::GetComponent()
 
 template<typename T>
 inline void GameObject::AddComponet(T* comp)
-{
+{	
 	componentList.push_back(comp);
 }

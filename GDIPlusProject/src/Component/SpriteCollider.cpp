@@ -2,8 +2,10 @@
 
 void SpriteCollider::RenderCollider(Gdiplus::Graphics* graphics)
 {
+#if _DEBUG
 	Gdiplus::Pen myPen(Gdiplus::Color(255,255,255,255), 1.0f);
 	graphics->DrawRectangle(&myPen, minX, minY, maxX - minX, maxY - minY);
+#endif
 }
 
 SpriteCollider::SpriteCollider()

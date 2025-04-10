@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 #include "Scenes/BaseScene.h"
 
 class PlayScene : public BaseScene
 {
 public:
+	PlayScene();
 	~PlayScene();
 
 	void Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC) override;

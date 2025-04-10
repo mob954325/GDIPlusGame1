@@ -7,8 +7,7 @@ MenuScene::MenuScene()
 	g_BackBufferDC = {};    // 뒷면 DC
 	g_pBackBufferGraphics = {};
 
-	player = nullptr;
-	testObj = nullptr;
+	gameObjectList = {};
 }
 
 MenuScene::~MenuScene()
@@ -24,30 +23,61 @@ void MenuScene::Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 	g_pBackBufferGraphics = Gdiplus::Graphics::FromHDC(g_BackBufferDC);
 
-	player = new Player();
-	player->Initialize();
+	//player = new Player();
+	//player->Initialize();
 
-	testObj = new TestObject();
-	testObj->Initialize();
+	//testObj = new TestObject();
+	//testObj->Initialize();
+	gameObjectList.push_back(new Player());
+	gameObjectList.push_back(new TestObject());
+
+	for (GameObject* obj : gameObjectList)
+	{
+		obj->Initialize();
+	}
 }
 
 void MenuScene::PhysicsUpdate()
 {
-	SpriteCollider* playerCollider = player->GetComponent<SpriteCollider>();
-	testObj->OnColliderOverlap(playerCollider);
+	//SpriteCollider* playerCollider = player->GetComponent<SpriteCollider>();
+	//testObj->OnColliderOverlap(playerCollider); // -> 이게 오브젝트 스크립트 내부에서 일어나야함, 즉 업데이트에서 일어나야함 ? 그럼 해당 함수는?
+	for (GameObject* objA : gameObjectList)
+	{
+		for (GameObject* objB : gameObjectList)
+		{
+			if (objA == objB) continue;
+			
+			SpriteCollider* colliderA = objA->GetComponent<SpriteCollider>();
+			SpriteCollider* colliderB = objB->GetComponent<SpriteCollider>();
+			if (colliderA == nullptr && colliderB == nullptr) continue;
+			
+
+			if (colliderA->IsOverlap(colliderA, colliderB)) // a->b
+			{
+				//printf("a->b 충돌\n");
+			}
+		}
+	}
 }
 
 void MenuScene::Update()
 {
-	PhysicsUpdate(); // 임시
-	testObj->Update();
-	player->Update();
+	//testObj->Update();
+	//player->Update();
+	for (GameObject* obj : gameObjectList)
+	{
+		obj->Update();
+	}
 }
 
 void MenuScene::Render()
 {
-	testObj->Render(g_pBackBufferGraphics); // TODO 랜더 동작 안됨
-	player->Render(g_pBackBufferGraphics);
+	//testObj->Render(g_pBackBufferGraphics);
+	//player->Render(g_pBackBufferGraphics);
+	for (GameObject* obj : gameObjectList)
+	{
+		obj->Render(g_pBackBufferGraphics);
+	}
 }
 
 void MenuScene::Uninitialize()
