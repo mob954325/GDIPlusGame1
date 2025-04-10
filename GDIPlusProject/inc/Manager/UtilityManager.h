@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../GameTime.h"
 #pragma comment(lib, "./lib/GameTime.lib")
 

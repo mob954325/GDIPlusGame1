@@ -1,11 +1,10 @@
 ﻿#include "WinMain.h"
+#include "Scenes/MenuScene.h"
 
-void Update();
-void Render();
-// void Uninitialize();
+SceneManager* sceneManager = {};
 
 // WindowApi, Console
-LPCTSTR g_title = TEXT("20250403이성호");
+LPCTSTR g_title = TEXT("GDIPlus Game 1");
 LPCTSTR g_szClassName = TEXT("윈도우 클래스 이름");
 
 int g_width = 1024;
@@ -15,10 +14,6 @@ HWND g_hwnd;
 HDC g_FrontBufferDC;    // 앞면 DC
 HDC g_BackBufferDC;    // 뒷면 DC
 HBITMAP g_BackBufferBitmap;
-
-// Scene Control
-Scene currentScene = Scene::MENU;
-Scene nextScene = Scene::MENU;
 
 // 콘솔 초기화
 void InitConsole()
@@ -86,6 +81,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
+
 	// 렌더러 초기화
 	Renderer::Initialize(hwnd, g_width, g_height);
 	g_FrontBufferDC = Renderer::GetFrontBuffer();
@@ -93,7 +89,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// 나머지 초기화
 	GDIPlusManager::Initialize();
-	MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
+	
+	// 매니저 생성
+	sceneManager = new SceneManager();
+	sceneManager->Initialize();
+	sceneManager->GetCurrentScene()->Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC); // 임시
+
 	GameTime::InitTime();
 
 	// 게임 루프
@@ -109,9 +110,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		Renderer::BeginDraw();
 
-		Update();
-		Render();
+		Input::Update();
+		GameTime::UpdateTime();
+		sceneManager->GetCurrentScene()->Update();
+		sceneManager->GetCurrentScene()->Render();
 
 		CHECK_FPS();
 
@@ -130,10 +134,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			g_FrontBufferDC = Renderer::GetFrontBuffer();
 
 			GDIPlusManager::Initialize();
-			MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
+			//MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
 			//SetWindowLongPtr(hwnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
 			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, w, h, SWP_FRAMECHANGED);
 		}
+
+		Renderer::EndDraw();
 	}
 
 	GDIPlusManager::ShutDown();
@@ -144,45 +150,3 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	UninitConsole();  // 콘솔 출력 해제
 	return (int)msg.wParam;
 }
-
-// 루프 함수 ===============================================================================
-
-void Update()
-{
-	Input::Update();
-	GameTime::UpdateTime();
-
-	switch (currentScene)
-	{
-	case MENU:
-		MenuScene::Update();
-		break;
-	case PLAY:
-		break;
-	case END:
-		break;
-	default:
-		break;
-	}
-}
-
-void Render()
-{
-	Renderer::BeginDraw();
-
-	switch (currentScene)
-	{
-	case MENU:
-		MenuScene::Render();
-		break;
-	case PLAY:
-		break;
-	case END:
-		break;
-	default:
-		break;
-	}
-
-	Renderer::EndDraw();
-}
-

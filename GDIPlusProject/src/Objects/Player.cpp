@@ -24,6 +24,7 @@ Player::~Player()
 	spriteRenderer[0]->DeleteImage();
 	spriteRenderer[1]->DeleteImage();
 	spriteRenderer[2]->DeleteImage();
+	printf("Player 소멸자 호출"); // 임시
 }
 
 void Player::Initialize()

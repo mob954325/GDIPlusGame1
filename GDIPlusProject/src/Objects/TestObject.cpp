@@ -14,6 +14,7 @@ TestObject::TestObject()
 TestObject::~TestObject()
 {
 	spriteRenderer->DeleteImage();
+	printf("testObject 소멸자 호출\n"); // 임시
 }
 
 void TestObject::Initialize()

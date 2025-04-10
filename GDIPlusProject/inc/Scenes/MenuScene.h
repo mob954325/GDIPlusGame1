@@ -1,12 +1,26 @@
 ﻿#pragma once
 #include "Objects/Player.h"
 #include "Objects/TestObject.h"
+#include "Scenes/BaseScene.h"
 
-namespace MenuScene
+class MenuScene : public BaseScene
 {
-	void Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC);
-	void PhysicsUpdate();
-	void Update();
-	void Render();
-	void Uninitialize();
-}
+public:
+	MenuScene();
+	~MenuScene();
+
+	void Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC) override;
+	void PhysicsUpdate() override;
+	void Update() override;
+	void Render() override;
+	void Uninitialize() override;
+
+protected:
+	HWND g_hwnd;
+	HDC g_FrontBufferDC;    // 앞면 DC
+	HDC g_BackBufferDC;    // 뒷면 DC
+	Gdiplus::Graphics* g_pBackBufferGraphics;
+
+	Player* player;
+	TestObject* testObj;
+};

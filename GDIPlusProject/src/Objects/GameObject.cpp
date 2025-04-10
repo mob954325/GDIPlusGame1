@@ -21,6 +21,10 @@ GameObject::~GameObject()
 		printf("%ws GameObject 소멸자 호출", name);
 		free(name);
 	}
+	else
+	{
+		printf("GameObject 소멸자 호출");
+	}
 }
 
 void GameObject::SetDefault()
