@@ -42,7 +42,7 @@ void Player::Initialize()
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
 
-	Speed = 50.0f;
+	Speed = 250.0f;
 
 	// 안내 로그
 	printf("플레이어 상태 변경 : 스페이스바\n");
@@ -101,6 +101,11 @@ void Player::Update()
 	}
 
 	transform->Translate(moveDirection * Speed * GameTime::GetDeltaTime());
+
+	// 임시
+	//if(transform->position.y < 768)
+	//transform->Translate(Vector2(0.0f, 9.6f) * GameTime::GetDeltaTime());
+	printf("%f, %f\n", transform->position.x, transform->position.y);
 
 	collider->UpdateValue(this, spriteRenderer[0]);
 }
