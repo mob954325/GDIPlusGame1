@@ -18,4 +18,7 @@ public:
 
 	// 해당 씬이 가지고 있는 오브젝트 리스트
 	std::vector<GameObject*> gameObjectList;
+
+	// 임시
+	std::vector<GameObject*> mapObjectList;
 };

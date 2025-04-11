@@ -78,10 +78,39 @@ void MenuScene::Render()
 	{
 		obj->Render(g_pBackBufferGraphics);
 	}
+
+	RenderMap(g_pBackBufferGraphics);
 }
 
 void MenuScene::Uninitialize()
 {
+}
+
+void MenuScene::RenderMap(Gdiplus::Graphics* grapic)
+{
+	int map[8][10] =
+	{
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		{1, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	};
+
+	Gdiplus::Pen myPen(Gdiplus::Color(255, 255, 255, 255), 1.0f);
+	for (int y = 0; y < 8; y++)
+	{
+		for (int x = 0; x < 10; x++)
+		{
+			if (map[y][x] == 1)
+			{
+				grapic->DrawRectangle(&myPen, x + x * mapObjectWidth, y + y * mapObjectWidth, mapObjectWidth, mapObjectHeight);
+			}
+		}
+	}
 }
 
 // 안쓰는 함수

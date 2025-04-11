@@ -82,7 +82,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
-
 	// 렌더러 초기화
 	Renderer::Initialize(hwnd, g_screenWidth, g_screenHeight);
 	g_FrontBufferDC = Renderer::GetFrontBuffer();
