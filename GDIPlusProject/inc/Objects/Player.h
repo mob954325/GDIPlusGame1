@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "Manager/UtilityManager.h"
 #include "Objects/GameObject.h"
 #include "Component/SpriteRenderer.h"
 #include "Component/SpriteCollider.h"
+#include "Component/Gravity.h"
 
 class Player : public GameObject
 {
@@ -16,12 +16,15 @@ public:
 protected:
 	SpriteRenderer* spriteRenderer[3]; // 임시 개수 선언
 	SpriteCollider* collider;
-
+	Gravity* gravity;
 	Vector2 moveDirection;
 
 	// state
 	int playerState = 0; // idle, turn, hurt
-	float Speed;
+	float speed;
+	float maxJumpHeight;
+	float currentJumpHeight;
+	float jumpForce;
 
 	// time
 	float animationGameTimer;

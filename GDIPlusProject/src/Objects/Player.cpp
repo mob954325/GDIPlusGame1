@@ -4,7 +4,10 @@ Player::Player()
 {
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.0f;
-	Speed = 0.0f;
+	speed = 0.0f;
+	maxJumpHeight = 0.0f;
+	currentJumpHeight = 0.0f;
+	jumpForce = 0.0f;
 	moveDirection = Vector2(0.0f, 0.0f);
 
 	// 스프라이트 데이터 생성
@@ -17,6 +20,8 @@ Player::Player()
 	// 그외 컴포넌트 생성
 	collider = new SpriteCollider();
 	AddComponet(collider);
+
+	gravity = new Gravity();
 }
 
 Player::~Player()
@@ -42,7 +47,11 @@ void Player::Initialize()
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
 
-	Speed = 250.0f;
+	speed = 250.0f;
+	maxJumpHeight = 250.0f;
+	jumpForce = 2500.0f;
+
+	gravity->Initialize(this);
 
 	// 안내 로그
 	printf("플레이어 상태 변경 : 스페이스바\n");
@@ -51,6 +60,8 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	gravity->Update();
+
 	animationGameTimer += GameTime::GetDeltaTime();
 	if (animationGameTimer > maxAnimationGameTime)
 	{
@@ -87,9 +98,27 @@ void Player::Update()
 	{
 		moveDirection = Vector2(moveDirection.x, 1.0f);
 	}
-	if (Input::IsKeyDown(VK_UP))
+	if (Input::IsKeyDown(VK_UP)) // 임시 점프
 	{
-		moveDirection = Vector2(moveDirection.x, -1.0f);
+		if (currentJumpHeight < maxJumpHeight)
+		{
+			transform->Translate(0.0f, -jumpForce * GameTime::GetDeltaTime()); // 점프 높이가 일정하지 않음
+			currentJumpHeight += jumpForce * GameTime::GetDeltaTime();
+			gravity->SetIsGround(false); // 임시 사용안된 변수 변경
+			printf("점프 누름\n");
+			printf("%f\n", currentJumpHeight);
+		}
+	}
+	else
+	{
+		if (currentJumpHeight > 0.0f)
+		{
+			currentJumpHeight -= gravity->GetFallingSpeed() * GameTime::GetDeltaTime();
+		}
+		else
+		{
+			currentJumpHeight = 0.0f;
+		}
 	}
 	if (Input::IsKeyDown(VK_LEFT))
 	{
@@ -100,13 +129,7 @@ void Player::Update()
 		moveDirection = Vector2(1.0f, moveDirection.y);
 	}
 
-	transform->Translate(moveDirection * Speed * GameTime::GetDeltaTime());
-
-	// 임시
-	//if(transform->position.y < 768)
-	//transform->Translate(Vector2(0.0f, 9.6f) * GameTime::GetDeltaTime());
-	printf("%f, %f\n", transform->position.x, transform->position.y);
-
+	transform->Translate(moveDirection * speed * GameTime::GetDeltaTime());
 	collider->UpdateValue(this, spriteRenderer[0]);
 }
 

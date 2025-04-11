@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Component\Gravity.h" />
     <ClInclude Include="inc\Manager\UtilityManager.h" />
     <ClInclude Include="inc\Scenes\BaseScene.h" />
     <ClInclude Include="inc\Component\Component.h" />
@@ -150,12 +151,15 @@
     <ClInclude Include="inc\Component\SpriteCollider.h" />
     <ClInclude Include="inc\Scenes\PlayScene.h" />
     <ClInclude Include="inc\Manager\SceneManager.h" />
+    <ClInclude Include="inc\Manager\SettingManager.h" />
     <ClInclude Include="WinMain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Manager\SettingManager.cpp" />
+    <ClCompile Include="src\Component\Gravity.cpp" />
     <ClCompile Include="src\Manager\SceneManager.cpp" />
     <ClCompile Include="src\Scenes\PlayScene.cpp" />
     <ClCompile Include="src\Component\Component.cpp" />

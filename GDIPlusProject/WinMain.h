@@ -4,6 +4,7 @@
 #include <iostream>
 
 // Manager =======================================
+#include "Manager/SettingManager.h"
 #include "Manager/GDIPlusManager.h"
 #include "Manager/UtilityManager.h"
 #include "Manager/SceneManager.h"

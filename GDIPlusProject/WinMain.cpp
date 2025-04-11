@@ -2,13 +2,11 @@
 #include "Scenes/MenuScene.h"
 
 SceneManager* sceneManager = {};
+SettingManager* settingManager = {};
 
 // WindowApi, Console
 LPCTSTR g_title = TEXT("GDIPlus Game 1");
 LPCTSTR g_szClassName = TEXT("윈도우 클래스 이름");
-
-int g_width = 1024;
-int g_height = 768;
 
 HWND g_hwnd;
 HDC g_FrontBufferDC;    // 앞면 DC
@@ -49,6 +47,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
 	InitConsole();  // 콘솔 출력 초기화
+	settingManager = new SettingManager();
+	g_screenWidth = 1024;
+	g_screenHeight = 768;
 
 	// 폴더 경로 콘솔 출력
 	char szPath[MAX_PATH] = { 0, };
@@ -65,7 +66,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	RegisterClass(&wc);
 
 	// 원하는 크기가 조정되어 리턴
-	RECT rcClient = { 0, 0, (LONG)g_width, (LONG)g_height };
+	RECT rcClient = { 0, 0, (LONG)g_screenWidth, (LONG)g_screenHeight };
 	AdjustWindowRect(&rcClient, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// 윈도우 생성
@@ -83,7 +84,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 
 	// 렌더러 초기화
-	Renderer::Initialize(hwnd, g_width, g_height);
+	Renderer::Initialize(hwnd, g_screenWidth, g_screenHeight);
 	g_FrontBufferDC = Renderer::GetFrontBuffer();
 	g_BackBufferDC = Renderer::GetBackBuffer();
 
@@ -99,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// 게임 루프
 	MSG msg = {};
-	while (true)
+	while (!Input::IsKeyPressed(VK_END)) // 임시
 	{
 		// 메세지 큐 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -127,21 +128,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			GDIPlusManager::ShutDown();
 			Renderer::Uninitialize();
 
-			int w = GetSystemMetrics(SM_CXSCREEN);
-			int h = GetSystemMetrics(SM_CYSCREEN);
+			g_screenWidth = GetSystemMetrics(SM_CXSCREEN);
+			g_screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
-			Renderer::Initialize(hwnd, w, h);
+			Renderer::Initialize(hwnd, g_screenWidth, g_screenHeight);
 			g_BackBufferDC = Renderer::GetBackBuffer();
 			g_FrontBufferDC = Renderer::GetFrontBuffer();
 
 			GDIPlusManager::Initialize();
-			//MenuScene::Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
+			sceneManager->GetCurrentScene()->Initialize(hwnd, g_FrontBufferDC, g_BackBufferDC);
 			//SetWindowLongPtr(hwnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
-			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, w, h, SWP_FRAMECHANGED);
+			SetWindowPos(g_hwnd, HWND_TOP, 0, 0, g_screenWidth, g_screenHeight, SWP_FRAMECHANGED);
 		}
 
 		Renderer::EndDraw();
 	}
+
+	// 임시
+	delete settingManager;
+	delete sceneManager;
 
 	GDIPlusManager::ShutDown();
 	Renderer::Uninitialize();

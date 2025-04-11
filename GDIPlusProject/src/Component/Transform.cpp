@@ -24,7 +24,8 @@ void Transform::Translate(float nextX, float nextY)
 	position.y += nextY;
 }
 
-void Transform::Translate(Vector2 position)
+#include <iostream>
+void Transform::Translate(Vector2 position) // 임시
 {
 	this->position += position;
 }

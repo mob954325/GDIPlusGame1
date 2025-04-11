@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "Manager/UtilityManager.h"
 #include "Component/SpriteRenderer.h"
 #include "Component/SpriteCollider.h"
 #include "Objects/GameObject.h"
