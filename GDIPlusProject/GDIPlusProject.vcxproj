@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Objects\BackGroundObject.h" />
     <ClInclude Include="inc\Component\Gravity.h" />
     <ClInclude Include="inc\Manager\UtilityManager.h" />
     <ClInclude Include="inc\Scenes\BaseScene.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Objects\BackGroundObject.cpp" />
     <ClCompile Include="src\Manager\SettingManager.cpp" />
     <ClCompile Include="src\Component\Gravity.cpp" />
     <ClCompile Include="src\Manager\SceneManager.cpp" />

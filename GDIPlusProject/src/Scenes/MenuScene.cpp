@@ -23,13 +23,9 @@ void MenuScene::Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 	g_pBackBufferGraphics = Gdiplus::Graphics::FromHDC(g_BackBufferDC);
 
-	//player = new Player();
-	//player->Initialize();
-
-	//testObj = new TestObject();
-	//testObj->Initialize();
-	gameObjectList.push_back(new Player());
+	//gameObjectList.push_back(new BackGroundObject());
 	gameObjectList.push_back(new TestObject());
+	gameObjectList.push_back(new Player());
 
 	for (GameObject* obj : gameObjectList)
 	{
@@ -49,8 +45,8 @@ void MenuScene::PhysicsUpdate()
 			
 			SpriteCollider* colliderA = objA->GetComponent<SpriteCollider>();
 			SpriteCollider* colliderB = objB->GetComponent<SpriteCollider>();
-			if (colliderA == nullptr && colliderB == nullptr) continue;
-			
+
+			if (colliderA == nullptr || colliderB == nullptr) continue;			
 
 			if (colliderA->IsOverlap(colliderA, colliderB)) // a->b
 			{

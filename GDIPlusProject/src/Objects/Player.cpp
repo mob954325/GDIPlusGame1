@@ -38,11 +38,11 @@ void Player::Initialize()
 
 	spriteRenderer[0]->GetImage(L"./Resource/Player/Idle/Idle-Sheet.png");
 	spriteRenderer[1]->GetImage(L"./Resource/Player/Run/Run-Sheet.png");
-	spriteRenderer[2]->GetImage(L"./Resource/Player/Attack/Attack-Sheet.png");
+	spriteRenderer[2]->GetImage(L"./Resource/Player/Jump/Jump.png");
 
 	spriteRenderer[0]->GetImageInfo(L"Idle", L"./Resource/Player/animSize.csv");
 	spriteRenderer[1]->GetImageInfo(L"Run", L"./Resource/Player/animSize.csv");
-	spriteRenderer[2]->GetImageInfo(L"Attack", L"./Resource/Player/animSize.csv");
+	spriteRenderer[2]->GetImageInfo(L"Jump", L"./Resource/Player/animSize.csv");
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;

@@ -1,7 +1,13 @@
 ﻿#pragma once
+#include "Scenes/BaseScene.h"
+
+#pragma region GameObjects
 #include "Objects/Player.h"
 #include "Objects/TestObject.h"
-#include "Scenes/BaseScene.h"
+#include "Objects/BackGroundObject.h"
+#pragma endregion
+
+
 
 class MenuScene : public BaseScene
 {
