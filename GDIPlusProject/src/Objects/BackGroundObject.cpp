@@ -3,8 +3,6 @@
 BackGroundObject::BackGroundObject()
 {
 	spriteRenderer = {};
-	backGroundBitmap = {};
-	bufferGraphics = {};
 
 	widthCount = 0;
 	heightCount = 0;
