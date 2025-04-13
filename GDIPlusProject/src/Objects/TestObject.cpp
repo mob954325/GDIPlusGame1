@@ -13,6 +13,21 @@ TestObject::TestObject()
 	maxAnimationGameTime = 0.1f;
 }
 
+TestObject::TestObject(int positionX, int positionY)
+{
+	transform->position = Vector2(positionX, positionY);
+
+	spriteRenderer = new SpriteRenderer();
+	AddComponet(spriteRenderer);
+	collider = new SpriteCollider();
+	AddComponet(collider);
+
+	collider->SetOwner(this);
+
+	animationGameTimer = 0.0f;
+	maxAnimationGameTime = 0.1f;
+}
+
 TestObject::~TestObject()
 {
 	spriteRenderer->DeleteImage();

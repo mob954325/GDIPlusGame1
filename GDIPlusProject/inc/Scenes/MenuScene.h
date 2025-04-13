@@ -5,6 +5,7 @@
 #include "Objects/Player.h"
 #include "Objects/TestObject.h"
 #include "Objects/BackGroundObject.h"
+#include "Objects/TestTerrainObject.h"
 #pragma endregion
 
 
@@ -20,11 +21,6 @@ public:
 	void Update() override;
 	void Render() override;
 	void Uninitialize() override;
-
-	// 임시
-	int mapObjectWidth = 100;
-	int mapObjectHeight = 100;
-	void RenderMap(Gdiplus::Graphics* grapic);
 
 protected:
 	HWND g_hwnd;

@@ -17,7 +17,6 @@ public:
 	bool GetIsGround();
 
 private:
-	GameObject* owner;	// 중력에 영향 받는 오브젝트
 	float ownerHeight;	// 임시
 	float fallingSpeed; // 낙하 속도
 	bool isGround;		// 땅인지 확인하는 bool값

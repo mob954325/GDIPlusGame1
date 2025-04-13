@@ -8,6 +8,7 @@ class TestObject : public GameObject
 {
 public:
 	TestObject();
+	TestObject(int positionX, int positionY);
 	~TestObject();
 
 	void Initialize() override;

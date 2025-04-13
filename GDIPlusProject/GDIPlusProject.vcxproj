@@ -153,6 +153,7 @@
     <ClInclude Include="inc\Scenes\PlayScene.h" />
     <ClInclude Include="inc\Manager\SceneManager.h" />
     <ClInclude Include="inc\Manager\SettingManager.h" />
+    <ClInclude Include="inc\Objects\TestTerrainObject.h" />
     <ClInclude Include="WinMain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="src\Component\Transform.cpp" />
     <ClCompile Include="src\Math\Vector2.cpp" />
     <ClCompile Include="src\Objects\TestObject.cpp" />
+    <ClCompile Include="src\Objects\TestTerrainObject.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

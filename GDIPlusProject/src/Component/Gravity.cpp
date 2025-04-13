@@ -11,8 +11,6 @@ Gravity::Gravity()
 
 Gravity::~Gravity()
 {
-	owner = nullptr;
-	delete owner;
 }
 
 void Gravity::Initialize(GameObject* objectPtr)

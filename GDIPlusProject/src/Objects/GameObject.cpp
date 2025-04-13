@@ -7,6 +7,13 @@ GameObject::GameObject()
 	AddComponet(transform);
 }
 
+GameObject::GameObject(float width, float height)
+{
+	name = NULL;
+	transform = new Transform(transform->position, width, height);
+	AddComponet(transform);
+}
+
 GameObject::~GameObject()
 {
 	// 컴포넌트 제거

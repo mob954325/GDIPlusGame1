@@ -35,5 +35,5 @@ void BackGroundObject::Update()
 
 void BackGroundObject::Render(Gdiplus::Graphics* graphics)
 {
-
+	spriteRenderer->DrawImage(graphics, 0, 0);
 }

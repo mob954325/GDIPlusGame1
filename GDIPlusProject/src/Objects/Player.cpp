@@ -21,7 +21,8 @@ Player::Player()
 	collider = new SpriteCollider();
 	AddComponet(collider);
 
-	gravity = new Gravity();
+	//gravity = new Gravity();
+	//AddComponet(gravity);
 }
 
 Player::~Player()
@@ -51,7 +52,8 @@ void Player::Initialize()
 	maxJumpHeight = 250.0f;
 	jumpForce = 2500.0f;
 
-	gravity->Initialize(this);
+	//gravity->Initialize(this);
+	collider->SetOwner(this);
 
 	// 안내 로그
 	printf("플레이어 상태 변경 : 스페이스바\n");
@@ -60,7 +62,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	gravity->Update();
+	//gravity->Update();
 
 	animationGameTimer += GameTime::GetDeltaTime();
 	if (animationGameTimer > maxAnimationGameTime)
