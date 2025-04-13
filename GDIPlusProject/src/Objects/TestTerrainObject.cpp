@@ -3,6 +3,7 @@
 TestTerrainObject::TestTerrainObject()
 {
 	tileSprite = {};
+	collider = {};
 }
 
 TestTerrainObject::~TestTerrainObject()
@@ -18,10 +19,20 @@ void TestTerrainObject::Initialize()
 	tileSprite->GetImageInfo(L"Yellow", L"./Resource/Background/mapSize.csv");
 
 	AddComponet(tileSprite);
+
+	collider = new SpriteCollider();
+	int top = tileSprite->imageHeight * 8;
+	int right = tileSprite->imageWidth * 10;
+	int bottom = tileSprite->imageHeight * 10;
+
+	collider->bound = { 0, tileSprite->imageHeight * 10, tileSprite->imageWidth * 10, tileSprite->imageHeight * 9 };
+	//collider->bound = { 0, 20, 20, 0};
+	AddComponet(collider);
 }
 
 void TestTerrainObject::Update()
 {
+	//collider->UpdateValue(this, tileSprite);
 }
 
 void TestTerrainObject::Render(Gdiplus::Graphics* graphics)
@@ -36,4 +47,6 @@ void TestTerrainObject::Render(Gdiplus::Graphics* graphics)
 			}
 		}
 	}
+
+	collider->RenderCollider(graphics);
 }

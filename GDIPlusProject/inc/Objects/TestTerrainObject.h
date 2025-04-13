@@ -1,5 +1,7 @@
 #pragma once
 #include "Objects/GameObject.h"
+#include "Component/SpriteRenderer.h"
+#include "Component/SpriteCollider.h"
 
 class TestTerrainObject : public GameObject
 {
@@ -12,6 +14,7 @@ public:
 	void Render(Gdiplus::Graphics* graphics) override;
 
 	SpriteRenderer* tileSprite;
+	SpriteCollider* collider;
 
 private:
 	int tiles[10][10] =

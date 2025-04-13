@@ -3,7 +3,7 @@
 void SpriteCollider::RenderCollider(Gdiplus::Graphics* graphics)
 {
 #if _DEBUG
-	Gdiplus::Pen myPen(Gdiplus::Color(255,255,255,255), 1.0f);
+	Gdiplus::Pen myPen(Gdiplus::Color(255,255,0,0), 1.0f);
 	//graphics->DrawRectangle(&myPen, minX, minY, maxX - minX, maxY - minY);
 	graphics->DrawRectangle(&myPen, bound.left, (INT)bound.bottom, (INT)bound.right - (INT)bound.left, (INT)bound.top - (INT)bound.bottom);
 #endif

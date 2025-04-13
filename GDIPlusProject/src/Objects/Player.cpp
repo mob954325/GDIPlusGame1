@@ -102,25 +102,26 @@ void Player::Update()
 	}
 	if (Input::IsKeyDown(VK_UP)) // 임시 점프
 	{
-		if (currentJumpHeight < maxJumpHeight)
-		{
-			transform->Translate(0.0f, -jumpForce * GameTime::GetDeltaTime()); // 점프 높이가 일정하지 않음
-			currentJumpHeight += jumpForce * GameTime::GetDeltaTime();
-			gravity->SetIsGround(false); // 임시 사용안된 변수 변경
-			printf("점프 누름\n");
-			printf("%f\n", currentJumpHeight);
-		}
+		moveDirection = Vector2(moveDirection.y, -1.0f);
+		//if (currentJumpHeight < maxJumpHeight)
+		//{
+		//	transform->Translate(0.0f, -jumpForce * GameTime::GetDeltaTime()); // 점프 높이가 일정하지 않음
+		//	currentJumpHeight += jumpForce * GameTime::GetDeltaTime();
+		//	//gravity->SetIsGround(false); // 임시 사용안된 변수 변경
+		//	printf("점프 누름\n");
+		//	printf("%f\n", currentJumpHeight);
+		//}
 	}
 	else
 	{
-		if (currentJumpHeight > 0.0f)
-		{
-			currentJumpHeight -= gravity->GetFallingSpeed() * GameTime::GetDeltaTime();
-		}
-		else
-		{
-			currentJumpHeight = 0.0f;
-		}
+		//if (currentJumpHeight > 0.0f)
+		//{
+		//	currentJumpHeight -= gravity->GetFallingSpeed() * GameTime::GetDeltaTime();
+		//}
+		//else
+		//{
+		//	currentJumpHeight = 0.0f;
+		//}
 	}
 	if (Input::IsKeyDown(VK_LEFT))
 	{

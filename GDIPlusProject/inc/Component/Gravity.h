@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Manager/SettingManager.h"
+#include "Component/SpriteRenderer.h"
 #include "Component/Component.h"
 #include "Objects/GameObject.h"
 

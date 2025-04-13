@@ -2,7 +2,7 @@
 
 Component::~Component()
 {
-	delete owner;
+	//delete owner;
 }
 
 void Component::SetOwner(GameObject* object)

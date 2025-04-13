@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Manager/UtilityManager.h"
-#include "Component/SpriteRenderer.h"
+#include "Manager/GDIPlusManager.h"
 #include "Component/Component.h"
 #include "Component/Transform.h"
 
