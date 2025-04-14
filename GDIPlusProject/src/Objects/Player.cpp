@@ -20,6 +20,7 @@ Player::Player()
 	// 그외 컴포넌트 생성
 	collider = new SpriteCollider();
 	AddComponet(collider);
+	collider->SetOwner(this);
 
 	//gravity = new Gravity();
 	//AddComponet(gravity);
