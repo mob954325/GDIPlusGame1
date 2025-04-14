@@ -41,8 +41,3 @@ bool SpriteCollider::IsOverlap(SpriteCollider* objectA, SpriteCollider* objectB)
 	return objectA->bound.left < objectB->bound.right && objectA->bound.right > objectB->bound.left &&
 		   objectA->bound.bottom < objectB->bound.top && objectA->bound.top > objectB->bound.bottom;
 }
-
-SpriteCollider* SpriteCollider::GetColliderComponent()
-{
-	return this;
-}

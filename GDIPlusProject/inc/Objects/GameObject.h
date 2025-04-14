@@ -22,6 +22,9 @@ public:
 	virtual void Update();
 	virtual void Render(Gdiplus::Graphics* graphics);
 
+	// Event
+	virtual void OnColliderOverlap(GameObject* other);
+
 	template<typename T>
 	T* GetComponent();
 

@@ -142,3 +142,8 @@ void Player::Render(Gdiplus::Graphics* graphics)
 	spriteRenderer[playerState]->DrawImage(graphics, (int)transform->position.x, (int)transform->position.y);
 	collider->RenderCollider(graphics);
 }
+
+void Player::OnColliderOverlap(GameObject* other)
+{
+	// 충돌 내용
+}

@@ -53,12 +53,20 @@ void GameObject::GetName(wchar_t** bufferPtr)
 
 void GameObject::Initialize()
 {
+	// 초기화
 }
 
 void GameObject::Update()
 {
+	// 업데이트
 }
 
 void GameObject::Render(Gdiplus::Graphics* graphics)
 {
+	// 랜더링 내용
+}
+
+void GameObject::OnColliderOverlap(GameObject* other)
+{
+	// 충돌 내용
 }

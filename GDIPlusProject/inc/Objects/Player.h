@@ -13,6 +13,8 @@ public:
 	void Update() override;
 	void Render(Gdiplus::Graphics* graphics) override;
 
+	void OnColliderOverlap(GameObject* other) override;
+
 protected:
 	SpriteRenderer* spriteRenderer[3]; // 임시 개수 선언
 	SpriteCollider* collider;
