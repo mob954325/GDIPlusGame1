@@ -15,7 +15,7 @@ public:
 	void Update() override;
 	void Render(Gdiplus::Graphics* graphics) override;
 
-	void OnColliderOverlap(SpriteCollider* other);
+	void OnColliderOverlap(GameObject* other) override;
 
 protected:
 	SpriteRenderer* spriteRenderer;

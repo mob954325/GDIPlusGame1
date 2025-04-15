@@ -1,4 +1,4 @@
-#include "Objects/TestTerrainObject.h"
+﻿#include "Objects/TestTerrainObject.h"
 
 TestTerrainObject::TestTerrainObject()
 {
@@ -49,4 +49,10 @@ void TestTerrainObject::Render(Gdiplus::Graphics* graphics)
 	}
 
 	collider->RenderCollider(graphics);
+}
+
+void TestTerrainObject::OnColliderOverlap(GameObject* other)
+{
+	printf("테스트 지형 충돌\n");
+	other->GetComponent<Gravity>()->SetIsGround(true);
 }

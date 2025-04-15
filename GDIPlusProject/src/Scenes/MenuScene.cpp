@@ -52,7 +52,7 @@ void MenuScene::PhysicsUpdate()
 			if (colliderA->IsOverlap(colliderA, colliderB)) // a->b
 			{
 				objA->OnColliderOverlap(objB);
-				printf("a->b 충돌\n");
+				//printf("a->b 충돌\n");
 			}
 		}
 	}

@@ -60,10 +60,7 @@ void TestObject::Render(Gdiplus::Graphics* graphics)
 	collider->RenderCollider(graphics);
 }
 
-void TestObject::OnColliderOverlap(SpriteCollider* other)
+void TestObject::OnColliderOverlap(GameObject* other)
 {
-	if (collider->IsOverlap(collider, other))
-	{
-		printf("%s, %s가 서로 충돌함\n", typeid(*this).name(), typeid(*other).name());
-	}
+	printf("테스트 오브젝트 충돌 \n");
 }

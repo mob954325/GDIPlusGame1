@@ -69,4 +69,5 @@ void GameObject::Render(Gdiplus::Graphics* graphics)
 void GameObject::OnColliderOverlap(GameObject* other)
 {
 	// 충돌 내용
+	printf("기본 오브젝트 내용 : %s, %s\n", typeid(*this).name(), typeid(*other).name());
 }
