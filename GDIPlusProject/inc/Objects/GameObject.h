@@ -34,7 +34,7 @@ public:
 	std::vector<T*> Getcomponents();
 
 	template<typename T> 
-	void AddComponet(T* comp);
+	T* AddComponent();
 
 	// Elements
 	wchar_t* name;	
@@ -76,7 +76,10 @@ inline std::vector<T*> GameObject::Getcomponents()
 }
 
 template<typename T>
-inline void GameObject::AddComponet(T* comp)
+inline T* GameObject::AddComponent()
 {	
+	T* comp = new T(this);
 	componentList.push_back(comp); // 엑세스 위험
+
+	return comp;
 }

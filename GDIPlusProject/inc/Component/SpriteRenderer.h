@@ -9,6 +9,9 @@
 class SpriteRenderer : public Component
 {
 public:
+	SpriteRenderer(GameObject* obj) : Component(obj), 
+		imageBitMap(nullptr), currFrame(0), imageFrameCount(0), imageWidth(0), imageHeight(0) { };
+	~SpriteRenderer();
 	bool GetImage(const wchar_t* path);
 	void DrawImage(Gdiplus::Graphics* graphics, int posX, int posY);
 	void DeleteImage();

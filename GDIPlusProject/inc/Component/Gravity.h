@@ -8,6 +8,8 @@ class Gravity : public Component
 {
 public:
 	Gravity();
+	Gravity(GameObject* obj) : Component(obj), 
+		ownerHeight(0), fallingSpeed(550.0f), isGround(false) {};
 	~Gravity();
 
 	void Initialize(GameObject* objectPtr);

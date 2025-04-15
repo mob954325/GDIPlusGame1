@@ -15,17 +15,12 @@ Player::Player()
 	// 스프라이트 데이터 생성
 	for (int i = 0; i < 3; i++)
 	{
-		spriteRenderer[i] = new SpriteRenderer();
-		AddComponet(spriteRenderer[i]);
+		spriteRenderer[i] = AddComponent<SpriteRenderer>();
 	}
 
 	// 그외 컴포넌트 생성
-	collider = new SpriteCollider();
-	AddComponet(collider);
-	collider->SetOwner(this);
-
-	gravity = new Gravity();
-	AddComponet(gravity);
+	collider = AddComponent<SpriteCollider>();
+	gravity = AddComponent<Gravity>();
 }
 
 Player::~Player()
@@ -56,7 +51,6 @@ void Player::Initialize()
 	jumpForce = 2500.0f;
 
 	gravity->Initialize(this);
-	collider->SetOwner(this);
 
 	// 안내 로그
 	printf("플레이어 상태 변경 : 스페이스바\n");
@@ -65,7 +59,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	printf("Player %d\n", gravity->GetIsGround());
 	gravity->Update();
 
 	animationGameTimer += GameTime::GetDeltaTime();

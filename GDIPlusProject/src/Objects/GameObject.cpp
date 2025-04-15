@@ -3,15 +3,13 @@
 GameObject::GameObject()
 {
 	name = NULL;
-	transform = new Transform();
-	AddComponet(transform);
+	transform = AddComponent<Transform>();
 }
 
 GameObject::GameObject(float width, float height)
 {
 	name = NULL;
-	transform = new Transform(transform->position, width, height);
-	AddComponet(transform);
+	transform = AddComponent<Transform>();
 }
 
 GameObject::~GameObject()

@@ -7,9 +7,10 @@ class GameObject;
 class Component
 {
 public:	
+	Component();
+	Component(GameObject* obj) : owner(obj) { };
 	virtual ~Component();
 
 	GameObject* owner;
-	void SetOwner(GameObject* object);
 };
 

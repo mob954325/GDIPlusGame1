@@ -4,10 +4,9 @@ TestObject::TestObject()
 {
 	transform->position = Vector2(100, 100);
 
-	spriteRenderer = new SpriteRenderer();
-	AddComponet(spriteRenderer);
+	spriteRenderer = AddComponent<SpriteRenderer>();
 	collider = new SpriteCollider();
-	AddComponet(collider);
+	collider = AddComponent<SpriteCollider>();
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
@@ -17,12 +16,8 @@ TestObject::TestObject(int positionX, int positionY)
 {
 	transform->position = Vector2(positionX, positionY);
 
-	spriteRenderer = new SpriteRenderer();
-	AddComponet(spriteRenderer);
-	collider = new SpriteCollider();
-	AddComponet(collider);
-
-	collider->SetOwner(this);
+	spriteRenderer = AddComponent<SpriteRenderer>();
+	collider = AddComponent<SpriteCollider>();
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;

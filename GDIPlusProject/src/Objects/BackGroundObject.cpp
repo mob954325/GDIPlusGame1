@@ -15,12 +15,11 @@ BackGroundObject::~BackGroundObject()
 
 void BackGroundObject::Initialize()
 {
-	spriteRenderer = new SpriteRenderer();
 
+	spriteRenderer = AddComponent<SpriteRenderer>();
 	spriteRenderer->GetImage(L"./Resource/BackGround/Blue.png");
 	spriteRenderer->GetImageInfo(L"Blue", L"./Resource/BackGround/mapSize.csv");
 
-	AddComponet(spriteRenderer);
 
 	int imageWidth = spriteRenderer->imageWidth;
 	int imageHeight = spriteRenderer->imageHeight;

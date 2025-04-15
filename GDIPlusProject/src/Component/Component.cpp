@@ -1,11 +1,11 @@
 ﻿#include "./Component/Component.h"
 
+Component::Component()
+{
+	owner = nullptr;
+}
+
 Component::~Component()
 {
 	//delete owner;
-}
-
-void Component::SetOwner(GameObject* object)
-{
-	owner = object;
 }

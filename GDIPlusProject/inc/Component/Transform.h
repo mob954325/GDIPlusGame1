@@ -6,7 +6,7 @@ class Transform : public Component
 {
 public:
 	Transform();
-	Transform(Vector2 position, float width, float height);
+	Transform(GameObject* obj) : Component(obj) {};
 
 	void SetTransform(float posX, float posY);
 	void SetTransform(Vector2 position);
@@ -14,9 +14,4 @@ public:
 	void Translate(Vector2 position);
 
 	Vector2 position;
-	float width;
-	float height;
-	// 임시값
-	float scale;
-	float rotation;
 };

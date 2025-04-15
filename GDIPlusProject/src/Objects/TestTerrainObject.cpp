@@ -14,25 +14,13 @@ TestTerrainObject::~TestTerrainObject()
 
 void TestTerrainObject::Initialize()
 {
-	tileSprite = new SpriteRenderer();
+	tileSprite = AddComponent<SpriteRenderer>();
 
 	tileSprite->GetImage(L"./Resource/BackGround/Yellow.png");
 	tileSprite->GetImageInfo(L"Yellow", L"./Resource/Background/mapSize.csv");
 
-	AddComponet(tileSprite);
-
-	// 콜라이더
 	collider = new SpriteCollider*[5];
-
-	// 임시
 	SetCollider();
-	//int top = tileSprite->imageHeight * 8;
-	//int right = tileSprite->imageWidth * 10;
-	//int bottom = tileSprite->imageHeight * 10;
-
-	//collider->bound = { 0, tileSprite->imageHeight * 10, tileSprite->imageWidth * 10, tileSprite->imageHeight * 9 };
-	//collider->bound = { 0, 20, 20, 0};
-	//AddComponet(collider);
 }
 
 void TestTerrainObject::Update()
@@ -94,7 +82,7 @@ void TestTerrainObject::SetCollider()
 			if (!isVaild && tiles[y][x] == 1)
 			{
 				collider[colliderIndex] = new SpriteCollider();
-				AddComponet(collider[colliderIndex]);
+				collider[colliderIndex] = AddComponent<SpriteCollider>();
 				collider[colliderIndex]->bound = {x * tileSprite->imageWidth, 
 												(y + 1) * tileSprite->imageHeight, 
 												(x) * tileSprite->imageWidth, 

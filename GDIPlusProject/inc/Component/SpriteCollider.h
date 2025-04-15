@@ -8,6 +8,7 @@ class SpriteCollider : public Component
 {
 public:
 	SpriteCollider();
+	SpriteCollider(GameObject* obj) : Component(obj) {};
 	~SpriteCollider();
 	
 	void UpdateValue(GameObject* object, SpriteRenderer* spriteRenderer); // 값 갱신 함수	

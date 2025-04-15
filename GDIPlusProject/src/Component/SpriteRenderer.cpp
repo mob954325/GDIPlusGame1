@@ -1,5 +1,13 @@
 ﻿#include "Component/SpriteRenderer.h"
 
+SpriteRenderer::~SpriteRenderer()
+{
+	if (imageBitMap != nullptr)
+	{
+		delete imageBitMap;
+	}
+}
+
 bool SpriteRenderer::GetImage(const wchar_t* path)
 {
 	Gdiplus::Bitmap* bitmap = new Gdiplus::Bitmap(path);
