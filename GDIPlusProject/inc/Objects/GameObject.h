@@ -26,12 +26,17 @@ public:
 	virtual void OnColliderOverlap(GameObject* other);
 	virtual void OnColliderExit(GameObject* other);
 
+	// Component function
 	template<typename T>
 	T* GetComponent();
+
+	template<typename T>
+	std::vector<T*> Getcomponents();
 
 	template<typename T> 
 	void AddComponet(T* comp);
 
+	// Elements
 	wchar_t* name;	
 	Transform* transform;
 
@@ -51,6 +56,23 @@ inline T* GameObject::GetComponent()
 	}
 
 	return nullptr;
+}
+
+template<typename T>
+inline std::vector<T*> GameObject::Getcomponents()
+{
+	std::vector<T*> tempList;
+	tempList.reserve(componentList.size());
+
+	for (Component* comp : componentList)
+	{
+		if (T* casted = dynamic_cast<T*>(comp))
+		{
+			tempList.push_back(casted);
+		}
+	}
+
+	return tempList;
 }
 
 template<typename T>

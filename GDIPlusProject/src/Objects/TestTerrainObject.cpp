@@ -4,6 +4,7 @@ TestTerrainObject::TestTerrainObject()
 {
 	tileSprite = {};
 	collider = {};
+	collider2 = {};
 }
 
 TestTerrainObject::~TestTerrainObject()
@@ -21,13 +22,18 @@ void TestTerrainObject::Initialize()
 	AddComponet(tileSprite);
 
 	collider = new SpriteCollider();
+	collider2 = new SpriteCollider();
+
+	// 임시
 	int top = tileSprite->imageHeight * 8;
 	int right = tileSprite->imageWidth * 10;
 	int bottom = tileSprite->imageHeight * 10;
 
 	collider->bound = { 0, tileSprite->imageHeight * 10, tileSprite->imageWidth * 10, tileSprite->imageHeight * 9 };
+	collider2->bound = { 0, tileSprite->imageHeight * 8, tileSprite->imageWidth * 6, tileSprite->imageHeight * 7 };
 	//collider->bound = { 0, 20, 20, 0};
 	AddComponet(collider);
+	AddComponet(collider2);
 }
 
 void TestTerrainObject::Update()
@@ -49,12 +55,16 @@ void TestTerrainObject::Render(Gdiplus::Graphics* graphics)
 	}
 
 	collider->RenderCollider(graphics);
+	collider2->RenderCollider(graphics);
 }
 
 void TestTerrainObject::OnColliderOverlap(GameObject* other)
 {
-	//printf("테스트 지형 충돌\n");
-	other->GetComponent<Gravity>()->SetIsGround(true);
+	Gravity* comp = other->GetComponent<Gravity>();
+	if (comp != nullptr)
+	{
+		comp->SetIsGround(true);
+	}
 }
 
 void TestTerrainObject::OnColliderExit(GameObject* other)

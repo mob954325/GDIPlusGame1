@@ -65,6 +65,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	printf("Player %d\n", gravity->GetIsGround());
 	gravity->Update();
 
 	animationGameTimer += GameTime::GetDeltaTime();

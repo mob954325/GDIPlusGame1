@@ -1,4 +1,4 @@
-#include "Objects/BackGroundObject.h"
+ï»¿#include "Objects/BackGroundObject.h"
 
 BackGroundObject::BackGroundObject()
 {
@@ -30,10 +30,16 @@ void BackGroundObject::Initialize()
 
 void BackGroundObject::Update()
 {
-	// »ç¿ë ¾ÈÇÔ
+	// ì‚¬ìš© ì•ˆí•¨
 }
 
 void BackGroundObject::Render(Gdiplus::Graphics* graphics)
 {
-	spriteRenderer->DrawImage(graphics, 0, 0);
+	//for (int y = 0; y < heightCount; y++)
+	//{
+	//	for (int x = 0; x < widthCount; x++)
+	//	{
+	//		spriteRenderer->DrawImage(graphics, x * spriteRenderer->imageWidth, y * spriteRenderer->imageHeight);
+	//	}
+	//}
 }

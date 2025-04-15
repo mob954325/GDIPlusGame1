@@ -3,8 +3,8 @@
 MenuScene::MenuScene()
 {
 	g_hwnd = {};
-	g_FrontBufferDC = {};    // 앞면 DC
-	g_BackBufferDC = {};    // 뒷면 DC
+	g_FrontBufferDC = {};	// 앞면 DC
+	g_BackBufferDC = {};	// 뒷면 DC
 	g_pBackBufferGraphics = {};
 
 	gameObjectList = {};
@@ -36,23 +36,35 @@ void MenuScene::Initialize(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 void MenuScene::PhysicsUpdate()
 {
-	//SpriteCollider* playerCollider = player->GetComponent<SpriteCollider>();
-	//testObj->OnColliderOverlap(playerCollider); // -> 이게 오브젝트 스크립트 내부에서 일어나야함, 즉 업데이트에서 일어나야함 ? 그럼 해당 함수는?
 	for (GameObject* objA : gameObjectList)
 	{
 		for (GameObject* objB : gameObjectList)
 		{
 			if (objA == objB) continue;
 			
-			SpriteCollider* colliderA = objA->GetComponent<SpriteCollider>();
-			SpriteCollider* colliderB = objB->GetComponent<SpriteCollider>();
+			std::vector<SpriteCollider*> colliderAList = objA->Getcomponents<SpriteCollider>();
+			std::vector<SpriteCollider*> colliderBList = objB->Getcomponents<SpriteCollider>();
 
-			if (colliderA == nullptr || colliderB == nullptr) continue;			
+			if (colliderAList.size() == 0 || colliderBList.size() == 0) continue;
 
-			if (colliderA->IsOverlap(colliderA, colliderB)) // a->b
+			bool isOverlap = false;
+			// 오브젝트에 있는 모든 콜라이더 검사
+			for (SpriteCollider* colliderA : colliderAList)
+			{
+				for (SpriteCollider* colliderB : colliderBList)
+				{
+					if (colliderA->IsOverlap(colliderA, colliderB)) // a->b
+					{
+						isOverlap = true;
+						break;
+					}
+				}
+			}
+
+			// 충돌 여부에 따른 함수 호출
+			if (isOverlap)
 			{
 				objA->OnColliderOverlap(objB);
-				//printf("a->b 충돌\n");
 			}
 			else
 			{
@@ -64,8 +76,6 @@ void MenuScene::PhysicsUpdate()
 
 void MenuScene::Update()
 {
-	//testObj->Update();
-	//player->Update();
 	for (GameObject* obj : gameObjectList)
 	{
 		obj->Update();
@@ -74,8 +84,6 @@ void MenuScene::Update()
 
 void MenuScene::Render()
 {
-	//testObj->Render(g_pBackBufferGraphics);
-	//player->Render(g_pBackBufferGraphics);
 	for (GameObject* obj : gameObjectList)
 	{
 		obj->Render(g_pBackBufferGraphics);
