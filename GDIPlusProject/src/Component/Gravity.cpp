@@ -27,7 +27,6 @@ void Gravity::Update()
 		return;
 	}
 
-	// 임시
 	if (!isGround)
 	{
 		owner->transform->Translate(0.0f, fallingSpeed * GameTime::GetDeltaTime());

@@ -27,6 +27,7 @@ protected:
 	float jumpForce;			// 점프 시 올라갈 때 받을 값
 	float maxJumpHeight;		// 플레이어 최대 점프 높이
 	float currentJumpHeight;	// 플레이어 현재 점프 높이
+	bool canJump = false;		// 점프 가능 여부
 
 	// time
 	float animationGameTimer;
@@ -35,7 +36,7 @@ protected:
 private:
 	// 땅에 닿았을 때 올라간 점프높이를 초기화하는 함수
 	void CheckJumpHeight();
-	void PlayerJump();
+	void PlayerJump(float jumpValue);
 };
 
 /// 조작 

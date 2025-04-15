@@ -8,6 +8,7 @@ Player::Player()
 	jumpForce = 0.0f;
 	maxJumpHeight = 0.0f;
 	currentJumpHeight = 0.0f;
+	canJump = true;
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.0f;
@@ -93,6 +94,7 @@ void Player::Update()
 	}
 
 	moveDirection = Vector2(0.0f, 0.0f);
+	float jumpValue = (double)jumpForce * (double)GameTime::GetDeltaTime();
 
 	if (Input::IsKeyDown(VK_DOWN))
 	{
@@ -100,19 +102,19 @@ void Player::Update()
 	}
 	if (Input::IsKeyDown(VK_UP))
 	{
-		//moveDirection = Vector2(moveDirection.y, -1.0f); // 디버그용 움직임
-		PlayerJump();
+		PlayerJump(jumpValue);
 	}
 	if (Input::IsKeyDown(VK_LEFT))
 	{
 		moveDirection = Vector2(-1.0f, moveDirection.y);
 	}
+
 	if (Input::IsKeyDown(VK_RIGHT))
 	{
 		moveDirection = Vector2(1.0f, moveDirection.y);
 	}
 
-	transform->Translate(moveDirection * speed * GameTime::GetDeltaTime());
+	transform->Translate(moveDirection.x * speed * GameTime::GetDeltaTime(), moveDirection.y * jumpValue);
 	collider->UpdateValue(this, spriteRenderer[0]);
 	CheckJumpHeight();
 }
@@ -128,6 +130,13 @@ void Player::Render(Gdiplus::Graphics* graphics)
 void Player::OnColliderOverlap(GameObject* other)
 {
 	// 충돌 내용
+	if (moveDirection.y < 0 && canJump) // 점프 도중 충돌
+	{
+		moveDirection.y = 0.0f;
+		transform->Translate(0.0f, -jumpForce * GameTime::GetDeltaTime());
+		gravity->SetIsGround(false);
+		canJump = false;
+	}
 }
 
 // Jump ----------------------------------------------------------------------------------------------------------------
@@ -135,28 +144,19 @@ void Player::OnColliderOverlap(GameObject* other)
 void Player::CheckJumpHeight()
 {
 	// jumpHeight reset
-	if (currentJumpHeight > 0.0f && gravity->GetIsGround())
+	if (currentJumpHeight >= 0.0f && gravity->GetIsGround())
 	{
 		currentJumpHeight = 0.0f;
+		canJump = true;
 	}
 }
 
-void Player::PlayerJump()
+void Player::PlayerJump(float jumpValue)
 {
-	double jumpValue = (double)jumpForce * (double)GameTime::GetDeltaTime();
-
-	if (currentJumpHeight <= maxJumpHeight) // -> 누른 만큼 올라감
+	if (currentJumpHeight <= maxJumpHeight && canJump) // -> 누른 만큼 올라감
 	{
-		transform->Translate(0.0f, -jumpValue); // 점프
+		moveDirection = Vector2(moveDirection.x, -1.0f);
 		currentJumpHeight += jumpValue;
 		printf("current jump height %f\n", currentJumpHeight);
 	}
-
 }
-
-// 점프 시작
-// isGround-> false;
-// 점프 높이 증가
-// 키를 땜-> isjump = true;
-// 중력 적용
-// 땅에 닿음 isGround -> true
