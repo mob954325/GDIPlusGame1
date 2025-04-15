@@ -53,6 +53,19 @@ void TestTerrainObject::Render(Gdiplus::Graphics* graphics)
 
 void TestTerrainObject::OnColliderOverlap(GameObject* other)
 {
-	printf("테스트 지형 충돌\n");
+	//printf("테스트 지형 충돌\n");
 	other->GetComponent<Gravity>()->SetIsGround(true);
+}
+
+void TestTerrainObject::OnColliderExit(GameObject* other)
+{
+	Gravity* comp = other->GetComponent<Gravity>();
+	if (comp != nullptr)
+	{
+		other->GetComponent<Gravity>()->SetIsGround(false);
+	}
+}
+
+void TestTerrainObject::SetCollider()
+{
 }

@@ -15,7 +15,7 @@ public:
 	void Render(Gdiplus::Graphics* graphics) override;
 
 	void OnColliderOverlap(GameObject* other) override;
-
+	void OnColliderExit(GameObject* other) override;
 	SpriteRenderer* tileSprite;
 	SpriteCollider* collider;
 
@@ -33,4 +33,6 @@ private:
 		{0,0,0,0,0,0,0,0,0,0},
 		{1,1,1,1,1,1,1,1,1,1},
 	};
+
+	void SetCollider();
 };

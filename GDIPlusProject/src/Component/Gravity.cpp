@@ -28,7 +28,7 @@ void Gravity::Update()
 	}
 
 	// 임시
-	if (owner->transform->position.y < g_screenHeight - ownerHeight)
+	if (!isGround)
 	{
 		owner->transform->Translate(0.0f, fallingSpeed * GameTime::GetDeltaTime());
 	}

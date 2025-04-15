@@ -24,6 +24,7 @@ public:
 
 	// Event
 	virtual void OnColliderOverlap(GameObject* other);
+	virtual void OnColliderExit(GameObject* other);
 
 	template<typename T>
 	T* GetComponent();
@@ -55,5 +56,5 @@ inline T* GameObject::GetComponent()
 template<typename T>
 inline void GameObject::AddComponet(T* comp)
 {	
-	componentList.push_back(comp);
+	componentList.push_back(comp); // 엑세스 위험
 }

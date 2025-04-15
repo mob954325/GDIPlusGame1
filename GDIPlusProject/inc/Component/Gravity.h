@@ -4,7 +4,7 @@
 #include "Component/Component.h"
 #include "Objects/GameObject.h"
 
-class Gravity : Component
+class Gravity : public Component
 {
 public:
 	Gravity();

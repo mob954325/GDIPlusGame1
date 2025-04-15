@@ -71,3 +71,8 @@ void GameObject::OnColliderOverlap(GameObject* other)
 	// 충돌 내용
 	printf("기본 오브젝트 내용 : %s, %s\n", typeid(*this).name(), typeid(*other).name());
 }
+
+void GameObject::OnColliderExit(GameObject* other)
+{
+	// 충돌 안 할 때 실행
+}
