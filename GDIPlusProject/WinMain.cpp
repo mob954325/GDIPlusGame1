@@ -120,6 +120,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		CHECK_FPS();
 
+		// 씬 변경 테스트 추가
 		if (Input::IsKeyPressed('J'))
 		{
 			sceneManager->ChangeCurrnetScene(SceneType::PLAY);
