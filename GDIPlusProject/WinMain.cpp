@@ -120,6 +120,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		CHECK_FPS();
 
+		if (Input::IsKeyPressed('J'))
+		{
+			sceneManager->ChangeCurrnetScene(SceneType::PLAY);
+		}
+		if (Input::IsKeyDown('K'))
+		{
+			sceneManager->ChangeCurrnetScene(SceneType::MENU);
+		}
+
 		// 임시 해상도 변경 테스트 함수
 		if (Input::IsKeyPressed('H'))
 		{
