@@ -135,6 +135,7 @@
     <ClInclude Include="inc\Objects\BackGroundObject.h" />
     <ClInclude Include="inc\Component\Gravity.h" />
     <ClInclude Include="inc\Manager\UtilityManager.h" />
+    <ClInclude Include="inc\Objects\BlockObject.h" />
     <ClInclude Include="inc\Scenes\BaseScene.h" />
     <ClInclude Include="inc\Component\Component.h" />
     <ClInclude Include="inc\DebugUtility.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="src\Manager\SettingManager.cpp" />
     <ClCompile Include="src\Component\Gravity.cpp" />
     <ClCompile Include="src\Manager\SceneManager.cpp" />
+    <ClCompile Include="src\Objects\BlockObject.cpp" />
     <ClCompile Include="src\Scenes\PlayScene.cpp" />
     <ClCompile Include="src\Component\Component.cpp" />
     <ClCompile Include="src\Component\SpriteCollider.cpp" />

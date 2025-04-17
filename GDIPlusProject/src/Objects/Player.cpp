@@ -157,6 +157,6 @@ void Player::PlayerJump(float jumpValue)
 	{
 		moveDirection = Vector2(moveDirection.x, -1.0f);
 		currentJumpHeight += jumpValue;
-		printf("current jump height %f\n", currentJumpHeight);
+		//printf("current jump height %f\n", currentJumpHeight);
 	}
 }

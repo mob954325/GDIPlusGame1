@@ -18,6 +18,7 @@ public:
 	void OnColliderExit(GameObject* other) override;
 	SpriteRenderer* tileSprite;
 	SpriteCollider** collider;
+	Transform playerTransform; // 임시
 
 	int tilesXCount = 12;
 	int tilesYCount = 12;

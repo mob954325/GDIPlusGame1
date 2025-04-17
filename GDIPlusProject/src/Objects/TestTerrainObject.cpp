@@ -3,7 +3,6 @@
 TestTerrainObject::TestTerrainObject()
 {
 	tileSprite = {};
-	//collider = {};
 	collider = nullptr;
 }
 
@@ -50,10 +49,40 @@ void TestTerrainObject::Render(Gdiplus::Graphics* graphics)
 void TestTerrainObject::OnColliderOverlap(GameObject* other)
 {
 	Gravity* comp = other->GetComponent<Gravity>();
+
+
 	if (comp != nullptr)
 	{
+		// 블록 충돌 체크
 		comp->SetIsGround(true);
-		printf("%f, %f\n", other->transform->position.x, other->transform->position.y);
+
+		if (!comp->GetIsGround()) playerTransform = *other->transform; // 지형에 닿았으면 닿은 위치 갱신
+
+		// 블록 위가 아닌 위치에 플레이어가 충돌 할 때 체크
+		// 블록 아래
+		if (other->transform->position.y - playerTransform.position.y < 0.0f) 
+		{
+			// note : 위로 올라간다 -> y값이 -값이 추가된다.
+			printf("머리 부딪침\n");
+			other->transform->SetTransform(playerTransform.position + Vector2(0, 5));
+			comp->SetIsGround(false);
+		}
+
+		// 블록 왼쪽
+		if (other->transform->position.x - playerTransform.position.x > 0.0f)
+		{
+			printf("왼쪽 부딪힘\n");
+			//other->transform->SetTransform(playerTransform.position + Vector2(-5, 0));
+			//comp->SetIsGround(false);
+		}
+
+		// 블록 오른쪽
+		if (other->transform->position.x - playerTransform.position.x < 0.0f)
+		{
+			printf("오른쪽 부딪힘\n");
+			//other->transform->SetTransform(playerTransform.position + Vector2(5, 0));
+			//comp->SetIsGround(false);
+		}
 	}
 }
 
