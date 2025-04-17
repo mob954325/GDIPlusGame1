@@ -53,6 +53,7 @@ void TestTerrainObject::OnColliderOverlap(GameObject* other)
 	if (comp != nullptr)
 	{
 		comp->SetIsGround(true);
+		printf("%f, %f\n", other->transform->position.x, other->transform->position.y);
 	}
 }
 
