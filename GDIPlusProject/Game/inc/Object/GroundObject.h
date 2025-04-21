@@ -12,7 +12,7 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Render() override;
-	void SetupTransform(int gridX, int gridY, int width, int height);
+	void SetupTransform(int gridX, int gridY, int countX, int countY);
 
 	// Event
 	void OnColliderOverlap(GameObject* other) override;

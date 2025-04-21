@@ -31,7 +31,7 @@ protected:
 	// state
 	int playerState = 0;
 	float speed = 350;		 // 플레이어 이동 속도
-	float jumpPower = 700;
+	float jumpPower = 2500;
 
 	float currentJumpHeight = 0;
 	float maxJumpHeight = 250;
