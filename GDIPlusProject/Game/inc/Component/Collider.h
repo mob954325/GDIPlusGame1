@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "GDIEngineLib/inc/Utility/Component.h"
-#include <windows.h>
 #include "GDIEngineLib/inc/Utility/GameObject.h"
+#include <windows.h>
 
 // 스프라이트 크기로 Colilder 크기를 지정하는 함수
 class Collider : public Component
