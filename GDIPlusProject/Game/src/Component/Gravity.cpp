@@ -3,8 +3,7 @@
 Gravity::Gravity()
 {
 	owner = nullptr;
-	fallingSpeed = 550.0f;
-
+	fallingSpeed = 10.0f; // 
 	isGround = false;
 }
 
@@ -19,21 +18,33 @@ void Gravity::Initialize(GameObject* objectPtr)
 
 void Gravity::Update()
 {
+
 	if (owner == nullptr)
 	{
 		printf("owner가 존재하지 않습니다.\n");
 		return;
 	}
+	
+	ApplyGravity();
+	ApplyFrictionForce();
+	ClampVelocity();
 
-	if (!isGround)
-	{
-		owner->transform->Translate(0.0f, fallingSpeed * g_GameTime.GetDeltaTime());
-	}
+	//printf("%f %f\n", velocity.x, velocity.y);
 }
 
-float Gravity::GetFallingSpeed()
+Vector2 Gravity::GetVelocity()
 {
-	return fallingSpeed;
+	return velocity;
+}
+
+void Gravity::ApplyForce(Vector2 forceVec)
+{
+	velocity += forceVec;
+}
+
+void Gravity::SetVelocityYZero()
+{
+	velocity.y = 0;
 }
 
 void Gravity::SetIsGround(bool value)
@@ -46,3 +57,35 @@ bool Gravity::GetIsGround()
 	return isGround;
 }
 
+void Gravity::ApplyFrictionForce()
+{
+	if (abs((double)velocity.x) > 0)
+	{
+		if (velocity.x > 0.0f)
+		{
+			velocity.x -= frictionForce * g_GameTime.GetDeltaTime();
+			if (velocity.x < 0.0f) velocity.x = 0.0f;
+		}
+		else if (velocity.x < 0.0f)
+		{
+			velocity.x += frictionForce * g_GameTime.GetDeltaTime();
+			if (velocity.x > 0.0f) velocity.x = 0.0f;
+		}
+	}
+}
+
+void Gravity::ApplyGravity()
+{
+	if (!isGround)
+	{
+		velocity.y += fallingSpeed * g_GameTime.GetDeltaTime();
+	}
+}
+
+void Gravity::ClampVelocity()
+{
+	if (velocity.x > maxVelocityX) velocity.x = maxVelocityX;
+	if (velocity.x < -maxVelocityX) velocity.x = -maxVelocityX;
+	if (velocity.y > maxVelocityY) velocity.y = maxVelocityY;
+	if (velocity.y < -maxVelocityY) velocity.y = -maxVelocityY;
+}

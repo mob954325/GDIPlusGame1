@@ -2,6 +2,7 @@
 #include "GDIEngineLib/inc/Manager/GameTime.h"
 #include "GDIEngineLib/inc/Manager/Input.h"
 #include "Manager/ScoreManager.h"
+#include "Object/GroundObject.h"
 
 Player::~Player()
 {
@@ -21,14 +22,12 @@ void Player::Initialize()
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
 
-	speed = 350.0f;
-
 	transform->position = Vector2(200, 200);
 	transform->width = 32;
 	transform->height = 32;
 
 	collider->bound = { 0, 50, 50, 0 };
-	collider->UpdateValue(this);
+	collider->Update(this);
 
 	gravity = AddComponent<Gravity>();
 }
@@ -36,8 +35,6 @@ void Player::Initialize()
 void Player::Update()
 {
 	if (shouldBeDeleted) return;
-
-	gravity->Update();
 
 	animationGameTimer += g_GameTime.GetDeltaTime();
 	if (animationGameTimer > maxAnimationGameTime)
@@ -48,31 +45,33 @@ void Player::Update()
 		spriteRenderer[playerState]->currFrame %= spriteRenderer[playerState]->imageFrameCount;
 	}
 
-	moveDirection = Vector2(0.0f, 0.0f);
-	float jumpValue = (float)jumpPower * (float)g_GameTime.GetDeltaTime();
+	Vector2 inputForce = Vector2(0.0f, 0.0f);
 
 	if (g_Input.IsKeyDown(VK_DOWN))
 	{
-		moveDirection = Vector2(moveDirection.x, 1.0f);
+		//moveDirection = Vector2(moveDirection.x, 1.0f);
 	}
 	if (g_Input.IsKeyDown(VK_UP))
 	{
-		//moveDirection = Vector2(moveDirection.x, -1.0f);
-		OnJump(jumpValue);
+		OnJump();
 	}
 	if (g_Input.IsKeyDown(VK_LEFT))
 	{
-		moveDirection = Vector2(-1.0f, moveDirection.y);
+		inputForce.x = -speed;
 	}
 
 	if (g_Input.IsKeyDown(VK_RIGHT))
 	{
-		moveDirection = Vector2(1.0f, moveDirection.y);
+		inputForce.x = speed;
 	}
 
-	transform->Translate(moveDirection.x * speed * g_GameTime.GetDeltaTime(), moveDirection.y * jumpValue);
-	collider->UpdateValue(this);
-	CheckJumpHeight();
+	gravity->ApplyForce(inputForce);
+	gravity->Update();	//
+
+	canJump = gravity->GetIsGround(); // isGround로 점프 가능한지 체크
+
+	collider->Update(this); //
+	transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
 }
 
 void Player::Render()
@@ -92,28 +91,22 @@ void Player::OnColliderOverlap(GameObject* other)
 	if (shouldBeDeleted) return;
 
 	//other->shouldBeDeleted = true; // 닿은 오브젝트 제거
-	g_ScoreManager.AddScore();
+	//g_ScoreManager.AddScore();
 }
 
 void Player::OnColliderExit(GameObject* other)
 {
 	if (shouldBeDeleted) return;
+
+	GroundObject* ground = dynamic_cast<GroundObject*>(other);
+	if (ground != nullptr) gravity->SetIsGround(false);
 }
 
-void Player::OnJump(float jumpValue)
+void Player::OnJump()
 {
-	if (currentJumpHeight <= maxJumpHeight && canJump) // -> 누른 만큼 올라감
+	if (canJump) // -> 누른 만큼 올라감
 	{
-		moveDirection = Vector2(moveDirection.x, -1.0f);
-		currentJumpHeight += jumpValue;
-	}
-}
-
-void Player::CheckJumpHeight()
-{
-	if (currentJumpHeight >= 0.0f && gravity->GetIsGround())
-	{
-		currentJumpHeight = 0.0f;
-		canJump = true;
+		gravity->ApplyForce(Vector2(0.0f, -jumpPower));
+		gravity->SetIsGround(false);
 	}
 }

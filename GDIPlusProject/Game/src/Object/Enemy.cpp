@@ -22,7 +22,7 @@ void Enemy::Initialize()
 	transform->height = 28;
 
 	collider->bound = { 0, (LONG)transform->height, (LONG)transform->width, 0 };
-	collider->UpdateValue(this);
+	collider->Update(this);
 }
 
 void Enemy::Update()
@@ -38,7 +38,7 @@ void Enemy::Update()
 		spriteRenderer->currFrame %= spriteRenderer->imageFrameCount;
 	}
 
-	collider->UpdateValue(this);
+	collider->Update(this);
 }
  
 void Enemy::Render()

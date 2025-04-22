@@ -11,7 +11,7 @@ public:
 	Collider(GameObject* obj) : Component(obj), bound({}) {};
 	~Collider();
 
-	void UpdateValue(GameObject* object); // 값 갱신 함수	
+	void Update(GameObject* object); // 값 갱신 함수	
 	bool IsOverlap(Collider* objectA, Collider* objectB); // AABB 충돌 검사 함수
 
 	RECT bound;

@@ -22,7 +22,5 @@ protected:
 	Gdiplus::Graphics* graphics = {};
 	SpriteRenderer* spriteRenderer;
 	Collider* collider;
-
-	Transform playerTransform;
 };
 

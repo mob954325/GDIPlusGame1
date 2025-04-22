@@ -19,8 +19,7 @@ public:
 	void OnColliderExit(GameObject* other) override;
 
 protected:
-	void OnJump(float jumpValue);
-	void CheckJumpHeight();
+	void OnJump();
 
 	Gdiplus::Graphics* graphics = {};
 	SpriteRenderer* spriteRenderer[1];
@@ -30,12 +29,10 @@ protected:
 
 	// state
 	int playerState = 0;
-	float speed = 350;		 // 플레이어 이동 속도
-	float jumpPower = 2500;
+	float speed = 220.0f;		 // 플레이어 이동 속도
+	float jumpPower = 600.0f;
 
-	float currentJumpHeight = 0;
-	float maxJumpHeight = 250;
-	bool canJump = false;
+	bool canJump = true;
 
 	// time
 	float animationGameTimer;

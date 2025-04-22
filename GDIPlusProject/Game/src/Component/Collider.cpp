@@ -9,7 +9,7 @@ Collider::~Collider()
 {
 }
 
-void Collider::UpdateValue(GameObject* object)
+void Collider::Update(GameObject* object)
 {
 	bound.left = (LONG)object->transform->position.x;
 	bound.right = (LONG)(object->transform->position.x + object->transform->width);

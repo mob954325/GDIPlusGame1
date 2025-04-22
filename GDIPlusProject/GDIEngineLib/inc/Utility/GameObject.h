@@ -72,7 +72,7 @@ template<typename T>
 inline T* GameObject::AddComponent()
 {
 	T* comp = new T(this);
-	componentList.push_back(comp); // 엑세스 위험
+	componentList.push_back(comp);
 
 	return comp;
 }
