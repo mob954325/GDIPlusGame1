@@ -51,7 +51,7 @@ void Enemy::Render()
 	}
 }
 
-void Enemy::OnColliderOverlap(GameObject* other)
+void Enemy::OnColliderEnter(GameObject* other)
 {
 	if (shouldBeDeleted) return;
 }

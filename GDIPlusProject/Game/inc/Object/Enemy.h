@@ -14,7 +14,7 @@ public:
 	void Render() override;
 
 	// Event
-	void OnColliderOverlap(GameObject* other) override;
+	void OnColliderEnter(GameObject* other) override;
 	void OnColliderExit(GameObject* other) override;
 
 protected:

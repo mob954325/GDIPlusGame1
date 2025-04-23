@@ -72,6 +72,9 @@ void Player::Update()
 
 	collider->Update(this); //
 	transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
+
+	printf("%s\n", gravity->GetIsGround() ? "true": "false");
+	//printf("%f\n", transform->position.y);
 }
 
 void Player::Render()
@@ -86,12 +89,30 @@ void Player::Render()
 
 // Event ----------------------------------------------------------------------------------------------------------------
 
-void Player::OnColliderOverlap(GameObject* other)
+void Player::OnColliderEnter(GameObject* other)
 {
 	if (shouldBeDeleted) return;
 
 	//other->shouldBeDeleted = true; // 닿은 오브젝트 제거
 	//g_ScoreManager.AddScore();
+
+	GroundObject* ground = dynamic_cast<GroundObject*>(other);
+	if (ground != nullptr && !gravity->GetIsGround())
+	{
+		float playerBottom = transform->position.y + transform->height;
+		float groundTop = ground->transform->position.y;
+
+		if (gravity->GetVelocity().y >= 0.0f)
+		{
+			transform->position.y = groundTop - transform->height;
+			gravity->SetIsGround(true);
+			gravity->SetVelocityYZero();
+		}
+	}
+}
+
+void Player::OnColliderStay(GameObject* other)
+{
 }
 
 void Player::OnColliderExit(GameObject* other)
@@ -104,7 +125,7 @@ void Player::OnColliderExit(GameObject* other)
 
 void Player::OnJump()
 {
-	if (canJump) // -> 누른 만큼 올라감
+	if (canJump && gravity->GetIsGround()) // -> 누른 만큼 올라감
 	{
 		gravity->ApplyForce(Vector2(0.0f, -jumpPower));
 		gravity->SetIsGround(false);

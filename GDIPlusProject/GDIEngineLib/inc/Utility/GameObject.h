@@ -16,7 +16,8 @@ public:
 	virtual void Render();
 
 	// Event
-	virtual void OnColliderOverlap(GameObject* other);
+	virtual void OnColliderEnter(GameObject* other);
+	virtual void OnColliderStay(GameObject* other);
 	virtual void OnColliderExit(GameObject* other);
 
 	// Component function

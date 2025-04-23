@@ -15,7 +15,7 @@ public:
 	void SetupTransform(int gridX, int gridY, int countX, int countY);
 
 	// Event
-	void OnColliderOverlap(GameObject* other) override;
+	void OnColliderEnter(GameObject* other) override;
 	void OnColliderExit(GameObject* other) override;
 
 protected:

@@ -34,6 +34,7 @@ void Gravity::Update()
 
 Vector2 Gravity::GetVelocity()
 {
+	//printf("%f %f\n", velocity.x, velocity.y);
 	return velocity;
 }
 
@@ -79,6 +80,10 @@ void Gravity::ApplyGravity()
 	if (!isGround)
 	{
 		velocity.y += fallingSpeed * g_GameTime.GetDeltaTime();
+	}
+	else
+	{
+		velocity.y = 0.0f;
 	}
 }
 

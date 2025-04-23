@@ -35,9 +35,15 @@ void GameObject::Render()
 	if (shouldBeDeleted) return;
 }
 
-void GameObject::OnColliderOverlap(GameObject* other)
+void GameObject::OnColliderEnter(GameObject* other)
 {
 	// 충돌 내용
+	if (shouldBeDeleted) return;
+}
+
+void GameObject::OnColliderStay(GameObject* other)
+{
+	// 충돌 중일 때 내용
 	if (shouldBeDeleted) return;
 }
 

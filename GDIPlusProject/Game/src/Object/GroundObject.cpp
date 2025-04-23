@@ -42,63 +42,8 @@ void GroundObject::SetupTransform(int gridX, int gridY, int countX, int countY)
 	collider->Update(this);
 }
 
-void GroundObject::OnColliderOverlap(GameObject* other)
+void GroundObject::OnColliderEnter(GameObject* other)
 {
-	Gravity* comp = other->GetComponent<Gravity>();	
-
-	if (comp != nullptr)
-	{
-		// 블록 충돌 체크
-
-		comp->SetIsGround(true);
-
-		//블록 위가 아닌 위치에 플레이어가 충돌 할 때 체크
-		//블록 아래
-		if (comp->GetVelocity().y < 0.0f)
-		{
-			// note : 위로 올라간다 -> y값이 -값이 추가된다.
-			printf("머리 부딪침\n");			
-			comp->SetIsGround(false);
-
-			// 블록 왼쪽
-			if (comp->GetVelocity().x > 0.0f)
-			{
-				printf("왼쪽 부딪힘\n");
-				//other->transform->SetTransform(playerTransform.position + Vector2(-5, 0));
-				//comp->SetIsGround(false);
-			}
-
-			// 블록 오른쪽
-			if (comp->GetVelocity().x < 0.0f)
-			{
-				printf("오른쪽 부딪힘\n");
-				//other->transform->SetTransform(playerTransform.position + Vector2(5, 0));
-				//comp->SetIsGround(false);
-			}
-		}
-
-		if (comp->GetVelocity().y > 0.0f) 
-		{ 
-			printf("떨어짐\n");
-			comp->SetVelocityYZero();
-
-			// 블록 왼쪽
-			if (comp->GetVelocity().x > 0.0f)
-			{
-				printf("왼쪽 부딪힘\n");
-				//other->transform->SetTransform(playerTransform.position + Vector2(-5, 0));
-				//comp->SetIsGround(false);
-			}
-
-			// 블록 오른쪽
-			if (comp->GetVelocity().x < 0.0f)
-			{
-				printf("오른쪽 부딪힘\n");
-				//other->transform->SetTransform(playerTransform.position + Vector2(5, 0));
-				//comp->SetIsGround(false);
-			}
-		}
-	}
 }
 
 void GroundObject::OnColliderExit(GameObject* other)

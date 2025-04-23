@@ -35,32 +35,53 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 void PlayScene::PhysicsUpdate()
 {
-	for (GameObject* objA : gameObjectList)
-	{
-		for (GameObject* objB : gameObjectList)
-		{
-			if (objA == objB) continue;
+	currentCollisions.clear();
 
+	for (int i = 0; i < gameObjectList.size(); i++)
+	{
+		for (int j = i + 1; j < gameObjectList.size(); j++)
+		{
+			GameObject* objA = gameObjectList[i];
+			GameObject* objB = gameObjectList[j];
 			Collider* colliderA = objA->GetComponent<Collider>();
 			Collider* colliderB = objB->GetComponent<Collider>();
 
-			bool isOverlap = false;
 			if (colliderA->IsOverlap(colliderA, colliderB)) // a->b
 			{
-				isOverlap = true;
-			}
+				auto pair = std::minmax(objA, objB); // 순서 무시
+				currentCollisions.insert(pair);
 
-			// 충돌 여부에 따른 함수 호출
-			if (isOverlap)
-			{
-				objA->OnColliderOverlap(objB);
-			}
-			else
-			{
-				objA->OnColliderExit(objB);
+				// 충돌 여부에 따른 함수 호출
+				if (previousCollisions.find(pair) == previousCollisions.end())
+				{
+					// 이전 충돌에 없었으면 enter
+					objA->OnColliderEnter(objB);
+					objB->OnColliderEnter(objA);
+				}
+				else
+				{
+					// 이전에도 충돌이 있었으면 stay
+					objA->OnColliderStay(objB);
+					objB->OnColliderStay(objA);
+				}
 			}
 		}
 	}
+
+	// exit
+	for (const auto& pair : previousCollisions)
+	{
+		if (currentCollisions.find(pair) == currentCollisions.end())
+		{
+			GameObject* objA = pair.first;
+			GameObject* objB = pair.second;
+			objA->OnColliderExit(objB);
+			objB->OnColliderExit(objA);
+		}
+	}
+
+	// 다음 프레임을 위해 이전 충돌 목록 갱신
+	previousCollisions = currentCollisions;
 }
 
 void PlayScene::Update()
