@@ -54,9 +54,11 @@ void Enemy::Render()
 void Enemy::OnColliderEnter(GameObject* other)
 {
 	if (shouldBeDeleted) return;
+	if (other->shouldBeDeleted) return;
 }
 
 void Enemy::OnColliderExit(GameObject* other)
 {
 	if (shouldBeDeleted) return;
+	if (other->shouldBeDeleted) return;
 }

@@ -1,5 +1,7 @@
 ﻿#include "Object/Map/Stage1.h"
 
+#include "Object/Enemy.h"
+
 Stage1::~Stage1()
 {
 }
@@ -7,6 +9,7 @@ Stage1::~Stage1()
 void Stage1::Initialize()
 {
 	groundList.reserve(8);
+	enemies.reserve(8);
 	SetGrounds();
 }
 
@@ -22,6 +25,13 @@ void Stage1::SetGrounds()
 		int rightCount = 0, firstVaildGridX;
 		for (int x = 0; x < tilesXCount; x++)
 		{
+			if (tiles[y][x] == 2)
+			{
+				Enemy* enemy = new Enemy(graphics);
+				enemies.push_back(enemy); // 임시
+				enemy->transform->SetTransform(x * 32, y * 32);
+			}
+
 			if (!isVaild && tiles[y][x] == 1)
 			{
 				groundList.push_back(new GroundObject(graphics));

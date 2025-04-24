@@ -26,6 +26,12 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	{
 		gameObjectList.push_back(stage1->groundList[i]);
 	}
+	int enemiesCount = stage1->groundList.size();
+	for (int i = 0; i < enemiesCount; i++)
+	{
+		gameObjectList.push_back(stage1->enemies[i]);
+	}
+
 
 	g_TextManager.Initialize(this->graphics);
 
@@ -50,6 +56,9 @@ void PlayScene::PhysicsUpdate()
 
 			GameObject* objA = gameObjectList[i];
 			GameObject* objB = gameObjectList[j];
+
+			if (objA->shouldBeDeleted || objB->shouldBeDeleted) continue; // 제거 될 오브젝트 무시
+
 			Collider* colliderA = objA->GetComponent<Collider>();
 			Collider* colliderB = objB->GetComponent<Collider>();
 
@@ -82,6 +91,9 @@ void PlayScene::PhysicsUpdate()
 		{
 			GameObject* objA = pair.first;
 			GameObject* objB = pair.second;
+
+			if (objA->shouldBeDeleted || objB->shouldBeDeleted) continue; // 제거 될 오브젝트 무시
+
 			objA->OnColliderExit(objB);
 			objB->OnColliderExit(objA);
 		}

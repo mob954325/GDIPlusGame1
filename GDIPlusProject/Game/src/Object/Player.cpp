@@ -3,7 +3,9 @@
 #include "GDIEngineLib/inc/Manager/GameTime.h"
 #include "GDIEngineLib/inc/Manager/Input.h"
 #include "Manager/ScoreManager.h"
+
 #include "Object/GroundObject.h"
+#include "Object/Enemy.h"
 
 Player::~Player()
 {
@@ -94,9 +96,14 @@ void Player::Render()
 void Player::OnColliderEnter(GameObject* other)
 {
 	if (shouldBeDeleted) return;
+	if (other->shouldBeDeleted) return;
 
-	//other->shouldBeDeleted = true; // 닿은 오브젝트 제거
-	//g_ScoreManager.AddScore();
+	Enemy* enemy = dynamic_cast<Enemy*>(other);
+	if (enemy != nullptr)
+	{
+		other->shouldBeDeleted = true; // 닿은 오브젝트 제거
+		g_ScoreManager.AddScore();
+	}
 
 	GroundObject* ground = dynamic_cast<GroundObject*>(other);
 	OnGroundColliderEnter(ground);
@@ -109,6 +116,7 @@ void Player::OnColliderStay(GameObject* other)
 void Player::OnColliderExit(GameObject* other)
 {
 	if (shouldBeDeleted) return;
+	if (other->shouldBeDeleted) return;
 
 	GroundObject* ground = dynamic_cast<GroundObject*>(other);
 	if (ground != nullptr)
