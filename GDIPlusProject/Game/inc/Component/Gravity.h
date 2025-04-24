@@ -17,7 +17,9 @@ public:
 
 	Vector2 GetVelocity();
 	void ApplyForce(Vector2 forceVec);
+	void SetVelocityZero();
 	void SetVelocityYZero();
+	void SetVelocityXZero();
 	void SetIsGround(bool value);
 	bool GetIsGround();
 
@@ -29,7 +31,7 @@ private:
 	Vector2 velocity = Vector2();
 
 	float maxVelocityY = 1000.0f;
-	float maxVelocityX = 100.0f;
+	float maxVelocityX = 250.0f;
 
 	float fallingSpeed = 1000.0f;	// 낙하 속도
 	float frictionForce = 600.0f;	// 마찰력 -> 높을 수록 빨리 멈춤

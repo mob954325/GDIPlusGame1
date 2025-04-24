@@ -43,9 +43,19 @@ void Gravity::ApplyForce(Vector2 forceVec)
 	velocity += forceVec;
 }
 
+void Gravity::SetVelocityZero()
+{
+	velocity = { 0,0 };
+}
+
 void Gravity::SetVelocityYZero()
 {
 	velocity.y = 0;
+}
+
+void Gravity::SetVelocityXZero()
+{
+	velocity.x = 0;
 }
 
 void Gravity::SetIsGround(bool value)

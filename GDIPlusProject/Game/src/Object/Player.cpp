@@ -55,12 +55,11 @@ void Player::Update()
 	{
 		OnJump();
 	}
-	if (g_Input.IsKeyDown(VK_LEFT))
+	if (g_Input.IsKeyDown(VK_LEFT) && canMoveLeft)
 	{
 		inputForce.x = -speed;
 	}
-
-	if (g_Input.IsKeyDown(VK_RIGHT))
+	if (g_Input.IsKeyDown(VK_RIGHT) && canMoveRight)
 	{
 		inputForce.x = speed;
 	}
@@ -97,23 +96,11 @@ void Player::OnColliderEnter(GameObject* other)
 	//g_ScoreManager.AddScore();
 
 	GroundObject* ground = dynamic_cast<GroundObject*>(other);
-	if (ground != nullptr && !gravity->GetIsGround())
-	{
-		float playerBottom = transform->position.y + transform->height;
-		float groundTop = ground->transform->position.y;
-
-		if (gravity->GetVelocity().y >= 0.0f)
-		{
-			transform->position.y = groundTop - transform->height;
-			gravity->SetIsGround(true);
-			gravity->SetVelocityYZero();
-		}
-	}
+	OnGroundColliderEnter(ground);
 }
 
 void Player::OnColliderStay(GameObject* other)
 {
-	printf("Stay\n");
 }
 
 void Player::OnColliderExit(GameObject* other)
@@ -121,7 +108,12 @@ void Player::OnColliderExit(GameObject* other)
 	if (shouldBeDeleted) return;
 
 	GroundObject* ground = dynamic_cast<GroundObject*>(other);
-	//if (ground != nullptr) gravity->SetIsGround(false);
+	if (ground != nullptr)
+	{
+		gravity->SetIsGround(false);
+		canMoveLeft = true;
+		canMoveRight = true;
+	}
 }
 
 void Player::OnJump()
@@ -130,5 +122,46 @@ void Player::OnJump()
 	{
 		gravity->ApplyForce(Vector2(0.0f, -jumpPower));
 		gravity->SetIsGround(false);
+	}
+}
+
+void Player::OnGroundColliderEnter(GroundObject* ground)
+{
+	if (ground != nullptr && !gravity->GetIsGround())
+	{
+		if (!gravity->GetIsGround())
+		{
+			Vector2 velocity = gravity->GetVelocity();
+
+			float playerBottom = transform->position.y;
+			float playerTop = playerBottom + transform->height;
+			float groundBottom = ground->transform->position.y;
+			float groundTop = groundBottom + ground->transform->height;
+
+
+			// 랜딩 조건
+			// velocity.y > 0.0f -> 떨어질 때
+			// playerTop 이 groundBottom보다 낮을때 -> 플레이어가 더 위에 있을 때
+			// playerBottom 이 groundBottom보다 낮을 때 -> 위와 동일
+
+			float landingMargin = 5.0f;
+			if (velocity.y > 0.0f && playerTop - landingMargin < groundBottom && playerBottom + landingMargin < groundBottom)
+			{
+				gravity->SetIsGround(true);
+			}
+			else
+			{
+				gravity->SetVelocityZero();
+
+				if (velocity.x > 0)
+				{
+					canMoveRight = false;
+				}
+				else if (velocity.x < 0)
+				{
+					canMoveLeft = false;
+				}
+			}
+		}
 	}
 }
