@@ -23,6 +23,7 @@ public:
 protected:
 	void OnJump();
 	void OnGroundColliderEnter(GroundObject* ground);
+	void LimitPositionInScreen();
 
 	Gdiplus::Graphics* graphics = {};
 	SpriteRenderer* spriteRenderer[1];

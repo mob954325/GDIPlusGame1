@@ -1,4 +1,5 @@
 ﻿#include "Object/Player.h"
+#include "GDIEngineLib/inc/Utility/WindowConfig.h"
 #include "GDIEngineLib/inc/Manager/GameTime.h"
 #include "GDIEngineLib/inc/Manager/Input.h"
 #include "Manager/ScoreManager.h"
@@ -74,6 +75,8 @@ void Player::Update()
 
 	//printf("%s\n", gravity->GetIsGround() ? "true": "false");
 	//printf("%f\n", transform->position.y);
+
+	LimitPositionInScreen();
 }
 
 void Player::Render()
@@ -164,4 +167,11 @@ void Player::OnGroundColliderEnter(GroundObject* ground)
 			}
 		}
 	}
+}
+
+void Player::LimitPositionInScreen()
+{
+	if (transform->position.x < 0) transform->position.x = 0;
+	if (transform->position.y + transform->height > g_WindowConfig.windowHeight) transform->position.y = g_WindowConfig.windowHeight - transform->height;
+	if (transform->position.x + transform->width > g_WindowConfig.windowWidth) transform->position.x = g_WindowConfig.windowWidth - transform->width;
 }
