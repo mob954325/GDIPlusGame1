@@ -35,12 +35,19 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 void PlayScene::PhysicsUpdate()
 {
+	// NOTE - enter 다음 바로 exit 호출됨
+	// 충돌 저장이 제대로 안됨
+	// current는 현재 프레임에서 충돌되어있는 페어 데이터가 있어야하고
+	// prev는 current의 데이터를 받아서 exit확인하기
+
 	currentCollisions.clear();
 
 	for (int i = 0; i < gameObjectList.size(); i++)
 	{
-		for (int j = i + 1; j < gameObjectList.size(); j++)
+		for (int j = 0; j < gameObjectList.size(); j++)
 		{
+			if (i == j) continue;
+
 			GameObject* objA = gameObjectList[i];
 			GameObject* objB = gameObjectList[j];
 			Collider* colliderA = objA->GetComponent<Collider>();
@@ -69,7 +76,7 @@ void PlayScene::PhysicsUpdate()
 	}
 
 	// exit
-	for (const auto& pair : previousCollisions)
+	for (auto pair : previousCollisions)
 	{
 		if (currentCollisions.find(pair) == currentCollisions.end())
 		{

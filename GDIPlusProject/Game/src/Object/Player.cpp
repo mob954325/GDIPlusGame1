@@ -73,7 +73,7 @@ void Player::Update()
 	collider->Update(this); //
 	transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
 
-	printf("%s\n", gravity->GetIsGround() ? "true": "false");
+	//printf("%s\n", gravity->GetIsGround() ? "true": "false");
 	//printf("%f\n", transform->position.y);
 }
 
@@ -113,6 +113,7 @@ void Player::OnColliderEnter(GameObject* other)
 
 void Player::OnColliderStay(GameObject* other)
 {
+	printf("Stay\n");
 }
 
 void Player::OnColliderExit(GameObject* other)
@@ -120,7 +121,7 @@ void Player::OnColliderExit(GameObject* other)
 	if (shouldBeDeleted) return;
 
 	GroundObject* ground = dynamic_cast<GroundObject*>(other);
-	if (ground != nullptr) gravity->SetIsGround(false);
+	//if (ground != nullptr) gravity->SetIsGround(false);
 }
 
 void Player::OnJump()

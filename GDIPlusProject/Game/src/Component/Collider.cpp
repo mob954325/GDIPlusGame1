@@ -20,6 +20,6 @@ void Collider::Update(GameObject* object)
 
 bool Collider::IsOverlap(Collider* objectA, Collider* objectB)
 {
-	return objectA->bound.left < objectB->bound.right && objectA->bound.right > objectB->bound.left &&
-		objectA->bound.bottom < objectB->bound.top && objectA->bound.top > objectB->bound.bottom;
+	return objectA->bound.left <= objectB->bound.right && objectA->bound.right >= objectB->bound.left &&
+		objectA->bound.bottom <= objectB->bound.top && objectA->bound.top >= objectB->bound.bottom;
 }
