@@ -14,6 +14,9 @@ public:
 protected:
 	float sceneTimer = 0;
 	float sceneMaxTimer = 10;
+	
+	int scoreBufferSize = 20;
+	wchar_t* scoreBuffer;
 
 	HWND hwnd = {};
 	HDC FrontBufferDC = {};    // 앞면 DC

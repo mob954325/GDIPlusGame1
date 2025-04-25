@@ -10,8 +10,8 @@ void GroundObject::Initialize()
 	spriteRenderer = AddComponent<SpriteRenderer>();
 	collider = AddComponent<Collider>();
 
-	spriteRenderer->GetImage(L"./Resource/Map/Blue.png");
-	spriteRenderer->GetImageInfo(L"Blue", L"./Resource/Map/mapSize.csv");
+	spriteRenderer->GetImage(L"./Resource/Tile/Blue.png");
+	spriteRenderer->GetImageInfo(L"Blue", L"./Resource/Tile/tileSize.csv");
 }
 
 void GroundObject::Update()

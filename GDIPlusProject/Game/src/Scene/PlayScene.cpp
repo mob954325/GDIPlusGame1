@@ -11,6 +11,7 @@
 
 void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 {
+	// handle, gdi setup
 	this->hwnd = hwnd;
 	this->FrontBufferDC = frontBufferDC;	// 앞면 DC
 	this->BackBufferDC = backBufferDC;	// 뒷면 DC
@@ -18,6 +19,7 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	Gdiplus::GdiplusStartup(&gdiPlusToken, &gsi, nullptr);
 	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
+	// object setup
 	gameObjectList.push_back(new Player(graphics));
 
 	Stage1* stage1 = new Stage1(graphics);
@@ -32,10 +34,12 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 		gameObjectList.push_back(stage1->enemies[i]);
 	}
 
-
+	// manager setup
 	g_TextManager.Initialize(this->graphics);
-
 	g_ScoreManager.ResetData();
+
+	scoreBuffer = new wchar_t[scoreBufferSize];
+
 	sceneTimer = 0;
 }
 
@@ -122,6 +126,9 @@ void PlayScene::Render()
 	//{
 	//	g_SceneManager.ChangeScene(2);
 	//}
+
+	g_ScoreManager.GetScoreString(&scoreBuffer);
+	g_TextManager.DrawTextByViewport(scoreBuffer, 0.1, 0);
 
 	for (GameObject* obj : gameObjectList)
 	{
