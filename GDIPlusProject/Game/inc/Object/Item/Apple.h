@@ -24,4 +24,7 @@ private:
 	Gdiplus::Graphics* graphics;
 	SpriteRenderer* spriteRenderer;	
 	Collider* collider;
+
+	float animationGameTimer = 0.0f;
+	float maxAnimationGameTime = 0.05f;
 };

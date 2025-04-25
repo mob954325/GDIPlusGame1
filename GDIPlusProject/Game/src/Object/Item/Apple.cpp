@@ -2,6 +2,7 @@
 #include "Object/Player.h"
 
 #include "Manager/ScoreManager.h"
+#include "GDIEngineLib/inc/Manager/GameTime.h"
 
 void Apple::Initialize()
 {
@@ -17,6 +18,15 @@ void Apple::Initialize()
 
 void Apple::Update()
 {
+	animationGameTimer += g_GameTime.GetDeltaTime();
+
+	if (animationGameTimer > maxAnimationGameTime)
+	{
+		spriteRenderer->currFrame++;
+		spriteRenderer->currFrame %= spriteRenderer->imageFrameCount;
+
+		animationGameTimer = 0.0f;
+	}
 }
 
 void Apple::Render()
@@ -26,13 +36,13 @@ void Apple::Render()
 
 void Apple::OnColliderEnterImpl(GameObject* other)
 {
-	//Player* player = dynamic_cast<Player*>(other);
+	Player* player = dynamic_cast<Player*>(other);
 
-	//if (player != nullptr)
-	//{
-	//	g_ScoreManager.AddScore();
-	//	delete this;
-	//}
+	if (player != nullptr)
+	{
+		g_ScoreManager.AddScore();
+		shouldBeDeleted = true;
+	}
 }
 
 void Apple::OnColliderStayImpl(GameObject* other)
@@ -45,10 +55,12 @@ void Apple::OnColliderExitImpl(GameObject* other)
 
 void Apple::SetupTransform(int gridX, int gridY, int countX, int countY)
 {
-	transform->SetTransform((float)(gridX * spriteRenderer->imageWidth), (float)(gridY * spriteRenderer->imageHeight));
+	// 지형 오브젝트랑 크기 맞게 변경하기
+	// apple -> 32
 
-	transform->width = (float)(spriteRenderer->imageWidth * countX);
-	transform->height = (float)(spriteRenderer->imageHeight * countY);
-	collider->bound = { (LONG)transform->position.x, (LONG)transform->height,(LONG)transform->width, (LONG)transform->position.y };
+	transform->SetTransform((float)(gridX * 64), (float)(gridY * 64));
+	transform->Translate(0.0f, 36.0f);
+
+	collider->bound = { (LONG)transform->position.x, (LONG)(transform->height * 0.7f),(LONG)(transform->width * 0.7f), (LONG)transform->position.y };
 	collider->Update(this);
 }
