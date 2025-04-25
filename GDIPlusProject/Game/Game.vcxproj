@@ -136,6 +136,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Object\Item\Apple.h" />
     <ClInclude Include="inc\Component\Gravity.h" />
     <ClInclude Include="inc\Object\GroundObject.h" />
     <ClInclude Include="inc\Component\Collider.h" />
@@ -153,6 +154,7 @@
     <ClInclude Include="inc\Object\Map\Stage1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Object\Item\Apple.cpp" />
     <ClCompile Include="src\Component\Gravity.cpp" />
     <ClCompile Include="src\Object\GroundObject.cpp" />
     <ClCompile Include="src\Component\Collider.cpp" />

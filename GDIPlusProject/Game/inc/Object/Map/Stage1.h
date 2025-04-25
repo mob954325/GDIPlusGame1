@@ -2,7 +2,7 @@
 #include <vector>
 #include "GDIEngineLib/inc/Utility/GameObject.h"
 #include "Object/GroundObject.h"
-#include "Object/Enemy.h"
+#include "Object/Item/Apple.h"
 
 class Stage1 : public GameObject
 {
@@ -14,7 +14,7 @@ public:
 	std::vector<GroundObject*> groundList;
 
 	// 임시
-	std::vector<Enemy*> enemies;
+	std::vector<Apple*> apples;
 private:
 	Gdiplus::Graphics* graphics;
 
@@ -28,13 +28,13 @@ private:
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0},
 		{0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0},
 		{0,0,0,0,2,2,2,2,2,2,2,0,0,0,0,0},
 		{0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0},
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 	};
 };

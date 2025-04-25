@@ -93,31 +93,25 @@ void Player::Render()
 
 // Event ----------------------------------------------------------------------------------------------------------------
 
-void Player::OnColliderEnter(GameObject* other)
+void Player::OnColliderEnterImpl(GameObject* other)
 {
-	if (shouldBeDeleted) return;
-	if (other->shouldBeDeleted) return;
-
-	Enemy* enemy = dynamic_cast<Enemy*>(other);
-	if (enemy != nullptr)
-	{
-		other->shouldBeDeleted = true; // 닿은 오브젝트 제거
-		g_ScoreManager.AddScore();
-	}
+	//Enemy* enemy = dynamic_cast<Enemy*>(other);
+	//if (enemy != nullptr)
+	//{
+	//	other->shouldBeDeleted = true; // 닿은 오브젝트 제거
+	//	g_ScoreManager.AddScore();
+	//}
 
 	GroundObject* ground = dynamic_cast<GroundObject*>(other);
 	OnGroundColliderEnter(ground);
 }
 
-void Player::OnColliderStay(GameObject* other)
+void Player::OnColliderStayImpl(GameObject* other)
 {
 }
 
-void Player::OnColliderExit(GameObject* other)
+void Player::OnColliderExitImpl(GameObject* other)
 {
-	if (shouldBeDeleted) return;
-	if (other->shouldBeDeleted) return;
-
 	GroundObject* ground = dynamic_cast<GroundObject*>(other);
 	if (ground != nullptr)
 	{

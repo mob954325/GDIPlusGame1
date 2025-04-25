@@ -23,15 +23,15 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	gameObjectList.push_back(new Player(graphics));
 
 	Stage1* stage1 = new Stage1(graphics);
-	int groundCount = stage1->groundList.size();
+	int groundCount = (int)stage1->groundList.size();
 	for (int i = 0; i < groundCount; i++)
 	{
 		gameObjectList.push_back(stage1->groundList[i]);
 	}
-	int enemiesCount = stage1->groundList.size();
-	for (int i = 0; i < enemiesCount; i++)
+	int applesCount = (int)stage1->apples.size();
+	for (int i = 0; i < applesCount; i++)
 	{
-		gameObjectList.push_back(stage1->enemies[i]);
+		gameObjectList.push_back(stage1->apples[i]);
 	}
 
 	// manager setup
@@ -65,6 +65,8 @@ void PlayScene::PhysicsUpdate()
 
 			Collider* colliderA = objA->GetComponent<Collider>();
 			Collider* colliderB = objB->GetComponent<Collider>();
+
+			if (colliderA == nullptr || colliderB == nullptr) continue; // 콜라이더 없음
 
 			if (colliderA->IsOverlap(colliderA, colliderB)) // a->b
 			{
@@ -128,7 +130,7 @@ void PlayScene::Render()
 	//}
 
 	g_ScoreManager.GetScoreString(&scoreBuffer);
-	g_TextManager.DrawTextByViewport(scoreBuffer, 0.1, 0);
+	g_TextManager.DrawTextByViewport(scoreBuffer, 0.1f, 0);
 
 	for (GameObject* obj : gameObjectList)
 	{

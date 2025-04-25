@@ -14,8 +14,8 @@ public:
 	void Render() override;
 
 	// Event
-	void OnColliderEnter(GameObject* other) override;
-	void OnColliderExit(GameObject* other) override;
+	void OnColliderEnterImpl(GameObject* other) override;
+	void OnColliderExitImpl(GameObject* other) override;
 
 protected:
 	Gdiplus::Graphics* graphics = {};

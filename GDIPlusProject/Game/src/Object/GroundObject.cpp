@@ -34,7 +34,7 @@ void GroundObject::Render()
 
 void GroundObject::SetupTransform(int gridX, int gridY, int countX, int countY)
 {
-	transform->SetTransform(gridX * spriteRenderer->imageWidth, gridY * spriteRenderer->imageHeight);
+	transform->SetTransform((float)(gridX * spriteRenderer->imageWidth), (float)(gridY * spriteRenderer->imageHeight));
 
 	transform->width = (float)(spriteRenderer->imageWidth * countX);
 	transform->height = (float)(spriteRenderer->imageHeight * countY);
@@ -42,11 +42,11 @@ void GroundObject::SetupTransform(int gridX, int gridY, int countX, int countY)
 	collider->Update(this);
 }
 
-void GroundObject::OnColliderEnter(GameObject* other)
+void GroundObject::OnColliderEnterImpl(GameObject* other)
 {
 }
 
-void GroundObject::OnColliderExit(GameObject* other)
+void GroundObject::OnColliderExitImpl(GameObject* other)
 {
 
 }

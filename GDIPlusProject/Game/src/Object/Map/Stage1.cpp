@@ -1,7 +1,5 @@
 ﻿#include "Object/Map/Stage1.h"
 
-#include "Object/Enemy.h"
-
 Stage1::~Stage1()
 {
 }
@@ -9,7 +7,7 @@ Stage1::~Stage1()
 void Stage1::Initialize()
 {
 	groundList.reserve(8);
-	enemies.reserve(8);
+	apples.reserve(8);
 	SetGrounds();
 }
 
@@ -27,9 +25,9 @@ void Stage1::SetGrounds()
 		{
 			if (tiles[y][x] == 2)
 			{
-				Enemy* enemy = new Enemy(graphics);
-				enemies.push_back(enemy); // 임시
-				enemy->transform->SetTransform(x * 32, y * 32);
+				Apple* apple = new Apple(graphics);
+				apples.push_back(apple); // 임시
+				apple->SetupTransform(x, y, rightCount, 1);
 			}
 
 			if (!isVaild && tiles[y][x] == 1)

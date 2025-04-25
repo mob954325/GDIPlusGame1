@@ -16,9 +16,13 @@ public:
 	virtual void Render();
 
 	// Event
-	virtual void OnColliderEnter(GameObject* other);
-	virtual void OnColliderStay(GameObject* other);
-	virtual void OnColliderExit(GameObject* other);
+	void OnColliderEnter(GameObject* other);
+	void OnColliderStay(GameObject* other);
+	void OnColliderExit(GameObject* other);
+
+	virtual void OnColliderEnterImpl(GameObject* other);
+	virtual void OnColliderStayImpl(GameObject* other);
+	virtual void OnColliderExitImpl(GameObject* other);
 
 	// Component function
 	template<typename T>

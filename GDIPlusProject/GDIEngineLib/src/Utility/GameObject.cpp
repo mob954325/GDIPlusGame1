@@ -39,16 +39,40 @@ void GameObject::OnColliderEnter(GameObject* other)
 {
 	// 충돌 내용
 	if (shouldBeDeleted) return;
+	if (other->shouldBeDeleted) return;
+
+	OnColliderEnterImpl(other);
 }
 
 void GameObject::OnColliderStay(GameObject* other)
 {
 	// 충돌 중일 때 내용
 	if (shouldBeDeleted) return;
+	if (other->shouldBeDeleted) return;
+
+	OnColliderStayImpl(other);
 }
 
 void GameObject::OnColliderExit(GameObject* other)
 {
 	// 충돌 안 할 때 실행
 	if (shouldBeDeleted) return;
+	if (other->shouldBeDeleted) return;
+
+	OnColliderExitImpl(other);
+}
+
+void GameObject::OnColliderEnterImpl(GameObject* other)
+{
+	// OnColliderEnter 내용 구현
+}
+
+void GameObject::OnColliderStayImpl(GameObject* other)
+{
+	// OnColliderStay 내용 구현
+}
+
+void GameObject::OnColliderExitImpl(GameObject* other)
+{
+	// OnColliderExit 내용 구현
 }
