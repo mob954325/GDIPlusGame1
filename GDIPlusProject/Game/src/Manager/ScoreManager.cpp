@@ -14,7 +14,7 @@ void ScoreManager::AddScore()
 
 void ScoreManager::GetScoreString(wchar_t** buffer)
 {
-	*buffer = new wchar_t[32];
+	*buffer = new wchar_t[32]; // ? Leak
 
 	wchar_t textBuffer[32] = L"Score : ";
 	wchar_t scoreBuffer[32] = L"\0";

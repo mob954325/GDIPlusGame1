@@ -93,6 +93,9 @@
     <ClInclude Include="inc\Object\Item\Apple.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Object\MainCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App\GameApp.cpp">
@@ -138,6 +141,9 @@
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\Object\Item\Apple.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object\MainCamera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

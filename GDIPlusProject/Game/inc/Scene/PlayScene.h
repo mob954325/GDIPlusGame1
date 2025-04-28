@@ -1,6 +1,9 @@
 ﻿#pragma once
 #include "framework.h"
 #include "GDIEngineLib/inc/Utility/Scene.h"
+#include "Object/MainCamera.h"
+
+// NOTE: 카메라 이동 작성
 
 class PlayScene : public Scene
 {
@@ -9,7 +12,12 @@ public:
 	void PhysicsUpdate() override;
 	void Update() override;
 	void Render() override;
-	void Exit() override { Clear(); Gdiplus::GdiplusShutdown(gdiPlusToken); };
+	void Exit() override 
+	{ 
+		Clear(); 
+		delete graphics;
+		Gdiplus::GdiplusShutdown(gdiPlusToken); 
+	};
 
 protected:
 	float sceneTimer = 0;
@@ -25,4 +33,6 @@ protected:
 	ULONG_PTR gdiPlusToken = 0;
 	Gdiplus::GdiplusStartupInput gsi = {};
 	Gdiplus::Graphics* graphics = {};
+
+	MainCamera* mainCamera = {};
 };

@@ -15,7 +15,9 @@ GameObject::~GameObject()
 		delete componentList[i];
 	}
 
-	printf("GameObject 소멸자 호출");
+
+
+	// printf("GameObject 소멸자 호출");
 }
 
 void GameObject::Initialize()

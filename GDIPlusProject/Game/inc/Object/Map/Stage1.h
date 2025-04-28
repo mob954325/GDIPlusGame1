@@ -12,8 +12,6 @@ public:
 	void Initialize() override;
 
 	std::vector<GroundObject*> groundList;
-
-	// 임시
 	std::vector<Apple*> apples;
 private:
 	Gdiplus::Graphics* graphics;
@@ -22,6 +20,7 @@ private:
 	int tilesYCount = 12;
 	int tilesXCount = 16;
 
+	// ㅁㅁ
 	int tiles[12][16] =
 	{
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},

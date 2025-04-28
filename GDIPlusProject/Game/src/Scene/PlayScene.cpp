@@ -1,5 +1,6 @@
 ﻿#include "GDIEngineLib/inc/Manager/GameTime.h"
 #include "GDIEngineLib/inc/Manager/SceneManager.h"
+#include "GDIEngineLib/inc/Manager/Input.h"
 
 #include "Scene/PlayScene.h"
 #include "Component/Collider.h"
@@ -28,6 +29,7 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	{
 		gameObjectList.push_back(stage1->groundList[i]);
 	}
+
 	int applesCount = (int)stage1->apples.size();
 	for (int i = 0; i < applesCount; i++)
 	{
@@ -41,6 +43,10 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	scoreBuffer = new wchar_t[scoreBufferSize];
 
 	sceneTimer = 0;
+
+	// Camera
+	mainCamera = new MainCamera();
+	gameObjectList.push_back(mainCamera);
 }
 
 void PlayScene::PhysicsUpdate()
@@ -111,6 +117,11 @@ void PlayScene::PhysicsUpdate()
 
 void PlayScene::Update()
 {
+	if (g_Input.IsKeyPressed(VK_END))
+	{
+		g_SceneManager.ChangeScene(2);
+	}
+
 	//sceneTimer += g_GameTime.GetDeltaTime();
 	CheckObjects();
 
@@ -119,6 +130,11 @@ void PlayScene::Update()
 	for (GameObject* obj : gameObjectList)
 	{
 		obj->Update();
+
+		if (mainCamera != nullptr && obj != mainCamera)
+		{
+			obj->transform->Translate(mainCamera->InvertTransformPosition());
+		}
 	}
 }
 

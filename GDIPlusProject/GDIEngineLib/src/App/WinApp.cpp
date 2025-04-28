@@ -5,6 +5,7 @@
 #include "Manager/GameTime.h"
 #include "Manager/SceneManager.h"
 #include "Utility/WindowConfig.h"
+#include "Utility/DebugUtility.h"
 
 WinApp* WinApp::m_pInstance = nullptr;
 
@@ -46,6 +47,8 @@ WinApp::~WinApp()
 
 void WinApp::Initialize()
 {
+	ENABLE_LEAK_CHECK();
+
 	char szPath[MAX_PATH] = { 0, };
 	GetModuleFileNameA(NULL, szPath, MAX_PATH); // 현재 모듈의 경로
 	m_ModulePath = szPath; // 모듈 경로
@@ -99,6 +102,7 @@ void WinApp::Initialize()
 void WinApp::Shutdown()
 {
 	// 
+	DUMP_LEAKS();
 }
 
 void WinApp::MessageProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -106,6 +110,8 @@ void WinApp::MessageProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_DESTROY:
+		Shutdown();
+		ShutdownConsole();
 		PostQuitMessage(0);
 		break;
 	}
@@ -117,6 +123,8 @@ void WinApp::Run()
 	MSG msg = {};
 	while (TRUE)
 	{
+		CHECK_FPS();
+
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if (msg.message == WM_QUIT)

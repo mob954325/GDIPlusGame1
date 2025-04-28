@@ -75,6 +75,9 @@
     <ClInclude Include="inc\Utility\Monobehaviour.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Utility\DebugUtility.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GDIEngineLib.cpp">
@@ -117,6 +120,9 @@
       <Filter>소스 파일\Utility</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility\Monobehaviour.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\DebugUtility.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
