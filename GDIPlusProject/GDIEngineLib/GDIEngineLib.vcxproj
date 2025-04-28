@@ -146,6 +146,7 @@
     <ClInclude Include="inc\Utility\GameObject.h" />
     <ClInclude Include="inc\Manager\GameTime.h" />
     <ClInclude Include="inc\Manager\Input.h" />
+    <ClInclude Include="inc\Utility\Monobehaviour.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="inc\Manager\Renderer.h" />
     <ClInclude Include="inc\Utility\Scene.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="inc\Utility\WindowConfig.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utility\Monobehaviour.cpp" />
     <ClCompile Include="src\Utility\Component.cpp" />
     <ClCompile Include="src\Utility\GameObject.cpp" />
     <ClCompile Include="src\Manager\GameTime.cpp" />

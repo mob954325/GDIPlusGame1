@@ -8,17 +8,19 @@ GroundObject::~GroundObject()
 void GroundObject::Initialize()
 {
 	spriteRenderer = AddComponent<SpriteRenderer>();
+	spriteRenderer->GetGraphic(&graphics);
+
 	collider = AddComponent<Collider>();
 
 	spriteRenderer->GetImage(L"./Resource/Tile/Blue.png");
 	spriteRenderer->GetImageInfo(L"Blue", L"./Resource/Tile/tileSize.csv");
 }
 
-void GroundObject::Update()
+void GroundObject::UpdateImpl()
 {
 }
 
-void GroundObject::Render()
+void GroundObject::RenderImpl()
 {
 	for (int y = 0; y < transform->height / spriteRenderer->imageHeight; y++)
 	{
@@ -41,7 +43,6 @@ void GroundObject::SetupTransform(int gridX, int gridY, int countX, int countY)
 	transform->width = (float)(spriteRenderer->imageWidth * countX);
 	transform->height = (float)(spriteRenderer->imageHeight * countY);
 	collider->bound = { (LONG)transform->position.x, (LONG)transform->height,(LONG)transform->width, (LONG)transform->position.y };
-	collider->Update(this);
 }
 
 void GroundObject::OnColliderEnterImpl(GameObject* other)

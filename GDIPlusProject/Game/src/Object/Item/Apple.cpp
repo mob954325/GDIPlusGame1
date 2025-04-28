@@ -7,6 +7,8 @@
 void Apple::Initialize()
 {
 	spriteRenderer = AddComponent<SpriteRenderer>();
+	spriteRenderer->GetGraphic(&graphics);
+
 	spriteRenderer->GetImage(L"./Resource/Item/Apple.png");
 	spriteRenderer->GetImageInfo(L"apple", L"./Resource/Item/itemSize.csv");
 
@@ -16,7 +18,7 @@ void Apple::Initialize()
 	collider = AddComponent<Collider>();
 }
 
-void Apple::Update()
+void Apple::UpdateImpl()
 {
 	animationGameTimer += g_GameTime.GetDeltaTime();
 
@@ -29,9 +31,9 @@ void Apple::Update()
 	}
 }
 
-void Apple::Render()
+void Apple::RenderImpl()
 {
-	spriteRenderer->DrawImage(graphics, (float)transform->position.x, (float)transform->position.y);
+	spriteRenderer->DrawImage(graphics, (int)transform->position.x, (int)transform->position.y);
 }
 
 void Apple::OnColliderEnterImpl(GameObject* other)
@@ -62,5 +64,4 @@ void Apple::SetupTransform(int gridX, int gridY, int countX, int countY)
 	transform->Translate(0.0f, 36.0f);
 
 	collider->bound = { (LONG)transform->position.x, (LONG)(transform->height * 0.7f),(LONG)(transform->width * 0.7f), (LONG)transform->position.y };
-	collider->Update(this);
 }

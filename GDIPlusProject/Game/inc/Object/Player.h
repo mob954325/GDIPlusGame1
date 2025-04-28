@@ -12,8 +12,8 @@ public:
 	Player(Gdiplus::Graphics* g) : graphics(g) { Initialize(); }
 	~Player();
 	void Initialize() override;
-	void Update() override;
-	void Render() override;
+	void UpdateImpl() override;
+	void RenderImpl() override;
 
 	// Event
 	void OnColliderEnterImpl(GameObject* other) override;

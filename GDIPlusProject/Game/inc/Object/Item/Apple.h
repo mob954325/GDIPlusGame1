@@ -10,8 +10,8 @@ public:
 	Apple(Gdiplus::Graphics* g) : graphics(g) { Initialize(); };
 
 	void Initialize() override;
-	void Update() override;
-	void Render() override;
+	virtual void UpdateImpl();
+	virtual void RenderImpl();
 
 	// Event
 	void OnColliderEnterImpl(GameObject* other) override;

@@ -10,8 +10,8 @@ public:
 	~GroundObject();
 
 	void Initialize() override;
-	void Update() override;
-	void Render() override;
+	void UpdateImpl() override;
+	void RenderImpl() override;
 	void SetupTransform(int gridX, int gridY, int countX, int countY);
 
 	// Event

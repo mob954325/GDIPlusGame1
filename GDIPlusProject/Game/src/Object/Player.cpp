@@ -15,6 +15,7 @@ void Player::Initialize()
 {
 	// 스프라이트 데이터 생성
 	spriteRenderer[0] = AddComponent<SpriteRenderer>();
+	spriteRenderer[0]->GetGraphic(&graphics);
 
 	// 그외 컴포넌트 생성
 	collider = AddComponent<Collider>();
@@ -30,15 +31,12 @@ void Player::Initialize()
 	transform->height = 32;
 
 	collider->bound = { 0, 50, 50, 0 };
-	collider->Update(this);
 
 	gravity = AddComponent<Gravity>();
 }
 
-void Player::Update()
+void Player::UpdateImpl()
 {
-	if (shouldBeDeleted) return;
-
 	animationGameTimer += g_GameTime.GetDeltaTime();
 	if (animationGameTimer > maxAnimationGameTime)
 	{
@@ -72,7 +70,6 @@ void Player::Update()
 
 	canJump = gravity->GetIsGround(); // isGround로 점프 가능한지 체크
 
-	collider->Update(this); //
 	transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
 
 	//printf("%s\n", gravity->GetIsGround() ? "true": "false");
@@ -81,10 +78,8 @@ void Player::Update()
 	LimitPositionInScreen();
 }
 
-void Player::Render()
+void Player::RenderImpl()
 {
-	if (shouldBeDeleted) return;
-
 	if (graphics != nullptr)
 	{
 		spriteRenderer[playerState]->DrawImage(graphics, (int)transform->position.x, (int)transform->position.y);

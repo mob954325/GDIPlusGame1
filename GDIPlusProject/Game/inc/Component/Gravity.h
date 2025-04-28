@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GDIEngineLib/inc/Utility/Vector2.h"
+#include "GDIEngineLib/inc/Utility/Component.h"
 #include "GDIEngineLib/inc/Manager/GameTime.h"
 #include "GDIEngineLib/inc/Utility/GameObject.h"
 #include "Component/SpriteRenderer.h"
@@ -12,8 +13,9 @@ public:
 	Gravity(GameObject* obj) : Component(obj) { };
 	~Gravity();
 
-	void Initialize(GameObject* objectPtr);
-	void Update(); // 중력 업데이트
+	void Initialize() override;
+	void Update() override;
+	void Render() override;
 
 	Vector2 GetVelocity();
 	void ApplyForce(Vector2 forceVec);

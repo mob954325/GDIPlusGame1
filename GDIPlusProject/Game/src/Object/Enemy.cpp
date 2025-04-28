@@ -10,6 +10,7 @@ Enemy::~Enemy()
 void Enemy::Initialize()
 {
 	spriteRenderer = AddComponent<SpriteRenderer>();
+	spriteRenderer->GetGraphic(&graphics);
 	collider = AddComponent<Collider>();	
 
 	spriteRenderer->GetImage(L"./Resource/Enemy/Idle-Sheet.png");
@@ -22,13 +23,10 @@ void Enemy::Initialize()
 	transform->height = 28;
 
 	collider->bound = { 0, (LONG)transform->height, (LONG)transform->width, 0 };
-	collider->Update(this);
 }
 
-void Enemy::Update()
+void Enemy::UpdateImpl()
 {
-	if (shouldBeDeleted) return;
-
 	animationGameTimer += g_GameTime.GetDeltaTime();
 	if (animationGameTimer > maxAnimationGameTime)
 	{
@@ -37,14 +35,10 @@ void Enemy::Update()
 		spriteRenderer->currFrame++;
 		spriteRenderer->currFrame %= spriteRenderer->imageFrameCount;
 	}
-
-	collider->Update(this);
 }
  
-void Enemy::Render()
+void Enemy::RenderImpl()
 {
-	if (shouldBeDeleted) return;
-
 	if (graphics != nullptr)
 	{
 		spriteRenderer->DrawImage(graphics, (int)transform->position.x, (int)transform->position.y);
@@ -53,12 +47,8 @@ void Enemy::Render()
 
 void Enemy::OnColliderEnterImpl(GameObject* other)
 {
-	if (shouldBeDeleted) return;
-	if (other->shouldBeDeleted) return;
 }
 
 void Enemy::OnColliderExitImpl(GameObject* other)
 {
-	if (shouldBeDeleted) return;
-	if (other->shouldBeDeleted) return;
 }

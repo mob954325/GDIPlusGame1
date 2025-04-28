@@ -27,12 +27,28 @@ void GameObject::Update()
 {
 	// 업데이트
 	if (shouldBeDeleted) return;
+	
+	UpdateImpl();
+	UpdateComponents();
 }
 
 void GameObject::Render()
 {
 	// 랜더링 내용
 	if (shouldBeDeleted) return;
+
+	RenderImpl();
+	RenderComponents();
+}
+
+void GameObject::UpdateImpl()
+{
+	// 업데이트 구현 내용
+}
+
+void GameObject::RenderImpl()
+{
+	// 업데이트 랜더 내용
 }
 
 void GameObject::OnColliderEnter(GameObject* other)
@@ -75,4 +91,20 @@ void GameObject::OnColliderStayImpl(GameObject* other)
 void GameObject::OnColliderExitImpl(GameObject* other)
 {
 	// OnColliderExit 내용 구현
+}
+
+void GameObject::UpdateComponents()
+{
+	for (Component* comp : componentList)
+	{
+		comp->Update();
+	}
+}
+
+void GameObject::RenderComponents()
+{
+	for (Component* comp : componentList)
+	{
+		comp->Render();
+	}
 }

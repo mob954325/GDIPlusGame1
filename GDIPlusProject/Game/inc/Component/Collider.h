@@ -11,10 +11,13 @@ public:
 	Collider(GameObject* obj) : Component(obj), bound({}) {};
 	~Collider();
 
-	void Update(GameObject* object); // 값 갱신 함수	
+	void Initialize() override;
+	void Update() override;
+	void Render() override;
 	bool IsOverlap(Collider* objectA, Collider* objectB); // AABB 충돌 검사 함수
 
 	RECT bound;
+private:
 };
 
 /// 각 Rect별 위치 

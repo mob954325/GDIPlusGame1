@@ -1,19 +1,23 @@
 ﻿#pragma once
 #include "Component.h"
 #include "Transform.h"
+#include "Monobehaviour.h"
 
 #include <string.h>
 #include <vector>
 
-class GameObject
+class GameObject : public Monobehaviour
 {
 public:
 	GameObject();
 	virtual ~GameObject();
 
-	virtual void Initialize();
-	virtual void Update();
-	virtual void Render();
+	void Initialize() override;
+	void Update() override;
+	void Render() override;
+
+	virtual void UpdateImpl();
+	virtual void RenderImpl();
 
 	// Event
 	void OnColliderEnter(GameObject* other);
@@ -39,6 +43,8 @@ public:
 	bool shouldBeDeleted = false;	// 삭제 예정인지 확인하는 변수
 
 private:
+	void UpdateComponents();
+	void RenderComponents();
 	std::vector<Component*> componentList;
 };
 

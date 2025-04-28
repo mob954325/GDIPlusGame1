@@ -1,4 +1,6 @@
 ﻿#include "Component/SpriteRenderer.h"
+#include "GDIEngineLib/inc/Utility/GameObject.h"
+#include <assert.h>
 
 SpriteRenderer::~SpriteRenderer()
 {
@@ -7,6 +9,19 @@ SpriteRenderer::~SpriteRenderer()
 		delete imageBitMap;
 		imageBitMap = nullptr;
 	}
+}
+
+void SpriteRenderer::Initialize()
+{
+}
+
+void SpriteRenderer::Update()
+{
+}
+
+void SpriteRenderer::Render()
+{
+	DrawImage();
 }
 
 bool SpriteRenderer::GetImage(const wchar_t* path)
@@ -28,10 +43,23 @@ bool SpriteRenderer::GetImage(const wchar_t* path)
 	return true;
 }
 
+void SpriteRenderer::GetGraphic(Gdiplus::Graphics** graphicsPtr)
+{
+	graphics = *graphicsPtr;
+}
+
 void SpriteRenderer::DrawImage(Gdiplus::Graphics* graphics, int posX, int posY)
 {
 	Gdiplus::Rect srcRect(imageWidth * currFrame, 0, imageWidth, imageHeight);	// 소스의 영역
 	Gdiplus::Rect destRect(posX, posY, srcRect.Width, srcRect.Height);			// 화면에 그릴 영역
+	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel); // 소스의 일부분만을 그린다.
+}
+
+void SpriteRenderer::DrawImage()
+{
+	//assert(graphics != nullptr && "SpriteRenderer's GDIPlus::Graphics is nullptr");
+	Gdiplus::Rect srcRect(imageWidth * currFrame, 0, imageWidth, imageHeight);	// 소스의 영역
+	Gdiplus::Rect destRect((int)owner->transform->position.x, (int)owner->transform->position.y, srcRect.Width, srcRect.Height);			// 화면에 그릴 영역
 	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel); // 소스의 일부분만을 그린다.
 }
 

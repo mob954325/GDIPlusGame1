@@ -11,9 +11,8 @@ Gravity::~Gravity()
 {
 }
 
-void Gravity::Initialize(GameObject* objectPtr)
+void Gravity::Initialize()
 {
-	owner = objectPtr;
 }
 
 void Gravity::Update()
@@ -30,6 +29,10 @@ void Gravity::Update()
 	ClampVelocity();
 
 	//printf("%f %f\n", velocity.x, velocity.y);
+}
+
+void Gravity::Render()
+{
 }
 
 Vector2 Gravity::GetVelocity()
