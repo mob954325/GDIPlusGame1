@@ -34,7 +34,7 @@ protected:
 	// state
 	int playerState = 0;
 	float speed = 330.0f;		 // 플레이어 이동 속도
-	float jumpPower = 450.0f;
+	float jumpPower = 660.0f;
 
 	bool canJump = true;
 	bool canMoveLeft = true;
