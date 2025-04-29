@@ -96,6 +96,9 @@
     <ClInclude Include="inc\Object\MainCamera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TerrainObject.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App\GameApp.cpp">
@@ -145,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="src\Object\MainCamera.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainObject.cpp">
+      <Filter>소스 파일\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

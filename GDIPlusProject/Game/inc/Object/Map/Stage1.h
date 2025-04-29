@@ -3,6 +3,7 @@
 #include "GDIEngineLib/inc/Utility/GameObject.h"
 #include "Object/GroundObject.h"
 #include "Object/Item/Apple.h"
+#include "TerrainObject.h"
 
 class Stage1 : public GameObject
 {
@@ -11,7 +12,8 @@ public:
 	~Stage1();
 	void Initialize() override;
 
-	std::vector<GroundObject*> groundList;
+	//std::vector<GroundObject*> groundList;
+	std::vector<TerrainObject*> groundList;
 	std::vector<Apple*> apples;
 private:
 	Gdiplus::Graphics* graphics;

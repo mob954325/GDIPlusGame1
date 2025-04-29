@@ -32,9 +32,9 @@ void SpriteRenderer::Render()
 {
 	if (isActive)
 	{
-		for (int y = 0; y < owner->transform->height / imageHeight; y++)
+		for (int y = 0; y < owner->transform->height / drawHeight; y++)
 		{
-			for (int x = 0; x < owner->transform->width / imageWidth; x++)
+			for (int x = 0; x < owner->transform->width / drawWidth; x++)
 			{
 				DrawImage(x, y);
 			}
@@ -54,8 +54,8 @@ bool SpriteRenderer::GetImage(const wchar_t* path)
 	}
 
 	imageBitMap = bitmap;
-	imageWidth = imageBitMap->GetWidth();
-	imageHeight = imageBitMap->GetHeight();
+	sourceWidth = imageBitMap->GetWidth();
+	sourceHeight = imageBitMap->GetHeight();
 	imageFrameCount = 1;
 	currFrame = 0;
 
@@ -71,10 +71,33 @@ void SpriteRenderer::DrawImage(int gridX, int gridY)
 {
 	if (imageBitMap == nullptr) return;
 
-	//assert(graphics != nullptr && "SpriteRenderer's GDIPlus::Graphics is nullptr");
-	Gdiplus::Rect srcRect(imageWidth * currFrame, 0, imageWidth, imageHeight);	// 소스의 영역
-	Gdiplus::Rect destRect((int)owner->transform->position.x + (gridX * imageWidth), (int)owner->transform->position.y + (gridY * imageHeight), srcRect.Width, srcRect.Height);			// 화면에 그릴 영역
+	Gdiplus::Rect srcRect(drawWidth * currFrame, 0, drawWidth, drawHeight);	// 소스의 영역
+	Gdiplus::Rect destRect((int)owner->transform->position.x + (gridX * drawWidth), (int)owner->transform->position.y + (gridY * drawHeight), srcRect.Width, srcRect.Height);			// 화면에 그릴 영역
 	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel); // 소스의 일부분만을 그린다.
+}
+
+void SpriteRenderer::DrawImage(int gridX, int gridY, int tileNum)
+{
+	if (imageBitMap == nullptr) return;
+
+	int tilesPerRow = sourceWidth / drawWidth;		// 가로 개수
+	int tilesPerCol = sourceHeight / drawHeight;	// 세로 개수
+
+	if (tileNum < 0 || tileNum >= tilesPerRow * tilesPerCol) return; // 존재하지 않는 위치
+
+	int y = tileNum / tilesPerRow;
+	int x = tileNum % tilesPerRow;
+
+
+	Gdiplus::Rect srcRect(drawWidth * x, drawHeight * y, drawWidth, drawHeight);
+	Gdiplus::Rect destRect(
+		(int)owner->transform->position.x + (gridX * drawWidth), 
+		(int)owner->transform->position.y + (gridY * drawHeight), 
+		srcRect.Width, srcRect.Height
+	);
+	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel);
+
+	std::cout << "tileNum: " << tileNum << " -> srcX: " << srcRect.X << ", srcY: " << srcRect.Y << std::endl;
 }
 
 void SpriteRenderer::GetImageInfo(const wchar_t* infoName, const wchar_t* path)
@@ -119,7 +142,8 @@ void SpriteRenderer::GetImageInfo(const wchar_t* infoName, const wchar_t* path)
 						{
 							if (i == 0)
 							{
-								imageWidth = _wtoi(bufferToken);
+								drawWidth = _wtoi(bufferToken);
+								drawHeight = drawWidth;
 							}
 							else if (i == 1)
 							{

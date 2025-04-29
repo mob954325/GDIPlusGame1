@@ -25,12 +25,12 @@ void GroundObject::RenderImpl()
 
 void GroundObject::SetupTransform(int gridX, int gridY, int countX, int countY)
 {
-	transform->SetTransform((float)(gridX * spriteRenderer->imageWidth), (float)(gridY * spriteRenderer->imageHeight));
+	transform->SetTransform((float)(gridX * spriteRenderer->drawWidth), (float)(gridY * spriteRenderer->drawHeight));
 	
-	//printf("ground %d", spriteRenderer->imageWidth);
+	//printf("ground %d", spriteRenderer->drawWidth);
 	
-	transform->width = (float)(spriteRenderer->imageWidth * countX);
-	transform->height = (float)(spriteRenderer->imageHeight * countY);
+	transform->width = (float)(spriteRenderer->drawWidth * countX);
+	transform->height = (float)(spriteRenderer->drawHeight * countY);
 	collider->bound = { (LONG)transform->position.x, (LONG)transform->height,(LONG)transform->width, (LONG)transform->position.y };
 }
 

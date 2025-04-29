@@ -24,32 +24,32 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	GameObject* player = new Player(graphics);
 	gameObjectList.push_back(player);
 
-	//Stage1* stage1 = new Stage1(graphics);
-	//int groundCount = (int)stage1->groundList.size();
-	//for (int i = 0; i < groundCount; i++)
-	//{
-	//	gameObjectList.push_back(stage1->groundList[i]);
-	//}
-
-	//int applesCount = (int)stage1->apples.size();
-	//for (int i = 0; i < applesCount; i++)
-	//{
-	//	gameObjectList.push_back(stage1->apples[i]);
-	//}
-
-	////manager setup
-	//g_TextManager.Initialize(this->graphics);
-	//g_ScoreManager.ResetData();
-
-	//scoreBuffer = new wchar_t[scoreBufferSize];
-
-	//sceneTimer = 0;
-
-	//// 카메라 때문에 플레이어 사라짐 -> colliderBound가 어디에서 초기화됨
-	//// Camera
-	//mainCamera = new MainCamera();
-	//mainCamera->SetCameraTarget(player);
-	//gameObjectList.push_back(mainCamera);
+	Stage1* stage1 = new Stage1(graphics);
+	int groundCount = (int)stage1->groundList.size();
+	for (int i = 0; i < groundCount; i++)
+	{
+		gameObjectList.push_back(stage1->groundList[i]);
+	}
+	
+	int applesCount = (int)stage1->apples.size();
+	for (int i = 0; i < applesCount; i++)
+	{
+		gameObjectList.push_back(stage1->apples[i]);
+	}
+	
+	//manager setup
+	g_TextManager.Initialize(this->graphics);
+	g_ScoreManager.ResetData();
+	
+	scoreBuffer = new wchar_t[scoreBufferSize];
+	
+	sceneTimer = 0;
+	
+	// 카메라 때문에 플레이어 사라짐 -> colliderBound가 어디에서 초기화됨
+	// Camera
+	mainCamera = new MainCamera();
+	mainCamera->SetCameraTarget(player);
+	gameObjectList.push_back(mainCamera);
 }
 
 void PlayScene::PhysicsUpdate()
