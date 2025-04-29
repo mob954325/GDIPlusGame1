@@ -99,7 +99,7 @@ void WinApp::Initialize()
 
 void WinApp::Shutdown()
 {
-	// 
+	ReleaseDC(m_hWnd, g_Renderer.GetFrontBuffer());
 	g_SceneManager.Shutdown();
 	g_Renderer.Shutdown();
 }

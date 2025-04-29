@@ -6,6 +6,7 @@ SpriteRenderer::~SpriteRenderer()
 {
 	if (imageBitMap != nullptr)
 	{
+		std::cout << "Deleting bitmap at address: " << imageBitMap << std::endl; // 메모리 주소 출력
 		delete imageBitMap;
 		imageBitMap = nullptr;
 	}

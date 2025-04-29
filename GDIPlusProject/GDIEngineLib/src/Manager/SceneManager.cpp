@@ -51,9 +51,8 @@ void SceneManager::Shutdown()
 	{
 		delete scene;
 	}
+	scenes.clear();
 
 	currentScene = nullptr;
 	nextScene = nullptr;
-
-	scenes.clear();
 }

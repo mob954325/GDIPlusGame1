@@ -12,9 +12,9 @@ void MenuScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	this->BackBufferDC = backBufferDC;	// 뒷면 DC
 
 	Gdiplus::GdiplusStartup(&gdiPlusToken, &gsi, nullptr);
-	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC); // null 반환
+	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
-	g_TextManager.Initialize(this->graphics);
+	//g_TextManager.Initialize(this->graphics);
 }
 
 void MenuScene::PhysicsUpdate()
@@ -28,5 +28,5 @@ void MenuScene::Update(){
 
 void MenuScene::Render()
 {
-	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Start", 0.5f, 0.7f);
+	//g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Start", 0.5f, 0.7f);
 }

@@ -14,9 +14,6 @@ public:
 	HDC GetBackBuffer();
 
 private:
-	//ULONG_PTR GdiPlusToken = 0;
-	//Gdiplus::GdiplusStartupInput gsi = {};
-
 	HWND hWnd = {};
 	HBITMAP BackBufferBitmap = {};
 	HDC FrontBufferDC = {};

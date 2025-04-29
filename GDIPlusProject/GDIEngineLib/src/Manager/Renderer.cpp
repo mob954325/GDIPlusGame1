@@ -29,6 +29,10 @@ void Renderer::Shutdown()
 {
 	DeleteObject(BackBufferBitmap);
 	DeleteDC(BackBufferDC);
+
+	FrontBufferDC = nullptr;
+	BackBufferDC = nullptr;
+	BackBufferBitmap = nullptr;
 }
 
 HDC Renderer::GetFrontBuffer()

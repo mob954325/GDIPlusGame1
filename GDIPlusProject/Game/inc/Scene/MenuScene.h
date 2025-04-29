@@ -9,7 +9,12 @@ public:
 	void PhysicsUpdate() override;
 	void Update() override;
 	void Render() override;
-	void Exit() override { Clear(); Gdiplus::GdiplusShutdown(gdiPlusToken); };
+	void Exit() override 
+	{ 
+		Clear(); 
+		delete graphics;
+		Gdiplus::GdiplusShutdown(gdiPlusToken); 
+	};
 
 protected:
 	HWND hwnd = nullptr;

@@ -18,7 +18,7 @@ void EndScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	Gdiplus::GdiplusStartup(&gdiPlusToken, &gsi, nullptr);
 	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
-	g_TextManager.Initialize(this->graphics);
+	//g_TextManager.Initialize(this->graphics);
 
 	g_ScoreManager.GetScoreString(&scoreString);
 }
@@ -37,6 +37,6 @@ void EndScene::Update()
 
 void EndScene::Render()
 {
-	g_TextManager.DrawTextByViewport(scoreString, 0.5f, 0.3f);
-	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Back to Menu", 0.5f, 0.7f);
+	//g_TextManager.DrawTextByViewport(scoreString, 0.5f, 0.3f);
+	//g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Back to Menu", 0.5f, 0.7f);
 }

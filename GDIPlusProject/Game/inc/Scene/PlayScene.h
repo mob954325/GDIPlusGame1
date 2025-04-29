@@ -14,6 +14,7 @@ public:
 	void Render() override;
 	void Exit() override 
 	{ 
+		Clear();
 		delete scoreBuffer;
 		delete graphics;
 		Gdiplus::GdiplusShutdown(gdiPlusToken); 
