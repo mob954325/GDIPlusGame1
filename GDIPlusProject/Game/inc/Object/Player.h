@@ -25,16 +25,16 @@ protected:
 	void OnGroundColliderEnter(GroundObject* ground);
 	void LimitPositionInScreen();
 
-	Gdiplus::Graphics* graphics = {};
+	Gdiplus::Graphics* graphics = nullptr;
 	SpriteRenderer* spriteRenderer[1];
-	Collider* collider = {};
-	Gravity* gravity = {};
-	Vector2 moveDirection = {};
+	Collider* collider = nullptr;
+	Gravity* gravity = nullptr;
+	Vector2 moveDirection = Vector2(0.0f, 0.0f);
 
 	// state
 	int playerState = 0;
 	float speed = 330.0f;		 // 플레이어 이동 속도
-	float jumpPower = 600.0f;
+	float jumpPower = 450.0f;
 
 	bool canJump = true;
 	bool canMoveLeft = true;

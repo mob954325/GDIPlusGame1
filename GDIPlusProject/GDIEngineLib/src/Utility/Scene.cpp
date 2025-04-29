@@ -9,23 +9,37 @@ void Scene::Clear()
 	}
 	
 	gameObjectList.clear();
+	previousCollisions.clear();
+	currentCollisions.clear();
 }
 
 void Scene::CheckObjects()
 {
-	// 리스트에서 오브젝트 제거하기
-	for (auto& gameObject : gameObjectList)
+	// 리스트에서 오브젝트 제거될 오브젝트 넘기기
+	if (gameObjectList.size() <= 0) return;
+
+	for (auto it = gameObjectList.begin(); it != gameObjectList.end();)
 	{
-		if (gameObject->shouldBeDeleted)
+		if ((*it)->shouldBeDeleted)
 		{
-			auto it = std::find(gameObjectList.begin(), gameObjectList.end(), gameObject);
-			if (it != gameObjectList.end())
-			{
-				delete gameObject;
-				gameObjectList.erase(it); // 오브젝트 제거
-			}
+			gameObjectDeleteList.push_back(*it);
+			it = gameObjectList.erase(it);
+		}
+		else
+		{
+			++it;
 		}
 	}
+}
+
+void Scene::DeleteDeactiveObjects()
+{
+	// 제거될 오브젝트 제거하기
+	for (auto& object : gameObjectDeleteList)
+	{
+		delete object;
+	}
+	gameObjectDeleteList.clear();
 }
 
 void Scene::PhysicsUpdate()

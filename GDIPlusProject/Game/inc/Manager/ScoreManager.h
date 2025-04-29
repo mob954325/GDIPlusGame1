@@ -12,7 +12,7 @@ public:
 	void GetScoreString(wchar_t** buffer);
 
 private:
-	Gdiplus::Graphics* graphics = {};
+	Gdiplus::Graphics* graphics = nullptr;
 	int score = 0;
 };
 

@@ -7,7 +7,7 @@
 class SpriteRenderer : public Component
 {
 public:
-	SpriteRenderer(GameObject* obj) : Component(obj) { };
+	SpriteRenderer(GameObject* obj) : Component(obj) { Initialize(); };
 	~SpriteRenderer();
 
 	void Initialize() override;
@@ -16,8 +16,7 @@ public:
 
 	bool GetImage(const wchar_t* path);
 	void GetGraphic(Gdiplus::Graphics** graphicsPtr);
-	void DrawImage(Gdiplus::Graphics* graphics, int posX, int posY);
-	void DrawImage();
+	void DrawImage(int gridX, int gridY);
 	void GetImageInfo(const wchar_t* infoName, const wchar_t* path);
 
 	int currFrame = 0;					// 현재 이미지 프레임 (GetImage에서 초기화)
@@ -25,7 +24,10 @@ public:
 	int imageWidth = 0;					// 각 이미지 넓이
 	int imageHeight = 0;				// 이미지 높이
 
+	// time
+	float animationGameTimer = 0.0f;
+	float maxAnimationGameTime = 0.8f;
 protected:
-	Gdiplus::Bitmap* imageBitMap = {};	// 이미지 비트맵
-	Gdiplus::Graphics* graphics = {};
+	Gdiplus::Bitmap* imageBitMap = nullptr;	// 이미지 비트맵
+	Gdiplus::Graphics* graphics = nullptr;
 };

@@ -12,6 +12,7 @@ public:
 	void UpdateTime();
 	float GetDeltaTime();
 	float GetElapsedTime();
+	float GetFixedDeltaTime();
 
 private:
 	LARGE_INTEGER freq, curr, prev, start, end;

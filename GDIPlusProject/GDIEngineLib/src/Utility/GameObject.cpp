@@ -15,8 +15,6 @@ GameObject::~GameObject()
 		delete componentList[i];
 	}
 
-
-
 	// printf("GameObject 소멸자 호출");
 }
 

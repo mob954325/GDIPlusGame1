@@ -33,7 +33,6 @@ void Apple::UpdateImpl()
 
 void Apple::RenderImpl()
 {
-	spriteRenderer->DrawImage(graphics, (int)transform->position.x, (int)transform->position.y);
 }
 
 void Apple::OnColliderEnterImpl(GameObject* other)

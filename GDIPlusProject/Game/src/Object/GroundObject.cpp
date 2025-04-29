@@ -9,11 +9,10 @@ void GroundObject::Initialize()
 {
 	spriteRenderer = AddComponent<SpriteRenderer>();
 	spriteRenderer->GetGraphic(&graphics);
-
-	collider = AddComponent<Collider>();
-
 	spriteRenderer->GetImage(L"./Resource/Tile/Blue.png");
 	spriteRenderer->GetImageInfo(L"Blue", L"./Resource/Tile/tileSize.csv");
+
+	collider = AddComponent<Collider>();
 }
 
 void GroundObject::UpdateImpl()
@@ -22,24 +21,14 @@ void GroundObject::UpdateImpl()
 
 void GroundObject::RenderImpl()
 {
-	for (int y = 0; y < transform->height / spriteRenderer->imageHeight; y++)
-	{
-		for (int x = 0; x < transform->width / spriteRenderer->imageWidth; x++)
-		{
-			spriteRenderer->DrawImage(graphics, (int)(transform->position.x + x * spriteRenderer->imageWidth), (int)(transform->position.y + y * spriteRenderer->imageHeight));
-		}
-	}
 }
-
-/// NOTE
-/// bound left 와 bound right 값이 잘못됨
 
 void GroundObject::SetupTransform(int gridX, int gridY, int countX, int countY)
 {
 	transform->SetTransform((float)(gridX * spriteRenderer->imageWidth), (float)(gridY * spriteRenderer->imageHeight));
-
+	
 	//printf("ground %d", spriteRenderer->imageWidth);
-
+	
 	transform->width = (float)(spriteRenderer->imageWidth * countX);
 	transform->height = (float)(spriteRenderer->imageHeight * countY);
 	collider->bound = { (LONG)transform->position.x, (LONG)transform->height,(LONG)transform->width, (LONG)transform->position.y };

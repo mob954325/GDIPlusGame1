@@ -8,7 +8,7 @@ class Collider : public Component
 {
 public:
 	Collider();
-	Collider(GameObject* obj) : Component(obj), bound({}) {};
+	Collider(GameObject* obj) : Component(obj), bound() {};
 	~Collider();
 
 	void Initialize() override;

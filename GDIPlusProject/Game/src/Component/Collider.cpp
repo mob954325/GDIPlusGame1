@@ -2,11 +2,12 @@
 
 Collider::Collider()
 {
-	bound = {};
+	bound = { 0, 0, 0, 0 };
 }
 
 Collider::~Collider()
 {
+	owner = nullptr;
 }
 
 void Collider::Initialize()

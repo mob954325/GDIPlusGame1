@@ -11,7 +11,7 @@
 #include "Manager/TextManager.h"
 
 void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
-{
+{ 
 	// handle, gdi setup
 	this->hwnd = hwnd;
 	this->FrontBufferDC = frontBufferDC;	// 앞면 DC
@@ -37,7 +37,7 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 		gameObjectList.push_back(stage1->apples[i]);
 	}
 
-	// manager setup
+	//manager setup
 	g_TextManager.Initialize(this->graphics);
 	g_ScoreManager.ResetData();
 
@@ -45,6 +45,7 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 	sceneTimer = 0;
 
+	// 카메라 때문에 플레이어 사라짐 -> colliderBound가 어디에서 초기화됨
 	// Camera
 	mainCamera = new MainCamera();
 	mainCamera->SetCameraTarget(player);
@@ -69,6 +70,7 @@ void PlayScene::PhysicsUpdate()
 			GameObject* objA = gameObjectList[i];
 			GameObject* objB = gameObjectList[j];
 
+			if (objA == nullptr || objB == nullptr) continue;
 			if (objA->shouldBeDeleted || objB->shouldBeDeleted) continue; // 제거 될 오브젝트 무시
 
 			Collider* colliderA = objA->GetComponent<Collider>();
@@ -131,6 +133,7 @@ void PlayScene::Update()
 
 	for (GameObject* obj : gameObjectList)
 	{
+		if (obj == nullptr) continue;
 		obj->Update();
 
 		// 카메라가 존재하면 카메라를 기준으로 이동
@@ -148,11 +151,19 @@ void PlayScene::Render()
 	//	g_SceneManager.ChangeScene(2);
 	//}
 
-	g_ScoreManager.GetScoreString(&scoreBuffer);
-	g_TextManager.DrawTextByViewport(scoreBuffer, 0.1f, 0);
+	if (g_Input.IsKeyPressed(VK_SPACE))
+	{
+		g_SceneManager.ChangeScene(2);
+	}
+
+	// 버그 - 힙터짐
+	//g_ScoreManager.GetScoreString(&scoreBuffer);
+	//g_TextManager.DrawTextByViewport(scoreBuffer, 0.1f, 0);
 
 	for (GameObject* obj : gameObjectList)
 	{
+		if (obj == nullptr) continue;
+
 		obj->Render();
 	}
 }

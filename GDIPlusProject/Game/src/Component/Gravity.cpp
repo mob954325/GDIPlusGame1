@@ -77,12 +77,12 @@ void Gravity::ApplyFrictionForce()
 	{
 		if (velocity.x > 0.0f)
 		{
-			velocity.x -= frictionForce * g_GameTime.GetDeltaTime();
+			velocity.x -= frictionForce * g_GameTime.GetFixedDeltaTime();
 			if (velocity.x < 0.0f) velocity.x = 0.0f;
 		}
 		else if (velocity.x < 0.0f)
 		{
-			velocity.x += frictionForce * g_GameTime.GetDeltaTime();
+			velocity.x += frictionForce * g_GameTime.GetFixedDeltaTime();
 			if (velocity.x > 0.0f) velocity.x = 0.0f;
 		}
 	}
@@ -92,7 +92,7 @@ void Gravity::ApplyGravity()
 {
 	if (!isGround)
 	{
-		velocity.y += fallingSpeed * g_GameTime.GetDeltaTime();
+		velocity.y += fallingSpeed * g_GameTime.GetFixedDeltaTime();
 	}
 	else
 	{

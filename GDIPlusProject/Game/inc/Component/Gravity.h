@@ -30,12 +30,13 @@ private:
 	void ApplyGravity();
 	void ClampVelocity();
 
-	Vector2 velocity = Vector2();
+	Vector2 velocity = Vector2(0.0f, 0.0f);
 
 	float maxVelocityY = 1000.0f;
 	float maxVelocityX = 250.0f;
 
 	float fallingSpeed = 1000.0f;	// 낙하 속도
 	float frictionForce = 600.0f;	// 마찰력 -> 높을 수록 빨리 멈춤
+
 	bool isGround = false;		// 땅인지 확인하는 bool값
 };

@@ -12,12 +12,12 @@ public:
 	void Exit() override { Clear(); Gdiplus::GdiplusShutdown(gdiPlusToken); };
 
 protected:
-	HWND hwnd = {};
-	HDC FrontBufferDC = {};    // 앞면 DC
-	HDC BackBufferDC = {};    // 뒷면 DC
+	HWND hwnd = nullptr;
+	HDC FrontBufferDC = nullptr;    // 앞면 DC
+	HDC BackBufferDC = nullptr;    // 뒷면 DC
 
 	ULONG_PTR gdiPlusToken = 0;
-	Gdiplus::GdiplusStartupInput gsi = {};
-	Gdiplus::Graphics* graphics = {};
+	Gdiplus::GdiplusStartupInput gsi = nullptr;
+	Gdiplus::Graphics* graphics = nullptr;
 };
 

@@ -14,7 +14,7 @@ public:
 	void Render() override;
 	void Exit() override 
 	{ 
-		Clear(); 
+		delete scoreBuffer;
 		delete graphics;
 		Gdiplus::GdiplusShutdown(gdiPlusToken); 
 	};
@@ -26,13 +26,13 @@ protected:
 	int scoreBufferSize = 20;
 	wchar_t* scoreBuffer;
 
-	HWND hwnd = {};
-	HDC FrontBufferDC = {};    // 앞면 DC
-	HDC BackBufferDC = {};    // 뒷면 DC
+	HWND hwnd = nullptr;
+	HDC FrontBufferDC = nullptr;    // 앞면 DC
+	HDC BackBufferDC = nullptr;    // 뒷면 DC
 
 	ULONG_PTR gdiPlusToken = 0;
-	Gdiplus::GdiplusStartupInput gsi = {};
-	Gdiplus::Graphics* graphics = {};
+	Gdiplus::GdiplusStartupInput gsi = nullptr;
+	Gdiplus::Graphics* graphics = nullptr;
 
-	MainCamera* mainCamera = {};
+	MainCamera* mainCamera = nullptr;
 };

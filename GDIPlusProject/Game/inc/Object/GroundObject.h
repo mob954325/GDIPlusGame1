@@ -19,7 +19,7 @@ public:
 	void OnColliderExitImpl(GameObject* other) override;
 
 protected:
-	Gdiplus::Graphics* graphics = {};
+	Gdiplus::Graphics* graphics = nullptr;
 	SpriteRenderer* spriteRenderer;
 	Collider* collider;
 };

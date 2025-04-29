@@ -47,8 +47,6 @@ WinApp::~WinApp()
 
 void WinApp::Initialize()
 {
-	ENABLE_LEAK_CHECK();
-
 	char szPath[MAX_PATH] = { 0, };
 	GetModuleFileNameA(NULL, szPath, MAX_PATH); // 현재 모듈의 경로
 	m_ModulePath = szPath; // 모듈 경로
@@ -102,7 +100,8 @@ void WinApp::Initialize()
 void WinApp::Shutdown()
 {
 	// 
-	DUMP_LEAKS();
+	g_SceneManager.Shutdown();
+	g_Renderer.Shutdown();
 }
 
 void WinApp::MessageProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -127,13 +126,14 @@ void WinApp::Run()
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			if (msg.message == WM_QUIT)
+			if (msg.message == WM_QUIT || msg.message == WM_DESTROY)
 				break;
 
 			//윈도우 메시지 처리 
 			TranslateMessage(&msg); // 키입력관련 메시지 변환  WM_KEYDOWN -> WM_CHAR
 			DispatchMessage(&msg);
 		}
+
 		Update();
 		Render();
 	}

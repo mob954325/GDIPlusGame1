@@ -17,11 +17,11 @@ void Player::Initialize()
 	spriteRenderer[0] = AddComponent<SpriteRenderer>();
 	spriteRenderer[0]->GetGraphic(&graphics);
 
-	// 그외 컴포넌트 생성
-	collider = AddComponent<Collider>();
-
 	spriteRenderer[0]->GetImage(L"./Resource/Player/Idle-Sheet.png");
 	spriteRenderer[0]->GetImageInfo(L"Idle", L"./Resource/Player/animSize.csv");
+
+	// 그외 컴포넌트 생성
+	collider = AddComponent<Collider>();
 
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
@@ -80,10 +80,6 @@ void Player::UpdateImpl()
 
 void Player::RenderImpl()
 {
-	if (graphics != nullptr)
-	{
-		spriteRenderer[playerState]->DrawImage(graphics, (int)transform->position.x, (int)transform->position.y);
-	}
 }
 
 // Event ----------------------------------------------------------------------------------------------------------------

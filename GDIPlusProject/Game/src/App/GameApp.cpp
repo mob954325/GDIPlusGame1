@@ -4,8 +4,11 @@
 #include "Scene/PlayScene.h"
 #include "Scene/EndScene.h"
 
+#include "GDIEngineLib/inc/Utility/DebugUtility.h"
+
 void GameApp::Initialize()
 {
+	ENABLE_LEAK_CHECK();
 	__super::Initialize();
 
 	g_SceneManager.CreateScene<MenuScene>();
@@ -18,4 +21,5 @@ void GameApp::Initialize()
 void GameApp::Shutdown()
 {
 	__super::Shutdown();
+	DUMP_LEAKS();
 }

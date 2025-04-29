@@ -14,7 +14,7 @@ void ScoreManager::AddScore()
 
 void ScoreManager::GetScoreString(wchar_t** buffer)
 {
-	*buffer = new wchar_t[32]; // ? Leak
+	if (*buffer == nullptr) return; // 출력할 내용이 존재하지 않음
 
 	wchar_t textBuffer[32] = L"Score : ";
 	wchar_t scoreBuffer[32] = L"\0";
@@ -25,5 +25,6 @@ void ScoreManager::GetScoreString(wchar_t** buffer)
 	wcscat_s(textBuffer, scoreBuffer);
 	wcscat_s(textBuffer, L"\0");
 
-	wcscpy_s(*buffer, 32, textBuffer);
+	// buffer == NULL -> 씬 교체 시 발생
+	wcscpy_s(*buffer, 32, textBuffer); // ((destination)) != NULL && ((size_in_elements)) > 0 
 }

@@ -12,6 +12,7 @@ public:
 
 	void Clear();
 	void CheckObjects();
+	void DeleteDeactiveObjects();
 	virtual void Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC) = 0;
 	virtual void PhysicsUpdate();
 	virtual void Update();
