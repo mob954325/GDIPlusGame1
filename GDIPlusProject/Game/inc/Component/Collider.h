@@ -16,7 +16,7 @@ public:
 	void Render() override;
 	bool IsOverlap(Collider* objectA, Collider* objectB); // AABB 충돌 검사 함수
 
-	RECT bound;
+	RECT bound; // left, top, right, bottom
 private:
 };
 

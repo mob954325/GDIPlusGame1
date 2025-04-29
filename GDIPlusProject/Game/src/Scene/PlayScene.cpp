@@ -21,7 +21,8 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
 	// object setup
-	gameObjectList.push_back(new Player(graphics));
+	GameObject* player = new Player(graphics);
+	gameObjectList.push_back(player);
 
 	Stage1* stage1 = new Stage1(graphics);
 	int groundCount = (int)stage1->groundList.size();
@@ -46,6 +47,7 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 	// Camera
 	mainCamera = new MainCamera();
+	mainCamera->SetCameraTarget(player);
 	gameObjectList.push_back(mainCamera);
 }
 
@@ -131,9 +133,10 @@ void PlayScene::Update()
 	{
 		obj->Update();
 
-		if (mainCamera != nullptr && obj != mainCamera)
+		// 카메라가 존재하면 카메라를 기준으로 이동
+		if (mainCamera != nullptr && obj != mainCamera) 
 		{
-			obj->transform->Translate(mainCamera->InvertTransformPosition());
+			obj->transform->Translate(mainCamera->InvertCameraMoveVector());
 		}
 	}
 }

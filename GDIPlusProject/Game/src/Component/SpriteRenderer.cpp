@@ -21,7 +21,10 @@ void SpriteRenderer::Update()
 
 void SpriteRenderer::Render()
 {
-	DrawImage();
+	if (isActive)
+	{
+		DrawImage();
+	}
 }
 
 bool SpriteRenderer::GetImage(const wchar_t* path)

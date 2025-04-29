@@ -18,7 +18,7 @@ public:
 	void GetGraphic(Gdiplus::Graphics** graphicsPtr);
 	void DrawImage(Gdiplus::Graphics* graphics, int posX, int posY);
 	void DrawImage();
-	void GetImageInfo(const wchar_t* infoName, const wchar_t* path); // 임시 부정확한 이름
+	void GetImageInfo(const wchar_t* infoName, const wchar_t* path);
 
 	int currFrame = 0;					// 현재 이미지 프레임 (GetImage에서 초기화)
 	int imageFrameCount = 0;			// 이미지 프레임 개수

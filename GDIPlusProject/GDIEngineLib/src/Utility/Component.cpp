@@ -21,3 +21,8 @@ void Component::Update()
 void Component::Render()
 {
 }
+
+void Component::SetActive(bool value)
+{
+	isActive = value;
+}
