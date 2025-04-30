@@ -153,7 +153,7 @@
     <ClInclude Include="inc\Component\SpriteRenderer.h" />
     <ClInclude Include="inc\Object\Map\Stage1.h" />
     <ClInclude Include="inc\Object\MainCamera.h" />
-    <ClInclude Include="TerrainObject.h" />
+    <ClInclude Include="inc\Object\TerrainObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Object\MainCamera.cpp" />
@@ -172,7 +172,7 @@
     <ClCompile Include="src\Manager\ScoreManager.cpp" />
     <ClCompile Include="src\Component\SpriteRenderer.cpp" />
     <ClCompile Include="src\Object\Map\Stage1.cpp" />
-    <ClCompile Include="TerrainObject.cpp" />
+    <ClCompile Include="src\Object\TerrainObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

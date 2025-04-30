@@ -20,8 +20,8 @@ public:
 	void DrawImage(int gridX, int gridY, int tileNum); // 이미지의 특정 위치를 그리는 함수
 	void GetImageInfo(const wchar_t* infoName, const wchar_t* path);
 
-	int currFrame = 0;					// 현재 이미지 프레임 (GetImage에서 초기화)
-	int imageFrameCount = 0;			// 이미지 프레임 개수
+	int currFrame = 0;					// 이미지의 현재 프레임 값 ( 출력할 이미지 위치 인덱스 값 )
+	int imageFrameCount = 0;			// 이미지 프레임 개수 (GetImage에서 초기화)
 	int drawWidth = 0;					// 그릴 이미지 넓이
 	int drawHeight = 0;					// 그릴 이미지 높이
 	int sourceWidth = 0;				// 소스 이미지 넓이
@@ -31,6 +31,7 @@ public:
 	float animationGameTimer = 0.0f;
 	float maxAnimationGameTime = 0.8f;
 protected:
+	void UpdateAnimationFrame();
 	Gdiplus::Bitmap* imageBitMap = nullptr;	// 이미지 비트맵
 	Gdiplus::Graphics* graphics = nullptr;
 };

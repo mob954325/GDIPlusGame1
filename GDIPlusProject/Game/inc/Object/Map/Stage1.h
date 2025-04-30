@@ -3,7 +3,7 @@
 #include "GDIEngineLib/inc/Utility/GameObject.h"
 #include "Object/GroundObject.h"
 #include "Object/Item/Apple.h"
-#include "TerrainObject.h"
+#include "Object/TerrainObject.h"
 
 class Stage1 : public GameObject
 {

@@ -1,4 +1,4 @@
-#include "TerrainObject.h"
+癤�#include "Object/TerrainObject.h"
 
 TerrainObject::~TerrainObject()
 {
@@ -12,6 +12,8 @@ void TerrainObject::Initialize()
 	spriteRenderer->GetImageInfo(L"Rock2", L"./Resource/Tile/TerrainSize.csv");
 
 	collider = AddComponent<Collider>();
+
+	spriteRenderer->currFrame = 52;
 }
 
 void TerrainObject::UpdateImpl()
@@ -20,13 +22,6 @@ void TerrainObject::UpdateImpl()
 
 void TerrainObject::RenderImpl()
 {
-	for (int y = 0; y < transform->height / spriteRenderer->drawHeight; y++)
-	{
-		for (int x = 0; x < transform->height / spriteRenderer->drawHeight; x++)
-		{
-			spriteRenderer->DrawImage(y, x, 50); // 랜더 중복 출력으로 그림 안보임
-		}
-	}
 }
 
 void TerrainObject::SetupTransform(int gridX, int gridY, int countX, int countY)

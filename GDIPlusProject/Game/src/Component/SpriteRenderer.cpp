@@ -18,14 +18,7 @@ void SpriteRenderer::Initialize()
 
 void SpriteRenderer::Update()
 {
-	animationGameTimer += g_GameTime.GetDeltaTime();
-	if (animationGameTimer > maxAnimationGameTime)
-	{
-		animationGameTimer = 0.0f;
-
-		currFrame++;
-		currFrame %= imageFrameCount;
-	}
+	UpdateAnimationFrame();
 }
 
 void SpriteRenderer::Render()
@@ -36,7 +29,7 @@ void SpriteRenderer::Render()
 		{
 			for (int x = 0; x < owner->transform->width / drawWidth; x++)
 			{
-				DrawImage(x, y);
+				DrawImage(x, y, currFrame);
 			}
 		}
 	}
@@ -76,18 +69,17 @@ void SpriteRenderer::DrawImage(int gridX, int gridY)
 	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel); // 소스의 일부분만을 그린다.
 }
 
-void SpriteRenderer::DrawImage(int gridX, int gridY, int tileNum)
+void SpriteRenderer::DrawImage(int gridX, int gridY, int imageIndex)
 {
 	if (imageBitMap == nullptr) return;
 
 	int tilesPerRow = sourceWidth / drawWidth;		// 가로 개수
 	int tilesPerCol = sourceHeight / drawHeight;	// 세로 개수
 
-	if (tileNum < 0 || tileNum >= tilesPerRow * tilesPerCol) return; // 존재하지 않는 위치
+	if (imageIndex < 0 || imageIndex >= tilesPerRow * tilesPerCol) return; // 존재하지 않는 위치
 
-	int y = tileNum / tilesPerRow;
-	int x = tileNum % tilesPerRow;
-
+	int y = imageIndex / tilesPerRow;
+	int x = imageIndex % tilesPerRow;
 
 	Gdiplus::Rect srcRect(drawWidth * x, drawHeight * y, drawWidth, drawHeight);
 	Gdiplus::Rect destRect(
@@ -97,7 +89,7 @@ void SpriteRenderer::DrawImage(int gridX, int gridY, int tileNum)
 	);
 	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel);
 
-	std::cout << "tileNum: " << tileNum << " -> srcX: " << srcRect.X << ", srcY: " << srcRect.Y << std::endl;
+	std::cout << "tileNum: " << imageIndex << " -> srcX: " << srcRect.X << ", srcY: " << srcRect.Y << std::endl;
 }
 
 void SpriteRenderer::GetImageInfo(const wchar_t* infoName, const wchar_t* path)
@@ -158,5 +150,20 @@ void SpriteRenderer::GetImageInfo(const wchar_t* infoName, const wchar_t* path)
 		} // if getws
 
 		fclose(file);
+	}
+}
+
+void SpriteRenderer::UpdateAnimationFrame()
+{
+	if (imageFrameCount > 1)
+	{
+		animationGameTimer += g_GameTime.GetDeltaTime();
+		if (animationGameTimer > maxAnimationGameTime)
+		{
+			animationGameTimer = 0.0f;
+
+			currFrame++;
+			currFrame %= imageFrameCount;
+		}
 	}
 }
