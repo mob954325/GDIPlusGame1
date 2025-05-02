@@ -8,13 +8,13 @@
 class TerrainObject : public GameObject
 {
 public:
-	TerrainObject(Gdiplus::Graphics* g) : graphics(g) { Initialize(); }
+	TerrainObject(Gdiplus::Graphics* g, int tileType) : graphics(g), tileNumber(tileType) { Initialize(); }
 	~TerrainObject();
 
 	void Initialize() override;
 	void UpdateImpl() override;
 	void RenderImpl() override;
-	void SetupTransform(int gridX, int gridY, int countX, int countY);
+	void SetupTransform(int gridX, int gridY);
 
 	// Event
 	void OnColliderEnterImpl(GameObject* other) override;
@@ -24,5 +24,7 @@ protected:
 	Gdiplus::Graphics* graphics = nullptr;
 	SpriteRenderer* spriteRenderer;
 	Collider* collider;
+
+	int tileNumber = 0;
 };
 

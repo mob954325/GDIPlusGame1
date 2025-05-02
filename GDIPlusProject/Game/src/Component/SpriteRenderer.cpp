@@ -78,8 +78,8 @@ void SpriteRenderer::DrawImage(int gridX, int gridY, int imageIndex)
 
 	if (imageIndex < 0 || imageIndex >= tilesPerRow * tilesPerCol) return; // 존재하지 않는 위치
 
-	int y = imageIndex / tilesPerRow;
-	int x = imageIndex % tilesPerRow;
+	int y = imageIndex / tilesPerRow; // NOTE : 지금 이미지 제대로 안쪼개짐 -> Player해보면 x가 한칸씩 밀려있음
+	int x = imageIndex % tilesPerRow - 1; // -> problem solved
 
 	Gdiplus::Rect srcRect(drawWidth * x, drawHeight * y, drawWidth, drawHeight);
 	Gdiplus::Rect destRect(

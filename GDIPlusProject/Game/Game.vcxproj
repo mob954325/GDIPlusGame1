@@ -155,6 +155,7 @@
     <ClInclude Include="inc\Object\MainCamera.h" />
     <ClInclude Include="inc\Object\TerrainObject.h" />
     <ClInclude Include="inc\Manager\JsonManager.h" />
+    <ClInclude Include="json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Manager\JsonManager.cpp" />
