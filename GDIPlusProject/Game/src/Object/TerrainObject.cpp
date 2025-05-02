@@ -1,5 +1,4 @@
 ﻿#include "Object/TerrainObject.h"
-
 TerrainObject::~TerrainObject()
 {
 }

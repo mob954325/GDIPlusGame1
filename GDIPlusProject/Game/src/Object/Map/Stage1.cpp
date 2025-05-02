@@ -1,4 +1,5 @@
 ﻿#include "Object/Map/Stage1.h"
+#include "Manager/JsonManager.h"
 
 Stage1::~Stage1()
 {
@@ -8,6 +9,14 @@ void Stage1::Initialize()
 {
 	groundList.reserve(8);
 	apples.reserve(8);
+
+	tileInfo = g_JsonManager.GetIntagerData(L"./Resource/Map/Stage1.json", std::vector<std::wstring>{ L"layers", L"data"});
+
+	for (int data : tileInfo)
+	{
+		printf("%d ", data);
+	}
+
 	SetGrounds();
 }
 

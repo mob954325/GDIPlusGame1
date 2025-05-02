@@ -16,9 +16,10 @@ public:
 	std::vector<TerrainObject*> groundList;
 	std::vector<Apple*> apples;
 private:
-	Gdiplus::Graphics* graphics;
-
 	void SetGrounds();
+	Gdiplus::Graphics* graphics;
+	std::vector<int> tileInfo; // 맵을 그릴 타일 데이터 컨테이너
+
 	int tilesYCount = 12;
 	int tilesXCount = 23;
 

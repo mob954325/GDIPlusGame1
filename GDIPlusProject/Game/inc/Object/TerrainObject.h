@@ -1,7 +1,9 @@
-#pragma once
+﻿#pragma once
 #include "GDIEngineLib/inc/Utility/GameObject.h"
 #include "Component/SpriteRenderer.h"
 #include "Component/Collider.h"
+
+#include <vector>
 
 class TerrainObject : public GameObject
 {

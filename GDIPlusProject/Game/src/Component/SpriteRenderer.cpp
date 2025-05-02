@@ -88,8 +88,6 @@ void SpriteRenderer::DrawImage(int gridX, int gridY, int imageIndex)
 		srcRect.Width, srcRect.Height
 	);
 	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel);
-
-	std::cout << "tileNum: " << imageIndex << " -> srcX: " << srcRect.X << ", srcY: " << srcRect.Y << std::endl;
 }
 
 void SpriteRenderer::GetImageInfo(const wchar_t* infoName, const wchar_t* path)
