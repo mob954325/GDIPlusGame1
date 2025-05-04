@@ -8,43 +8,11 @@ Stage1::~Stage1()
 void Stage1::Initialize()
 {
 	groundList.reserve(8);
-	apples.reserve(8);
-
-	tileInfo = g_JsonManager.GetIntagerData(L"./Resource/Map/StageTest.json", std::vector<std::wstring>{ L"layers", L"data"});
-	mapWidth = g_JsonManager.GetIntagerData(L"./Resource/Map/StageTest.json", std::vector<std::wstring>{ L"layers", L"width" })[0];
-
-	for (int data : tileInfo)
-	{
-		printf("%d ", data);
-	}
-
-	SetGrounds();
+	apples.reserve(8);	
 }
 
 void Stage1::SetGrounds()
 {
-	int dx[4] = { 1,-1,0,0 };
-	int dy[4] = { 0,0,1,-1 };
-
-	int groundIndex = 0;
-	int x = 0;
-	int y = 0;
-	for (int tile : tileInfo)
-	{
-		if(tile != 0)
-		{
-			groundList.push_back(new TerrainObject(graphics, tile));
-			groundList[groundIndex++]->SetupTransform(x, y);
-		}
-
-		x++;
-		if (x == mapWidth)
-		{
-			x = 0;
-			y++;
-		}
-	}
-
 	//int groundIndex = 0;
 	//for (int y = 0; y < tilesYCount; y++)
 	//{

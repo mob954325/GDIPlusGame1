@@ -37,15 +37,6 @@ void Player::Initialize()
 
 void Player::UpdateImpl()
 {
-	animationGameTimer += g_GameTime.GetDeltaTime();
-	if (animationGameTimer > maxAnimationGameTime)
-	{
-		animationGameTimer = 0.0f;
-
-		spriteRenderer[playerState]->currFrame++;
-		spriteRenderer[playerState]->currFrame %= spriteRenderer[playerState]->imageFrameCount;
-	}
-
 	Vector2 inputForce = Vector2(0.0f, 0.0f);
 
 	if (g_Input.IsKeyDown(VK_DOWN))
@@ -70,7 +61,7 @@ void Player::UpdateImpl()
 
 	canJump = gravity->GetIsGround(); // isGround로 점프 가능한지 체크
 
-	transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
+	//transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
 
 	//printf("%s\n", gravity->GetIsGround() ? "true": "false");
 	//printf("%f\n", transform->position.y);

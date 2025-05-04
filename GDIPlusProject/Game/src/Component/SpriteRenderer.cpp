@@ -65,7 +65,7 @@ void SpriteRenderer::DrawImage(int gridX, int gridY)
 	if (imageBitMap == nullptr) return;
 
 	Gdiplus::Rect srcRect(drawWidth * currFrame, 0, drawWidth, drawHeight);	// 소스의 영역
-	Gdiplus::Rect destRect((int)owner->transform->position.x + (gridX * drawWidth), (int)owner->transform->position.y + (gridY * drawHeight), srcRect.Width, srcRect.Height);			// 화면에 그릴 영역
+	Gdiplus::Rect destRect((int)owner->transform->position.x + (gridX * drawWidth), (int)owner->transform->position.y + (gridY * drawHeight), srcRect.Width, srcRect.Height);// 화면에 그릴 영역
 	graphics->DrawImage(imageBitMap, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, Gdiplus::UnitPixel); // 소스의 일부분만을 그린다.
 }
 
@@ -78,8 +78,8 @@ void SpriteRenderer::DrawImage(int gridX, int gridY, int imageIndex)
 
 	if (imageIndex < 0 || imageIndex >= tilesPerRow * tilesPerCol) return; // 존재하지 않는 위치
 
-	int y = imageIndex / tilesPerRow; // NOTE : 지금 이미지 제대로 안쪼개짐 -> Player해보면 x가 한칸씩 밀려있음
-	int x = imageIndex % tilesPerRow - 1; // -> problem solved
+	int y = imageIndex / tilesPerRow;
+	int x = imageIndex % tilesPerRow;
 
 	Gdiplus::Rect srcRect(drawWidth * x, drawHeight * y, drawWidth, drawHeight);
 	Gdiplus::Rect destRect(
@@ -158,10 +158,10 @@ void SpriteRenderer::UpdateAnimationFrame()
 		animationGameTimer += g_GameTime.GetDeltaTime();
 		if (animationGameTimer > maxAnimationGameTime)
 		{
-			animationGameTimer = 0.0f;
-
 			currFrame++;
 			currFrame %= imageFrameCount;
+
+			animationGameTimer = 0.0f;
 		}
 	}
 }

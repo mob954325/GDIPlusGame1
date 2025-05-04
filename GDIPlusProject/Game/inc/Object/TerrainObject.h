@@ -2,13 +2,15 @@
 #include "GDIEngineLib/inc/Utility/GameObject.h"
 #include "Component/SpriteRenderer.h"
 #include "Component/Collider.h"
+#include "framework.h"
 
 #include <vector>
+#include <windows.h>
 
 class TerrainObject : public GameObject
 {
 public:
-	TerrainObject(Gdiplus::Graphics* g, int tileType) : graphics(g), tileNumber(tileType) { Initialize(); }
+	TerrainObject(Gdiplus::Graphics* g) : graphics(g) { Initialize(); }
 	~TerrainObject();
 
 	void Initialize() override;
@@ -20,11 +22,20 @@ public:
 	void OnColliderEnterImpl(GameObject* other) override;
 	void OnColliderExitImpl(GameObject* other) override;
 
-protected:
-	Gdiplus::Graphics* graphics = nullptr;
-	SpriteRenderer* spriteRenderer;
-	Collider* collider;
+	std::vector<GameObject*> groundList;
 
-	int tileNumber = 0;
+protected:
+	Gdiplus::Bitmap* CreateTilemapBitMap(int row, int cols, std::vector<int> tileData, Gdiplus::Image* tileset);
+
+	Gdiplus::Graphics* graphics = nullptr;
+	std::vector<int> tileInfo;  // 맵을 그릴 타일 데이터 컨테이너
+	Gdiplus::Image* tileSet = nullptr;
+	Gdiplus::Bitmap* tilemapBitmap = nullptr;
+
+	int mapGridXCount = 0;
+	int mapGridYCount = 0;
+	int tileSize = 0;
+	int tileGridXCount = 0;
+	int tileGridYCount = 0;
 };
 

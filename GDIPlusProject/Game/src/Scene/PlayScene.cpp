@@ -7,8 +7,13 @@
 #include "Object/Player.h"
 #include "Object/Enemy.h"
 #include "Object/Map/Stage1.h"
+#include "Object/Item/Apple.h"
+#include "Object/TerrainObject.h"
 #include "Manager/ScoreManager.h"
 #include "Manager/TextManager.h"
+
+// TODO : player pricking
+// testing apple object is also pricking
 
 void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 { 
@@ -20,23 +25,17 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	Gdiplus::GdiplusStartup(&gdiPlusToken, &gsi, nullptr);
 	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
+	TerrainObject* terrainObject = new TerrainObject(graphics);
+	gameObjectList.push_back(terrainObject);
+
 	// object setup
 	GameObject* player = new Player(graphics);
 	gameObjectList.push_back(player);
 
-	Stage1* stage1 = new Stage1(graphics);
-	int groundCount = (int)stage1->groundList.size();
-	for (int i = 0; i < groundCount; i++)
-	{
-		gameObjectList.push_back(stage1->groundList[i]);
-	}
-	
-	int applesCount = (int)stage1->apples.size();
-	for (int i = 0; i < applesCount; i++)
-	{
-		gameObjectList.push_back(stage1->apples[i]);
-	}
-	
+	GameObject* apple = new Apple(graphics);
+	gameObjectList.push_back(apple);
+	apple->transform->SetTransform(400, 400);
+
 	//manager setup
 	g_TextManager.Initialize(this->graphics);
 	g_ScoreManager.ResetData();
@@ -44,12 +43,6 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	scoreBuffer = new wchar_t[scoreBufferSize];
 	
 	sceneTimer = 0;
-	
-	// 카메라 때문에 플레이어 사라짐 -> colliderBound가 어디에서 초기화됨
-	// Camera
-	mainCamera = new MainCamera();
-	mainCamera->SetCameraTarget(player);
-	gameObjectList.push_back(mainCamera);
 }
 
 void PlayScene::PhysicsUpdate()
@@ -135,12 +128,6 @@ void PlayScene::Update()
 	{
 		if (obj == nullptr) continue;
 		obj->Update();
-
-		// 카메라가 존재하면 카메라를 기준으로 이동
-		if (mainCamera != nullptr && obj != mainCamera) 
-		{
-			obj->transform->Translate(mainCamera->InvertCameraMoveVector());
-		}
 	}
 }
 

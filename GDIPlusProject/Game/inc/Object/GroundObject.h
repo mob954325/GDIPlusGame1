@@ -12,7 +12,7 @@ public:
 	void Initialize() override;
 	void UpdateImpl() override;
 	void RenderImpl() override;
-	void SetupTransform(int gridX, int gridY, int countX, int countY);
+	void SetupTransform(int gridSize, int gridX, int gridY, int countX, int countY);
 
 	// Event
 	void OnColliderEnterImpl(GameObject* other) override;
@@ -20,7 +20,6 @@ public:
 
 protected:
 	Gdiplus::Graphics* graphics = nullptr;
-	SpriteRenderer* spriteRenderer;
 	Collider* collider;
 };
 

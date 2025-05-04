@@ -30,8 +30,3 @@ float GameTime::GetElapsedTime()
     QueryPerformanceCounter(&end);
     return static_cast<float>(end.QuadPart - start.QuadPart) / freq.QuadPart;
 }
-
-float GameTime::GetFixedDeltaTime()
-{
-    return 0.002f;
-}

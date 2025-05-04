@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "framework.h"
 #include "GDIEngineLib/inc/Utility/Scene.h"
-#include "Object/MainCamera.h"
 
 // NOTE: 카메라 이동 작성
 
@@ -34,6 +33,4 @@ protected:
 	ULONG_PTR gdiPlusToken = 0;
 	Gdiplus::GdiplusStartupInput gsi = nullptr;
 	Gdiplus::Graphics* graphics = nullptr;
-
-	MainCamera* mainCamera = nullptr;
 };

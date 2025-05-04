@@ -16,19 +16,21 @@ void Apple::Initialize()
 	transform->height = 32;
 
 	collider = AddComponent<Collider>();
+	collider->bound = { (LONG)transform->position.x, (LONG)(transform->height * 0.7f),(LONG)(transform->width * 0.7f), (LONG)transform->position.y };
+
 }
 
 void Apple::UpdateImpl()
 {
-	animationGameTimer += g_GameTime.GetDeltaTime();
+	//animationGameTimer += g_GameTime.GetDeltaTime();
 
-	if (animationGameTimer > maxAnimationGameTime)
-	{
-		spriteRenderer->currFrame++;
-		spriteRenderer->currFrame %= spriteRenderer->imageFrameCount;
+	//if (animationGameTimer > maxAnimationGameTime)
+	//{
+	//	spriteRenderer->currFrame++;
+	//	spriteRenderer->currFrame %= spriteRenderer->imageFrameCount;
 
-		animationGameTimer = 0.0f;
-	}
+	//	animationGameTimer = 0.0f;
+	//}
 }
 
 void Apple::RenderImpl()
@@ -61,6 +63,5 @@ void Apple::SetupTransform(int gridX, int gridY, int countX, int countY)
 
 	transform->SetTransform((float)(gridX * 64), (float)(gridY * 64));
 	transform->Translate(0.0f, 36.0f);
-
-	collider->bound = { (LONG)transform->position.x, (LONG)(transform->height * 0.7f),(LONG)(transform->width * 0.7f), (LONG)transform->position.y };
+	//collider->bound = { (LONG)transform->position.x, (LONG)(transform->height * 0.7f),(LONG)(transform->width * 0.7f), (LONG)transform->position.y };
 }
