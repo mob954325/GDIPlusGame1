@@ -25,7 +25,8 @@ public:
 	std::vector<GameObject*> groundList;
 
 protected:
-	Gdiplus::Bitmap* CreateTilemapBitMap(int row, int cols, std::vector<int> tileData, Gdiplus::Image* tileset);
+	Gdiplus::Bitmap* CreateTilemapBitMap(int rows, int cols, std::vector<int> tileData, Gdiplus::Image* tileset);
+	void SetGroundCollider(int rows, int cols, std::vector<int> tileData);
 
 	Gdiplus::Graphics* graphics = nullptr;
 	std::vector<int> tileInfo;  // 맵을 그릴 타일 데이터 컨테이너

@@ -1,4 +1,7 @@
-﻿#include "Object/Player.h"
+﻿#define NOMINMAX
+#include <algorithm>
+
+#include "Object/Player.h"
 #include "GDIEngineLib/inc/Utility/WindowConfig.h"
 #include "GDIEngineLib/inc/Manager/GameTime.h"
 #include "GDIEngineLib/inc/Manager/Input.h"
@@ -6,6 +9,7 @@
 
 #include "Object/GroundObject.h"
 #include "Object/Enemy.h"
+
 
 Player::~Player()
 {
@@ -39,6 +43,11 @@ void Player::UpdateImpl()
 {
 	Vector2 inputForce = Vector2(0.0f, 0.0f);
 
+	if (g_Input.IsKeyDown('W'))
+	{
+		transform->Translate(0.0f, -110.0f);
+	}
+
 	if (g_Input.IsKeyDown(VK_DOWN))
 	{
 		//moveDirection = Vector2(moveDirection.x, 1.0f);
@@ -61,9 +70,10 @@ void Player::UpdateImpl()
 
 	canJump = gravity->GetIsGround(); // isGround로 점프 가능한지 체크
 
-	//transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
+	transform->Translate(gravity->GetVelocity() * g_GameTime.GetDeltaTime());
 
 	//printf("%s\n", gravity->GetIsGround() ? "true": "false");
+	//printf("%f\n", gravity->GetVelocity().y);
 	//printf("%f\n", transform->position.y);
 
 	LimitPositionInScreen();
@@ -90,6 +100,7 @@ void Player::OnColliderEnterImpl(GameObject* other)
 
 void Player::OnColliderStayImpl(GameObject* other)
 {
+	
 }
 
 void Player::OnColliderExitImpl(GameObject* other)
@@ -114,42 +125,56 @@ void Player::OnJump()
 
 void Player::OnGroundColliderEnter(GroundObject* ground)
 {
-	if (ground != nullptr && !gravity->GetIsGround())
+	if (ground == nullptr || gravity->GetIsGround())
+		return;
+
+	// 플레이어 및 지형의 AABB 정보
+	float playerLeft = transform->position.x;
+	float playerRight = playerLeft + transform->width;
+	float playerBottom = transform->position.y;
+	float playerTop = playerBottom + transform->height;
+
+	float groundLeft = ground->transform->position.x;
+	float groundRight = groundLeft + ground->transform->width;
+	float groundBottom = ground->transform->position.y;
+	float groundTop = groundBottom + ground->transform->height;
+
+	// 겹친 영역
+	float overlapX = std::min(playerRight, groundRight) - std::max(playerLeft, groundLeft);
+	float overlapY = std::min(playerTop, groundTop) - std::max(playerBottom, groundBottom);
+
+	printf(" x : %f Y: %f\n", overlapX, overlapY);
+
+	// 이동 속도
+	Vector2 velocity = gravity->GetVelocity();
+
+	if (std::abs(velocity.y) > std::abs(velocity.x))
 	{
-		if (!gravity->GetIsGround())
+		if (velocity.y >= -1.0f && playerBottom < groundTop && playerTop > groundBottom)
 		{
-			Vector2 velocity = gravity->GetVelocity();
-
-			float playerBottom = transform->position.y;
-			float playerTop = playerBottom + transform->height;
-			float groundBottom = ground->transform->position.y;
-			float groundTop = groundBottom + ground->transform->height;
-
-
-			// 랜딩 조건
-			// velocity.y > 0.0f -> 떨어질 때
-			// playerTop 이 groundBottom보다 낮을때 -> 플레이어가 더 위에 있을 때
-			// playerBottom 이 groundBottom보다 낮을 때 -> 위와 동일
-
-			float landingMargin = 5.0f;
-			if (velocity.y > 0.0f && playerTop - landingMargin < groundBottom && playerBottom + landingMargin < groundBottom)
+			gravity->SetIsGround(true);
+			if (playerTop < groundBottom)
 			{
-				gravity->SetIsGround(true);
+				transform->position.y = groundBottom - transform->height;
 			}
-			else
-			{
-				gravity->SetVelocityZero();
 
-				if (velocity.x > 0)
-				{
-					canMoveRight = false;
-				}
-				else if (velocity.x < 0)
-				{
-					canMoveLeft = false;
-				}
-			}
+			gravity->SetVelocityYZero();
 		}
+		else
+		{
+			// 머리 충돌
+			gravity->SetVelocityYZero();
+		}
+	}
+	else
+	{
+		// X축 충돌 (벽)
+		gravity->SetVelocityXZero();
+
+		if (velocity.x > 0)
+			canMoveRight = false;
+		else if (velocity.x < 0)
+			canMoveLeft = false;
 	}
 }
 

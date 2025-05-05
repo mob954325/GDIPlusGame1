@@ -6,7 +6,7 @@
 class GroundObject : public GameObject
 {
 public:
-	GroundObject(Gdiplus::Graphics* g) : graphics(g) { Initialize(); }
+	GroundObject() { Initialize(); }
 	~GroundObject();
 
 	void Initialize() override;
@@ -19,7 +19,6 @@ public:
 	void OnColliderExitImpl(GameObject* other) override;
 
 protected:
-	Gdiplus::Graphics* graphics = nullptr;
 	Collider* collider;
 };
 

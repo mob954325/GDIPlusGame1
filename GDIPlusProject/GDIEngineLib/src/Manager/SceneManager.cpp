@@ -28,7 +28,7 @@ void SceneManager::Update()
 	// 현재 업데이트
 	if (currentScene)
 	{
-		currentScene->PhysicsUpdate(); // 버그 currScene 존재 안함 (2)
+		currentScene->PhysicsUpdate();
 		currentScene->Update();
 	}
 }

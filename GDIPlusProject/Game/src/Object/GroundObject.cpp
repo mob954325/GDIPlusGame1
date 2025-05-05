@@ -22,11 +22,19 @@ void GroundObject::SetupTransform(int gridSize, int gridX, int gridY, int countX
 {
 	transform->SetTransform((float)(gridX * gridSize), (float)(gridY * gridSize));
 	
-	//printf("ground %d", spriteRenderer->drawWidth);
 	
 	transform->width = (float)(gridSize * countX);
 	transform->height = (float)(gridSize * countY);
-	collider->bound = { (LONG)transform->position.x, (LONG)transform->height,(LONG)transform->width, (LONG)transform->position.y };
+	collider->bound =
+	{
+		(LONG)(gridX * gridSize),
+		(LONG)((gridY + countY) * gridSize),
+		(LONG)((gridX + countX) * gridSize),
+		(LONG)(gridY * gridSize)
+	};
+
+	//printf("ground : width, height, bound\n");
+	printf("%f %f | %d %d %d %d\n", transform->width, transform->height, collider->bound.left, collider->bound.top, collider->bound.right, collider->bound.bottom);
 }
 
 void GroundObject::OnColliderEnterImpl(GameObject* other)

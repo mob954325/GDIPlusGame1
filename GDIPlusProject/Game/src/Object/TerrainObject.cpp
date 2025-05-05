@@ -1,6 +1,8 @@
 ﻿#include "Object/TerrainObject.h"
 #include "Manager/JsonManager.h"
 #include "GDIEngineLib/inc/Utility/WindowConfig.h"
+#include "Object/GroundObject.h"
+#include <queue>
 
 TerrainObject::~TerrainObject()
 {
@@ -20,6 +22,7 @@ void TerrainObject::Initialize()
     tileGridYCount = tileSet->GetHeight() / tileSize;
 
     tilemapBitmap = CreateTilemapBitMap(mapGridYCount, mapGridXCount, tileInfo, tileSet);
+    SetGroundCollider(mapGridYCount, mapGridXCount, tileInfo);
 }
 
 void TerrainObject::UpdateImpl()
@@ -64,31 +67,95 @@ Gdiplus::Bitmap* TerrainObject::CreateTilemapBitMap(int rows, int cols, std::vec
     gMap->Clear(Gdiplus::Color(0, 0, 0, 0)); // 완전 투명하게 클리어
 
     // 각 타일을 비트맵에 그리기
-    for (int y = 0; y < rows; ++y) {
-        for (int x = 0; x < cols; ++x) {
+    for (int y = 0; y < rows; ++y) 
+    {
+        for (int x = 0; x < cols; ++x) 
+        {
             int tile = tileData[y * mapGridXCount + x];  // 타일 ID (0이면 빈 타일)
-            if (tile == 0) // 빈 타일
-            {
+            if (tile == 0) continue;// 빈 타일
+            // 타일 이미지 그리기 (타일셋에서 해당 타일을 찾아서)
+            int tileX = (tile - 1) % tileGridXCount;  // 타일셋에서 X 위치
+            int tileY = (tile - 1) / tileGridXCount;  // 타일셋에서 Y 위치
 
-            }
-            else
-            {
-                // 타일 이미지 그리기 (타일셋에서 해당 타일을 찾아서)
-                int tileX = (tile - 1) % tileGridXCount;  // 타일셋에서 X 위치
-                int tileY = (tile - 1) / tileGridXCount;  // 타일셋에서 Y 위치
-
-                Gdiplus::Rect srcRect(tileX * tileSize, tileY * tileSize, tileSize, tileSize);
-                Gdiplus::Rect destRect(x * tileSize, y * tileSize, srcRect.Width, srcRect.Height); // 화면에 그릴 영역
-                gMap->DrawImage(tileSet,
-                    destRect, srcRect.X, srcRect.Y,
-                    srcRect.Width, srcRect.Height,
-                    Gdiplus::UnitPixel);
-
-            }
+            Gdiplus::Rect srcRect(tileX * tileSize, tileY * tileSize, tileSize, tileSize);
+            Gdiplus::Rect destRect(x * tileSize, y * tileSize, srcRect.Width, srcRect.Height); // 화면에 그릴 영역
+            gMap->DrawImage(tileSet,
+                destRect, srcRect.X, srcRect.Y,
+                srcRect.Width, srcRect.Height,
+                Gdiplus::UnitPixel);            
         }
     }
 
     return tilemapBitmap;
 
 
+}
+
+void TerrainObject::SetGroundCollider(int rows, int cols, std::vector<int> tileData)
+{
+    int colliderCount = 0;
+
+    // 상하좌우
+    int dx[2] = { 1, 0 };
+    int dy[2] = { 0, 1 };
+
+    std::vector<bool> visited;
+    visited.reserve(rows * cols);
+
+    for (int i = 0; i < visited.capacity(); i++)
+    {
+        visited.push_back(false);
+    }
+
+    std::queue<int> q;
+    for (int y = 0; y < rows; y++)
+    {
+        for (int x = 0; x < cols; x++)
+        {
+            int countX = 0;
+            int countY = 0;
+
+            if (visited[y * mapGridXCount + x]) continue;
+            if (tileData[y * mapGridXCount + x] == 0)
+            {
+                visited[y * mapGridXCount + x] = true;
+                continue;
+            }
+
+            countX = 1;
+            countY = 1;
+
+            q.push(y * mapGridXCount + x);
+            while (!q.empty())
+            {
+                int index = q.front();
+                int currentX = index % mapGridXCount;
+                int currentY = index / mapGridXCount;
+
+                q.pop();
+                visited[index] = true;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    int nextX = currentX + dx[i];
+                    int nextY = currentY + dy[i];
+
+                    if (nextX < 0 || nextX >= mapGridXCount || nextY < 0 || nextY >= mapGridYCount) continue; // 범위체크
+                    if (tileData[nextY * mapGridXCount + nextX] == 0) continue; // 0인 타일 무시
+
+                    q.push(nextY * mapGridXCount + nextX);
+
+                    // 개수 갱신
+                    if (countX < currentX - x + 1) countX = currentX - x + 1;
+                    if (countY < currentY - y + 1) countY = currentY - y + 1;
+                }
+            } // while
+
+            GroundObject* ground = new GroundObject();
+            ground->SetupTransform(tileSize, x, y, countX, countY); // 시작한 위치로부터 카운트 변수만큼 collider 생성
+            groundList.push_back(ground);
+            printf("count : %d, x: %d y: %d\n", ++colliderCount, countX, countY);
+
+        } // for x
+    } // for y
 }

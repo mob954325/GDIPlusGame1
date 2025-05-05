@@ -27,6 +27,10 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 	TerrainObject* terrainObject = new TerrainObject(graphics);
 	gameObjectList.push_back(terrainObject);
+	for (auto ground : terrainObject->groundList)
+	{
+		gameObjectList.push_back(ground);
+	}
 
 	// object setup
 	GameObject* player = new Player(graphics);
