@@ -3,17 +3,17 @@
 
 void Scene::Clear()
 {
-	for (auto& gameObject : gameObjectList)
-	{
-		delete gameObject;
-	}
-	gameObjectList.clear();
-
 	for (auto& object : gameObjectDeleteList)
 	{
 		delete object;
 	}
 	gameObjectDeleteList.clear();
+
+	for (auto& gameObject : gameObjectList)
+	{
+		delete gameObject;
+	}
+	gameObjectList.clear();
 
 	previousCollisions.clear();
 	currentCollisions.clear();

@@ -12,9 +12,6 @@
 #include "Manager/ScoreManager.h"
 #include "Manager/TextManager.h"
 
-// TODO : player pricking
-// testing apple object is also pricking
-
 void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 { 
 	// handle, gdi setup
@@ -31,14 +28,19 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	{
 		gameObjectList.push_back(ground);
 	}
+	for (auto obj : terrainObject->objectList)
+	{
+		gameObjectList.push_back(obj);
+	}
 
 	// object setup
 	GameObject* player = new Player(graphics);
+	player->transform->SetTransform(terrainObject->spawnPosition);
 	gameObjectList.push_back(player);
 
 	GameObject* apple = new Apple(graphics);
 	gameObjectList.push_back(apple);
-	apple->transform->SetTransform(400, 400);
+	apple->transform->SetTransform(10, 10);
 
 	//manager setup
 	g_TextManager.Initialize(this->graphics);
@@ -147,14 +149,13 @@ void PlayScene::Render()
 		g_SceneManager.ChangeScene(2);
 	}
 
-	// 버그 - 힙터짐
-	//g_ScoreManager.GetScoreString(&scoreBuffer);
-	//g_TextManager.DrawTextByViewport(scoreBuffer, 0.1f, 0);
-
 	for (GameObject* obj : gameObjectList)
 	{
 		if (obj == nullptr) continue;
 
 		obj->Render();
 	}
+
+	g_ScoreManager.GetScoreString(&scoreBuffer);
+	g_TextManager.DrawTextByViewport(scoreBuffer, 0.1f, 0);
 }

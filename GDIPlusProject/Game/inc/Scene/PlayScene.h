@@ -2,8 +2,6 @@
 #include "framework.h"
 #include "GDIEngineLib/inc/Utility/Scene.h"
 
-// NOTE: 카메라 이동 작성
-
 class PlayScene : public Scene
 {
 public:
@@ -14,7 +12,7 @@ public:
 	void Exit() override 
 	{ 
 		Clear();
-		delete scoreBuffer;
+		delete[] scoreBuffer;
 		delete graphics;
 		Gdiplus::GdiplusShutdown(gdiPlusToken); 
 	};
@@ -23,7 +21,7 @@ protected:
 	float sceneTimer = 0;
 	float sceneMaxTimer = 10;
 	
-	int scoreBufferSize = 20;
+	int scoreBufferSize = 128;
 	wchar_t* scoreBuffer;
 
 	HWND hwnd = nullptr;

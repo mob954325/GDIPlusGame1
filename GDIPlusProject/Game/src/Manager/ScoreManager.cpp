@@ -14,17 +14,13 @@ void ScoreManager::AddScore()
 
 void ScoreManager::GetScoreString(wchar_t** buffer)
 {
-	if (*buffer == nullptr) return; // 출력할 내용이 존재하지 않음
+	if (buffer == nullptr || *buffer == nullptr) return; // null 확인
 
 	wchar_t textBuffer[32] = L"Score : ";
-	wchar_t scoreBuffer[32] = L"\0";
-	
-	_itow_s(score, scoreBuffer, 10);
-	int scoreLen = (int)wcslen(scoreBuffer);
-	wcscat_s(scoreBuffer, L"\0");
-	wcscat_s(textBuffer, scoreBuffer);
-	wcscat_s(textBuffer, L"\0");
+	wchar_t scoreBuffer[16]; // 점수는 작으니 16이면 충분
 
-	// buffer == NULL -> 씬 교체 시 발생
-	wcscpy_s(*buffer, 32, textBuffer); // ((destination)) != NULL && ((size_in_elements)) > 0 
+	_itow_s(score, scoreBuffer, 10);
+	wcscat_s(textBuffer, scoreBuffer);
+
+	wcscpy_s(*buffer, 32, textBuffer);
 }

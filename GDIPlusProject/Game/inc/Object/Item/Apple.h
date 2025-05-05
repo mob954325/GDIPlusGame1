@@ -18,7 +18,7 @@ public:
 	void OnColliderStayImpl(GameObject* other) override;
 	void OnColliderExitImpl(GameObject* other) override;
 
-	void SetupTransform(int gridX, int gridY, int countX, int countY);
+	void SetupTransform(int gridSize, int gridX, int gridY, int countX, int countY);
 
 private:
 	Gdiplus::Graphics* graphics;

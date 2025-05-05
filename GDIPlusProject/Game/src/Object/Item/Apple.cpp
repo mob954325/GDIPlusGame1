@@ -56,12 +56,17 @@ void Apple::OnColliderExitImpl(GameObject* other)
 {
 }
 
-void Apple::SetupTransform(int gridX, int gridY, int countX, int countY)
+void Apple::SetupTransform(int gridSize, int gridX, int gridY, int countX, int countY)
 {
-	// 지형 오브젝트랑 크기 맞게 변경하기
-	// apple -> 32
+	transform->SetTransform((float)(gridX * gridSize), (float)(gridY * gridSize));
 
-	transform->SetTransform((float)(gridX * 64), (float)(gridY * 64));
-	transform->Translate(0.0f, 36.0f);
-	//collider->bound = { (LONG)transform->position.x, (LONG)(transform->height * 0.7f),(LONG)(transform->width * 0.7f), (LONG)transform->position.y };
+	transform->width = (float)(gridSize * countX);
+	transform->height = (float)(gridSize * countY);
+	collider->bound =
+	{
+		(LONG)(gridX * gridSize),
+		(LONG)((gridY + countY) * gridSize),
+		(LONG)((gridX + countX) * gridSize),
+		(LONG)(gridY * gridSize)
+	};
 }

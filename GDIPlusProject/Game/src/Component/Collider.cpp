@@ -25,6 +25,7 @@ void Collider::Update()
 
 void Collider::Render()
 {
+
 }
 
 bool Collider::IsOverlap(Collider* objectA, Collider* objectB)

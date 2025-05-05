@@ -81,6 +81,14 @@ void Player::UpdateImpl()
 
 void Player::RenderImpl()
 {
+	Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0), 1.0f); // 빨간색, 두께 1
+	graphics->DrawRectangle(
+		&pen,
+		(INT)(collider->bound.left),
+		(INT)(collider->bound.bottom),
+		(INT)(collider->bound.right - collider->bound.left),
+		(INT)(collider->bound.top - collider->bound.bottom)
+	);
 }
 
 // Event ----------------------------------------------------------------------------------------------------------------
@@ -128,53 +136,34 @@ void Player::OnGroundColliderEnter(GroundObject* ground)
 	if (ground == nullptr || gravity->GetIsGround())
 		return;
 
-	// 플레이어 및 지형의 AABB 정보
-	float playerLeft = transform->position.x;
-	float playerRight = playerLeft + transform->width;
+	Vector2 velocity = gravity->GetVelocity();
 	float playerBottom = transform->position.y;
 	float playerTop = playerBottom + transform->height;
-
-	float groundLeft = ground->transform->position.x;
-	float groundRight = groundLeft + ground->transform->width;
 	float groundBottom = ground->transform->position.y;
 	float groundTop = groundBottom + ground->transform->height;
-
-	// 겹친 영역
-	float overlapX = std::min(playerRight, groundRight) - std::max(playerLeft, groundLeft);
-	float overlapY = std::min(playerTop, groundTop) - std::max(playerBottom, groundBottom);
-
-	printf(" x : %f Y: %f\n", overlapX, overlapY);
-
-	// 이동 속도
-	Vector2 velocity = gravity->GetVelocity();
-
-	if (std::abs(velocity.y) > std::abs(velocity.x))
+	
+	//랜딩 조건
+	//velocity.y > 0.0f -> 떨어질 때
+	//playerTop 이 groundBottom보다 낮을때 -> 플레이어가 더 위에 있을 때
+	//playerBottom 이 groundBottom보다 낮을 때 -> 위와 동일
+	
+	float landingMargin = 5.0f;
+	if (velocity.y > 0.0f && playerTop + landingMargin > groundBottom && playerBottom - landingMargin < groundBottom)
 	{
-		if (velocity.y >= -1.0f && playerBottom < groundTop && playerTop > groundBottom)
-		{
-			gravity->SetIsGround(true);
-			if (playerTop < groundBottom)
-			{
-				transform->position.y = groundBottom - transform->height;
-			}
-
-			gravity->SetVelocityYZero();
-		}
-		else
-		{
-			// 머리 충돌
-			gravity->SetVelocityYZero();
-		}
+		gravity->SetIsGround(true);
 	}
 	else
 	{
-		// X축 충돌 (벽)
-		gravity->SetVelocityXZero();
-
+		gravity->SetVelocityZero();
+	
 		if (velocity.x > 0)
+		{
 			canMoveRight = false;
+		}
 		else if (velocity.x < 0)
+		{
 			canMoveLeft = false;
+		}
 	}
 }
 

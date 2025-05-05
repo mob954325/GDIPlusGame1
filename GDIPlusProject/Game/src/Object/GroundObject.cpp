@@ -16,12 +16,12 @@ void GroundObject::UpdateImpl()
 
 void GroundObject::RenderImpl()
 {
+
 }
 
 void GroundObject::SetupTransform(int gridSize, int gridX, int gridY, int countX, int countY)
 {
-	transform->SetTransform((float)(gridX * gridSize), (float)(gridY * gridSize));
-	
+	transform->SetTransform((float)(gridX * gridSize), (float)(gridY * gridSize));	
 	
 	transform->width = (float)(gridSize * countX);
 	transform->height = (float)(gridSize * countY);
