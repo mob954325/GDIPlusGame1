@@ -73,3 +73,8 @@ std::vector<int> JsonManager::GetIntagerData(const wchar_t* path, std::vector<st
 
 	return dataContainer;
 }
+
+std::vector<int> JsonManager::GetIntagerData(std::wstring path, std::vector<std::wstring> dataNames)
+{
+	return GetIntagerData(path.c_str(), dataNames);
+}

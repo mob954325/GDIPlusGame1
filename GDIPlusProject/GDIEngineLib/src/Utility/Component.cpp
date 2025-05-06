@@ -26,3 +26,8 @@ void Component::SetActive(bool value)
 {
 	isActive = value;
 }
+
+bool Component::GetIsActive()
+{
+	return isActive;
+}

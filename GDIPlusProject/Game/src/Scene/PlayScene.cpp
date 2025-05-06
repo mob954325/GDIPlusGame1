@@ -8,8 +8,8 @@
 #include "Object/Enemy.h"
 #include "Object/Item/Apple.h"
 #include "Object/TerrainObject.h"
-#include "Manager/ScoreManager.h"
-#include "Manager/TextManager.h"
+#include "Object/Flag.h"
+#include "Manager/GameManager.h"
 
 void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 { 
@@ -22,6 +22,9 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
 	TerrainObject* terrainObject = new TerrainObject(graphics);
+	std::wstring mapName = L"Stage" + std::to_wstring(g_GameManager.GetStageNumber());
+
+	terrainObject->LoadMapData(mapName);
 	gameObjectList.push_back(terrainObject);
 	for (auto ground : terrainObject->groundList)
 	{
@@ -33,21 +36,12 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	}
 
 	// object setup
-	GameObject* player = new Player(graphics);
+	scenePlayer = new Player(graphics);
+	GameObject* player = scenePlayer;
 	player->transform->SetTransform(terrainObject->spawnPosition);
 	gameObjectList.push_back(player);
 
-	GameObject* apple = new Apple(graphics);
-	gameObjectList.push_back(apple);
-	apple->transform->SetTransform(10, 10);
-
-	//manager setup
-	g_TextManager.Initialize(this->graphics);
-	g_ScoreManager.ResetData();
-	
-	scoreBuffer = new wchar_t[scoreBufferSize];
-	
-	sceneTimer = 0;
+	g_GameManager.Initialize(graphics);
 }
 
 void PlayScene::PhysicsUpdate()
@@ -56,6 +50,8 @@ void PlayScene::PhysicsUpdate()
 	// 충돌 저장이 제대로 안됨
 	// current는 현재 프레임에서 충돌되어있는 페어 데이터가 있어야하고
 	// prev는 current의 데이터를 받아서 exit확인하기
+
+	if (g_GameManager.gameState != GameState::Playing) return;
 
 	currentCollisions.clear();
 
@@ -119,44 +115,72 @@ void PlayScene::PhysicsUpdate()
 
 void PlayScene::Update()
 {
-	if (g_Input.IsKeyPressed(VK_END))
+	if (g_Input.IsKeyPressed('R'))
 	{
-		g_SceneManager.ChangeScene(2);
+		g_SceneManager.ChangeScene(1);
+		g_GameManager.gameState = GameState::Ready;
 	}
 
-	//sceneTimer += g_GameTime.GetDeltaTime();
-	CheckObjects();
-
-	//if (sceneTimer > sceneMaxTimer) return;
-
-	for (GameObject* obj : gameObjectList)
+	if (g_GameManager.gameState == GameState::Ready)
 	{
-		if (obj == nullptr) continue;
-		obj->Update();
+		if (g_Input.IsKeyPressed(VK_SPACE))
+		{
+			g_GameManager.StartCurrentScene();
+		}
 	}
+	if (g_GameManager.gameState == GameState::Playing)
+	{
+		CheckObjects();
 
-	DeleteDeactiveObjects();
+		for (GameObject* obj : gameObjectList)
+		{
+			if (obj == nullptr) continue;
+			obj->Update();
+		}
+
+		DeleteDeactiveObjects();
+	}
+	if (g_GameManager.gameState == GameState::End)
+	{
+		if (g_Input.IsKeyPressed(VK_SPACE))
+		{
+			if (scenePlayer->GetHp() > 0) g_GameManager.IncreaseStageNumber();
+
+
+			if (g_GameManager.GetStageNumber() > g_GameManager.GetMaxStageNumber())
+			{
+				g_SceneManager.ChangeScene(2);
+			}
+			else
+			{
+				g_SceneManager.ChangeScene(1);
+			}
+			g_GameManager.gameState = GameState::Ready;
+		}
+	}
 }
 
 void PlayScene::Render()
 {
-	//if (sceneTimer > sceneMaxTimer)
-	//{
-	//	g_SceneManager.ChangeScene(2);
-	//}
-
-	if (g_Input.IsKeyPressed(VK_SPACE))
+	if (g_GameManager.gameState != GameState::End)
 	{
-		g_SceneManager.ChangeScene(2);
+		for (GameObject* obj : gameObjectList)
+		{
+			if (obj == nullptr) continue;
+
+			obj->Render();
+		}
 	}
 
-	for (GameObject* obj : gameObjectList)
+	if (g_GameManager.gameState == GameState::End)
 	{
-		if (obj == nullptr) continue;
-
-		obj->Render();
+		if (scenePlayer->GetHp() <= 0)
+		{
+			g_GameManager.ShowResultAtScene(false);
+		}
+		else
+		{
+			g_GameManager.ShowResultAtScene(true);
+		}
 	}
-
-	//std::wstring str = g_ScoreManager.GetScoreString();
-	//g_TextManager.DrawTextByViewport(str, 0.1f, 0);
 }

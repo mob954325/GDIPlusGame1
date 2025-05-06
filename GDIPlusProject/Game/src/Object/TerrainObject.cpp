@@ -3,33 +3,19 @@
 #include "Manager/JsonManager.h"
 #include "Object/GroundObject.h"
 #include "Object/Item/Apple.h"
+#include "Object/Enemy.h"
+#include "Object/Flag.h"
+#include "Object/Spike.h"
 #include <queue>
 
 TerrainObject::~TerrainObject()
 {
+    groundList.clear();
+    objectList.clear();
+
     delete tileSet;
     delete tilemapBitmap;
     delete backgroundBitmap;
-}
-
-void TerrainObject::Initialize()
-{
-    transform->position = Vector2();
-	tileInfo = g_JsonManager.GetIntagerData(L"./Resource/Map/Stage1.json", std::vector<std::wstring>{ L"layers", L"data"});
-    tileSet = Gdiplus::Image::FromFile(L"./Resource/Tile/Terrain (16x16).png");
-
-    mapGridXCount = g_JsonManager.GetIntagerData(L"./Resource/Map/Stage1.json", { L"width"})[0];
-    mapGridYCount = g_JsonManager.GetIntagerData(L"./Resource/Map/Stage1.json", { L"height" })[0];
-    tileSize = g_JsonManager.GetIntagerData(L"./Resource/Map/Stage1.json", { L"tileheight" })[0];
-
-    tileGridXCount = tileSet->GetWidth() / tileSize;
-    tileGridYCount = tileSet->GetHeight() / tileSize;
-
-    tilemapBitmap = CreateTilemapBitMap(mapGridYCount, mapGridXCount, tileInfo, tileSet);
-    SetGroundCollider(mapGridYCount, mapGridXCount, tileInfo);
-
-    backgroundBitmap = CreateBackgroundBitmap(mapGridYCount, mapGridXCount);
-    objectList = CreateObjects(mapGridYCount, mapGridXCount, tileInfo);
 }
 
 void TerrainObject::UpdateImpl()
@@ -60,6 +46,7 @@ void TerrainObject::RenderImpl()
         srcRect.Width, srcRect.Height, // 원본 크기
         Gdiplus::UnitPixel);
 
+#if _DEBUG
     for (auto g : groundList)
     {
         Gdiplus::Pen pen(Gdiplus::Color(255, 0, 0), 2.0f); // 빨간색, 두께 1
@@ -72,6 +59,35 @@ void TerrainObject::RenderImpl()
             (INT)(collider->bound.top - collider->bound.bottom)
         );
     }
+#endif
+}
+
+void TerrainObject::LoadMapData(const std::wstring& mapName)
+{
+    transform->position = Vector2();
+
+    std::wstring mapPath = L"./Resource/Map/" + mapName + L".json";
+
+    tileInfo = g_JsonManager.GetIntagerData(mapPath, { L"layers", L"data" });
+    tileSet = Gdiplus::Image::FromFile(L"./Resource/Tile/Terrain (16x16).png");
+
+    mapGridXCount = g_JsonManager.GetIntagerData(mapPath, { L"width" })[0];
+    mapGridYCount = g_JsonManager.GetIntagerData(mapPath, { L"height" })[0];
+    tileSize = g_JsonManager.GetIntagerData(mapPath, { L"tileheight" })[0];
+
+    tileGridXCount = tileSet->GetWidth() / tileSize;
+    tileGridYCount = tileSet->GetHeight() / tileSize;
+
+    tilemapBitmap = CreateTilemapBitMap(mapGridYCount, mapGridXCount, tileInfo, tileSet);
+    SetGroundCollider(mapGridYCount, mapGridXCount, tileInfo);
+
+    backgroundBitmap = CreateBackgroundBitmap(mapGridYCount, mapGridXCount);
+    objectList = CreateObjects(mapGridYCount, mapGridXCount, tileInfo);
+}
+
+bool TerrainObject::IsSpecialTileData(int currTileData)
+{
+    return currTileData == 0 || currTileData == 241 || currTileData == 255 || currTileData == 256 || currTileData == 236 || currTileData == 214;
 }
 
 Gdiplus::Bitmap* TerrainObject::CreateTilemapBitMap(int rows, int cols, std::vector<int> tileData, Gdiplus::Image* tileset)
@@ -87,7 +103,7 @@ Gdiplus::Bitmap* TerrainObject::CreateTilemapBitMap(int rows, int cols, std::vec
         for (int x = 0; x < cols; ++x) 
         {
             int tile = tileData[y * mapGridXCount + x];  // 타일 ID (0이면 빈 타일)
-            if (tile == 0 || tile == 241 || tile == 255) continue;// 빈 타일 or 특수 타일
+            if (IsSpecialTileData(tile)) continue;// 빈 타일 or 특수 타일
             // 타일 이미지 그리기 (타일셋에서 해당 타일을 찾아서)
             int tileX = (tile - 1) % tileGridXCount;  // 타일셋에서 X 위치
             int tileY = (tile - 1) / tileGridXCount;  // 타일셋에서 Y 위치
@@ -101,6 +117,7 @@ Gdiplus::Bitmap* TerrainObject::CreateTilemapBitMap(int rows, int cols, std::vec
         }
     }
 
+    delete gMap;
     return tilemapBitmap;
 }
 
@@ -112,12 +129,7 @@ void TerrainObject::SetGroundCollider(int rows, int cols, std::vector<int> tileD
     int dx[2] = { 1, 0 };
     int dy[2] = { 0, 1 };
 
-    std::vector<bool> visited(rows * cols, false); // 한 줄로 끝
-
-    //for (int i = 0; i < visited.capacity(); i++)
-    //{
-    //    visited.push_back(false);
-    //}
+    std::vector<bool> visited(rows * cols, false);
 
     std::queue<int> q;
     for (int y = 0; y < rows; y++)
@@ -130,13 +142,8 @@ void TerrainObject::SetGroundCollider(int rows, int cols, std::vector<int> tileD
             if (visited[y * mapGridXCount + x]) continue;
 
             int currTileData = tileData[y * mapGridXCount + x];
-            if (currTileData == 0 || currTileData == 241 || currTileData == 255) // 특정 타일 무시, 0 무시
+            if (IsSpecialTileData(currTileData)) // 특정 타일 무시, 0 무시
             {
-                if (currTileData == 255)
-                {
-                    spawnPosition = Vector2(x * tileSize, y * tileSize);
-                }
-
                 visited[y * mapGridXCount + x] = true;
                 continue;
             }
@@ -162,7 +169,7 @@ void TerrainObject::SetGroundCollider(int rows, int cols, std::vector<int> tileD
                     if (nextX < 0 || nextX >= mapGridXCount || nextY < 0 || nextY >= mapGridYCount) continue; // 범위체크
 
                     int currTileData = tileData[nextY * mapGridXCount + nextX];
-                    if (currTileData == 0 || currTileData == 241) continue; // 특정 타일 무시, 0 무시
+                    if (IsSpecialTileData(currTileData)) continue; // 특정 타일 무시, 0 무시
 
                     q.push(nextY * mapGridXCount + nextX);
 
@@ -185,7 +192,7 @@ Gdiplus::Bitmap* TerrainObject::CreateBackgroundBitmap(int rows, int cols)
 {
     // 타일맵 비트맵 생성
     int backgroundTileSize = 32;
-    Gdiplus::Image* backgroundTile = Gdiplus::Image::FromFile(L"./Resource/Tile/Blue.png");
+    Gdiplus::Image* backgroundTile = Gdiplus::Image::FromFile(L"./Resource/Tile/Gray.png");
     Gdiplus::Bitmap* backgroundBitmap = new Gdiplus::Bitmap(cols * backgroundTileSize, rows * backgroundTileSize, PixelFormat32bppARGB);
     Gdiplus::Graphics* gMap = Gdiplus::Graphics::FromImage(backgroundBitmap);
 
@@ -203,12 +210,14 @@ Gdiplus::Bitmap* TerrainObject::CreateBackgroundBitmap(int rows, int cols)
         }
     }
 
+    delete backgroundTile;
+    delete gMap;
     return backgroundBitmap;
 }
 
 std::vector<GameObject*> TerrainObject::CreateObjects(int rows, int cols, std::vector<int> tileData)
 {
-    std::vector<GameObject*> objectsList;
+    std::vector<GameObject*> result;
     // 각 타일을 비트맵에 그리기
     for (int y = 0; y < rows; ++y)
     {
@@ -221,9 +230,36 @@ std::vector<GameObject*> TerrainObject::CreateObjects(int rows, int cols, std::v
             case 241: // 사과
             {
                 Apple* apple = new Apple(graphics);
-                objectsList.push_back(apple);
-                apple->SetupTransform(tileSize, x, y, 1, 1);
+                result.push_back(apple);
+                apple->SetupData(tileSize, x, y, 1, 1);
                 apple->transform->SetTransform((float)(x * tileSize), (float)(y * tileSize));
+                break;
+            }
+            case 236:
+            {
+                Flag* flag = new Flag(graphics);
+                result.push_back(flag);
+                flag->SetupData(tileSize, x, y, 1, 1);
+                flag->transform->SetTransform((float)(x * tileSize), (float)(y * tileSize));
+                break;
+            }
+            case 255:
+            {
+                spawnPosition = Vector2(x * tileSize, y * tileSize);
+                break;
+            }
+            case 256:
+            {
+                Enemy* enemy = new Enemy(graphics);
+                result.push_back(enemy);
+                enemy->transform->SetTransform((float)(x * tileSize), (float)(y * tileSize));
+                break;
+            }
+            case 214:
+            {
+                Spike* spike = new Spike(graphics);
+                result.push_back(spike);
+                spike->transform->SetTransform((float)(x * tileSize), (float)(y * tileSize));
                 break;
             }
             default:
@@ -231,5 +267,5 @@ std::vector<GameObject*> TerrainObject::CreateObjects(int rows, int cols, std::v
             }
         }
     }
-    return objectsList;
+    return result;
 }

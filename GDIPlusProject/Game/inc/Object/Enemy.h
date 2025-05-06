@@ -18,11 +18,12 @@ public:
 	void OnColliderExitImpl(GameObject* other) override;
 
 protected:
+	void LimitPositionInScreen();
 	Gdiplus::Graphics* graphics = nullptr;
 	SpriteRenderer* spriteRenderer;
 	Collider* collider = nullptr;
-	Vector2 moveDirection = Vector2(0.0f, 0.0f);
+	Vector2 moveDirection = Vector2(1.0f, 0.0f);
 
-	float speed = 0;
+	float speed = 200;
 };
 

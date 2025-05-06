@@ -15,6 +15,7 @@ public:
 	void Render() override;
 
 	void SetActive(bool value);
+	bool GetIsActive();
 	GameObject* owner;
 
 protected:

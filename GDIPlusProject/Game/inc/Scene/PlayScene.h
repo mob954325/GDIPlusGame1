@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "framework.h"
 #include "GDIEngineLib/inc/Utility/Scene.h"
+#include "Object/Player.h"
 
 class PlayScene : public Scene
 {
@@ -12,18 +13,11 @@ public:
 	void Exit() override 
 	{ 
 		Clear();
-		delete[] scoreBuffer;
 		delete graphics;
 		Gdiplus::GdiplusShutdown(gdiPlusToken); 
 	};
 
 protected:
-	float sceneTimer = 0;
-	float sceneMaxTimer = 10;
-	
-	int scoreBufferSize = 128;
-	wchar_t* scoreBuffer;
-
 	HWND hwnd = nullptr;
 	HDC FrontBufferDC = nullptr;    // 앞면 DC
 	HDC BackBufferDC = nullptr;    // 뒷면 DC
@@ -31,4 +25,6 @@ protected:
 	ULONG_PTR gdiPlusToken = 0;
 	Gdiplus::GdiplusStartupInput gsi = nullptr;
 	Gdiplus::Graphics* graphics = nullptr;
+
+	Player* scenePlayer = nullptr;
 };

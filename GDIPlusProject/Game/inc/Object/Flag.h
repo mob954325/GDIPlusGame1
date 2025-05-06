@@ -1,14 +1,14 @@
-﻿#pragma once
+#pragma once
+#include "framework.h"
 #include "GDIEngineLib/inc/Utility/GameObject.h"
-
 #include "Component/SpriteRenderer.h"
 #include "Component/Collider.h"
 
-class Apple : public GameObject
+class Flag : public GameObject
 {
 public:
-	Apple(Gdiplus::Graphics* g) : graphics(g) { Initialize(); };
-
+	Flag(Gdiplus::Graphics* g) : graphics(g) { Initialize(); }
+	~Flag();
 	void Initialize() override;
 	void UpdateImpl() override;
 	void RenderImpl() override;
@@ -20,8 +20,8 @@ public:
 
 	void SetupData(int gridSize, int gridX, int gridY, int countX, int countY);
 
-private:
-	Gdiplus::Graphics* graphics;
-	SpriteRenderer* spriteRenderer;	
-	Collider* collider;
+protected:
+	Gdiplus::Graphics* graphics = nullptr;
+	SpriteRenderer* spriteRenderer = nullptr;
+	Collider* collider = nullptr;
 };

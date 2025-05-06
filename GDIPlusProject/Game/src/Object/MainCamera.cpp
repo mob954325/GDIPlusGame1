@@ -11,8 +11,8 @@ void MainCamera::Initialize()
 	collider = AddComponent<Collider>();
 	collider->bound = { 0,g_WindowConfig.windowHeight, g_WindowConfig.windowWidth, 0 };
 
-	transform->width = g_WindowConfig.windowWidth;
-	transform->height = g_WindowConfig.windowHeight;
+	transform->width = (float)g_WindowConfig.windowWidth;
+	transform->height = (float)g_WindowConfig.windowHeight;
 }
 
 void MainCamera::UpdateImpl()

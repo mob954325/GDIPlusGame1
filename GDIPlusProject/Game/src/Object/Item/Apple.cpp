@@ -9,7 +9,7 @@ void Apple::Initialize()
 	spriteRenderer = AddComponent<SpriteRenderer>();
 	spriteRenderer->GetGraphic(&graphics);
 
-	spriteRenderer->GetImage(L"./Resource/Item/Apple.png");
+	spriteRenderer->GetImage(L"./Resource/Item/Apple.png", false);
 	spriteRenderer->GetImageInfo(L"apple", L"./Resource/Item/itemSize.csv");
 
 	transform->width = 32;
@@ -22,15 +22,6 @@ void Apple::Initialize()
 
 void Apple::UpdateImpl()
 {
-	//animationGameTimer += g_GameTime.GetDeltaTime();
-
-	//if (animationGameTimer > maxAnimationGameTime)
-	//{
-	//	spriteRenderer->currFrame++;
-	//	spriteRenderer->currFrame %= spriteRenderer->imageFrameCount;
-
-	//	animationGameTimer = 0.0f;
-	//}
 }
 
 void Apple::RenderImpl()
@@ -56,7 +47,7 @@ void Apple::OnColliderExitImpl(GameObject* other)
 {
 }
 
-void Apple::SetupTransform(int gridSize, int gridX, int gridY, int countX, int countY)
+void Apple::SetupData(int gridSize, int gridX, int gridY, int countX, int countY)
 {
 	transform->SetTransform((float)(gridX * gridSize), (float)(gridY * gridSize));
 

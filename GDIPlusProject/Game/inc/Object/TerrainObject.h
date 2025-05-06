@@ -12,6 +12,8 @@
 // 241 : 사과
 // 236 : 깃발
 // 255 : 스폰 지점
+// 256 : 적스폰
+// 214 : 스파이크
 
 class TerrainObject : public GameObject
 {
@@ -19,15 +21,21 @@ public:
 	TerrainObject(Gdiplus::Graphics* g) : graphics(g) { Initialize(); }
 	~TerrainObject();
 
-	void Initialize() override;
 	void UpdateImpl() override;
 	void RenderImpl() override;
+
+	/// <summary>
+	/// 맵 데이터 불러오기
+	/// </summary>
+	/// <param name="mapName">json 파일 명</param>
+	void LoadMapData(const std::wstring& mapName);
 
 	std::vector<GameObject*> groundList;
 	std::vector<GameObject*> objectList;
 	Vector2 spawnPosition = Vector2();
 
 protected:
+	bool IsSpecialTileData(int currTileData);
 	Gdiplus::Bitmap* CreateTilemapBitMap(int rows, int cols, std::vector<int> tileData, Gdiplus::Image* tileset);
 	void SetGroundCollider(int rows, int cols, std::vector<int> tileData);
 

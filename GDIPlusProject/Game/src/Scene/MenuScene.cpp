@@ -2,8 +2,10 @@
 #include "Scene/MenuScene.h"
 #include "GDIEngineLib/inc/Manager/Input.h"
 #include "GDIEngineLib/inc/Manager/SceneManager.h"
-
+#include "Manager/GameManager.h"
+#include "Manager/ScoreManager.h"
 #include "Manager/TextManager.h"
+#include "Object/MenuBackgroundImage.h"
 
 void MenuScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 {
@@ -14,7 +16,11 @@ void MenuScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	Gdiplus::GdiplusStartup(&gdiPlusToken, &gsi, nullptr);
 	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
-	//g_TextManager.Initialize(this->graphics);
+	gameObjectList.push_back(new MenuBackgroundImage(graphics));
+
+	g_GameManager.Initialize(graphics);
+	g_GameManager.ResetStageNumber();
+	g_ScoreManager.ResetData();
 }
 
 void MenuScene::PhysicsUpdate()
@@ -28,5 +34,12 @@ void MenuScene::Update(){
 
 void MenuScene::Render()
 {
-	//g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Start", 0.5f, 0.7f);
+	for (GameObject* obj : gameObjectList)
+	{
+		if (obj == nullptr) continue;
+
+		obj->Render();
+	}
+
+	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Start", 0.5f, 0.7f, Gdiplus::Color::White);
 }

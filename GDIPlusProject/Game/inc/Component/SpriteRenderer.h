@@ -14,7 +14,7 @@ public:
 	void Update() override;
 	void Render() override;
 
-	bool GetImage(const wchar_t* path);
+	bool GetImage(const wchar_t* path, bool isFlip);
 	void GetGraphic(Gdiplus::Graphics** graphicsPtr);
 	void DrawImage(int gridX, int gridY); // 매개변수 : 그리는 위치
 	void DrawImage(int gridX, int gridY, int tileNum); // 이미지의 특정 위치를 그리는 함수

@@ -3,10 +3,11 @@
 #include "Scene/EndScene.h"
 #include "Manager/ScoreManager.h"
 #include "Manager/TextManager.h"
+#include "Manager/GameManager.h"
+#include "Object/EndBackgroundImage.h"
 
 EndScene::~EndScene()
 {
-	delete scoreString;
 }
 
 void EndScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
@@ -18,9 +19,9 @@ void EndScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	Gdiplus::GdiplusStartup(&gdiPlusToken, &gsi, nullptr);
 	this->graphics = Gdiplus::Graphics::FromHDC(BackBufferDC);
 
-	//g_TextManager.Initialize(this->graphics);
+	gameObjectList.push_back(new EndBackgroundImage(graphics));
 
-	//g_ScoreManager.GetScoreString(&scoreString);
+	g_GameManager.Initialize(graphics);
 }
 
 void EndScene::PhysicsUpdate()
@@ -37,6 +38,13 @@ void EndScene::Update()
 
 void EndScene::Render()
 {
-	//g_TextManager.DrawTextByViewport(scoreString, 0.5f, 0.3f);
-	//g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Back to Menu", 0.5f, 0.7f);
+	for (GameObject* obj : gameObjectList)
+	{
+		if (obj == nullptr) continue;
+
+		obj->Render();
+	}
+
+	g_TextManager.DrawTextByViewport(scoreString, 0.5f, 0.3f, Gdiplus::Color::White);
+	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Back to Menu", 0.5f, 0.7f, Gdiplus::Color::White);
 }

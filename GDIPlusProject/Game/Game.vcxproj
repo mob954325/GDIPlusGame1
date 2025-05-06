@@ -78,7 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -92,7 +92,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -124,7 +124,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -136,6 +136,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Object\EndBackgroundImage.h" />
+    <ClInclude Include="inc\Object\MenuBackgroundImage.h" />
+    <ClInclude Include="inc\Manager\GameManager.h" />
+    <ClInclude Include="inc\Object\Flag.h" />
     <ClInclude Include="inc\Object\Item\Apple.h" />
     <ClInclude Include="inc\Component\Gravity.h" />
     <ClInclude Include="inc\Object\GroundObject.h" />
@@ -155,8 +159,14 @@
     <ClInclude Include="inc\Object\TerrainObject.h" />
     <ClInclude Include="inc\Manager\JsonManager.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="inc\Object\Spike.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Object\Spike.cpp" />
+    <ClCompile Include="src\Object\EndBackgroundImage.cpp" />
+    <ClCompile Include="src\Object\MenuBackgroundImage.cpp" />
+    <ClCompile Include="src\Manager\GameManager.cpp" />
+    <ClCompile Include="src\Object\Flag.cpp" />
     <ClCompile Include="src\Manager\JsonManager.cpp" />
     <ClCompile Include="src\Object\MainCamera.cpp" />
     <ClCompile Include="src\Object\Item\Apple.cpp" />

@@ -47,7 +47,23 @@ void Scene::DeleteDeactiveObjects()
 	// 제거될 오브젝트 제거하기
 	for (auto& object : gameObjectDeleteList)
 	{
+		for (auto it = previousCollisions.begin(); it != previousCollisions.end(); )
+		{
+			GameObject* objA = it->first;
+			GameObject* objB = it->second;
+
+			if (object == objA || object == objB)
+			{
+				it = previousCollisions.erase(it); // 삭제 후 반환된 반복자 사용
+			}
+			else
+			{
+				++it; // 다음 원소로 이동
+			}
+		}
+
 		delete object;
+		object = nullptr;
 	}
 	gameObjectDeleteList.clear();
 }

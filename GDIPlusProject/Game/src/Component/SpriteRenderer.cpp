@@ -35,7 +35,7 @@ void SpriteRenderer::Render()
 	}
 }
 
-bool SpriteRenderer::GetImage(const wchar_t* path)
+bool SpriteRenderer::GetImage(const wchar_t* path, bool isFlip)
 {
 	Gdiplus::Bitmap* bitmap = new Gdiplus::Bitmap(path);
 
@@ -45,6 +45,8 @@ bool SpriteRenderer::GetImage(const wchar_t* path)
 		delete bitmap; // 로드 실패
 		return false;
 	}
+
+	if(isFlip) bitmap->RotateFlip(Gdiplus::RotateNoneFlipX); // 예: 수평 반전
 
 	imageBitMap = bitmap;
 	sourceWidth = imageBitMap->GetWidth();
