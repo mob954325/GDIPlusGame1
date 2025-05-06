@@ -27,7 +27,7 @@ protected:
 	int currentSceneIndex = 0;
 	float elapsedTime = -1.0f;
 	int stageNum = 1;
-	int maxStageNum = 4;
+	int maxStageNum = 3;
 };
 
 extern GameManager g_GameManager;
