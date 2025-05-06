@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -151,7 +151,6 @@
     <ClInclude Include="inc\Scene\PlayScene.h" />
     <ClInclude Include="inc\Manager\ScoreManager.h" />
     <ClInclude Include="inc\Component\SpriteRenderer.h" />
-    <ClInclude Include="inc\Object\Map\Stage1.h" />
     <ClInclude Include="inc\Object\MainCamera.h" />
     <ClInclude Include="inc\Object\TerrainObject.h" />
     <ClInclude Include="inc\Manager\JsonManager.h" />
@@ -174,7 +173,6 @@
     <ClCompile Include="src\Scene\PlayScene.cpp" />
     <ClCompile Include="src\Manager\ScoreManager.cpp" />
     <ClCompile Include="src\Component\SpriteRenderer.cpp" />
-    <ClCompile Include="src\Object\Map\Stage1.cpp" />
     <ClCompile Include="src\Object\TerrainObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

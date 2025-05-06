@@ -20,7 +20,7 @@ void EndScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 
 	//g_TextManager.Initialize(this->graphics);
 
-	g_ScoreManager.GetScoreString(&scoreString);
+	//g_ScoreManager.GetScoreString(&scoreString);
 }
 
 void EndScene::PhysicsUpdate()

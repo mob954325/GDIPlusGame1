@@ -32,3 +32,8 @@ void TextManager::DrawTextByViewport(const wchar_t* textBuffer,float x, float y)
 	// 출력
 	graphics->DrawString(textBuffer, -1, &font, pointF, &solidBrush);
 }
+
+void TextManager::DrawTextByViewport(const std::wstring& text, float x, float y)
+{
+	DrawTextByViewport(text.c_str(), x, y);
+}

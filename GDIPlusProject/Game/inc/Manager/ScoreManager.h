@@ -9,7 +9,7 @@ public:
 
 	void ResetData();
 	void AddScore();
-	void GetScoreString(wchar_t** buffer);
+	std::wstring GetScoreString();
 
 private:
 	Gdiplus::Graphics* graphics = nullptr;

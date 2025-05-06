@@ -6,7 +6,6 @@
 #include "Component/Collider.h"
 #include "Object/Player.h"
 #include "Object/Enemy.h"
-#include "Object/Map/Stage1.h"
 #include "Object/Item/Apple.h"
 #include "Object/TerrainObject.h"
 #include "Manager/ScoreManager.h"
@@ -135,6 +134,8 @@ void PlayScene::Update()
 		if (obj == nullptr) continue;
 		obj->Update();
 	}
+
+	DeleteDeactiveObjects();
 }
 
 void PlayScene::Render()
@@ -156,6 +157,6 @@ void PlayScene::Render()
 		obj->Render();
 	}
 
-	g_ScoreManager.GetScoreString(&scoreBuffer);
-	g_TextManager.DrawTextByViewport(scoreBuffer, 0.1f, 0);
+	//std::wstring str = g_ScoreManager.GetScoreString();
+	//g_TextManager.DrawTextByViewport(str, 0.1f, 0);
 }

@@ -7,6 +7,9 @@
 
 TerrainObject::~TerrainObject()
 {
+    delete tileSet;
+    delete tilemapBitmap;
+    delete backgroundBitmap;
 }
 
 void TerrainObject::Initialize()

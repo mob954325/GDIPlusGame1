@@ -30,7 +30,6 @@ void Player::Initialize()
 	animationGameTimer = 0.0f;
 	maxAnimationGameTime = 0.1f;
 
-	transform->position = Vector2(200, 200);
 	transform->width = 32;
 	transform->height = 32;
 
@@ -108,7 +107,11 @@ void Player::OnColliderEnterImpl(GameObject* other)
 
 void Player::OnColliderStayImpl(GameObject* other)
 {
-	
+	GroundObject* ground = dynamic_cast<GroundObject*>(other);
+	if (ground != nullptr)
+	{
+		transform->SetTransform(transform->position);
+	}
 }
 
 void Player::OnColliderExitImpl(GameObject* other)
@@ -151,6 +154,7 @@ void Player::OnGroundColliderEnter(GroundObject* ground)
 	if (velocity.y > 0.0f && playerTop + landingMargin > groundBottom && playerBottom - landingMargin < groundBottom)
 	{
 		gravity->SetIsGround(true);
+		transform->SetTransform(transform->position.x, groundBottom - transform->height);
 	}
 	else
 	{
