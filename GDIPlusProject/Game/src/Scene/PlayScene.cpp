@@ -10,6 +10,7 @@
 #include "Object/TerrainObject.h"
 #include "Object/Flag.h"
 #include "Manager/GameManager.h"
+#include "Manager/TextManager.h"
 
 void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 { 
@@ -42,6 +43,9 @@ void PlayScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	gameObjectList.push_back(player);
 
 	g_GameManager.Initialize(graphics);
+	g_SoundManager.Initialize();
+
+	g_SoundManager.PlayMainMusic("./Resource/Sound/PlayBGM.wav");
 }
 
 void PlayScene::PhysicsUpdate()
@@ -182,5 +186,10 @@ void PlayScene::Render()
 		{
 			g_GameManager.ShowResultAtScene(true);
 		}
+	}
+
+	if (g_GameManager.gameState == GameState::Ready)
+	{
+		g_TextManager.DrawTextByViewport(L"[ Space ] to startStage", 0.5f, 0.4f, Gdiplus::Color::Black);
 	}
 }

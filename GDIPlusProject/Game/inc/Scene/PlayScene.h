@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "GDIEngineLib/inc/Utility/Scene.h"
 #include "Object/Player.h"
+#include "Manager/SoundManager.h"
 
 class PlayScene : public Scene
 {
@@ -14,6 +15,7 @@ public:
 	{ 
 		Clear();
 		delete graphics;
+		g_SoundManager.Release();
 		Gdiplus::GdiplusShutdown(gdiPlusToken); 
 	};
 

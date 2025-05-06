@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "framework.h"
 #include "GDIEngineLib/inc/Utility/Scene.h"
+#include "Manager/SoundManager.h"
 
 class MenuScene : public Scene
 {
@@ -13,6 +14,7 @@ public:
 	{ 
 		Clear(); 
 		delete graphics;
+		g_SoundManager.Release();
 		Gdiplus::GdiplusShutdown(gdiPlusToken); 
 	};
 

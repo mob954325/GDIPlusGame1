@@ -22,6 +22,9 @@ void EndScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	gameObjectList.push_back(new EndBackgroundImage(graphics));
 
 	g_GameManager.Initialize(graphics);
+	g_SoundManager.Initialize();
+
+	g_SoundManager.PlayMainMusic("./Resource/Sound/EndBGM.wav");
 }
 
 void EndScene::PhysicsUpdate()
@@ -45,6 +48,6 @@ void EndScene::Render()
 		obj->Render();
 	}
 
-	g_TextManager.DrawTextByViewport(scoreString, 0.5f, 0.3f, Gdiplus::Color::White);
-	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Back to Menu", 0.5f, 0.7f, Gdiplus::Color::White);
+	g_TextManager.DrawTextByViewport(L"Game Clear !!!", 0.5f, 0.4f, Gdiplus::Color::LawnGreen);
+	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Back to Menu", 0.5f, 0.7f, Gdiplus::Color::Black);
 }

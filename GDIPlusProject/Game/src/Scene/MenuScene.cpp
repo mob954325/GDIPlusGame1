@@ -21,6 +21,8 @@ void MenuScene::Enter(HWND hwnd, HDC frontBufferDC, HDC backBufferDC)
 	g_GameManager.Initialize(graphics);
 	g_GameManager.ResetStageNumber();
 	g_ScoreManager.ResetData();
+	g_SoundManager.Initialize();
+	g_SoundManager.PlayMainMusic("./Resource/Sound/MenuBGM.wav");
 }
 
 void MenuScene::PhysicsUpdate()
@@ -30,6 +32,7 @@ void MenuScene::PhysicsUpdate()
 void MenuScene::Update(){
 
 	if (g_Input.IsKeyPressed(VK_SPACE)) g_SceneManager.ChangeScene(1);
+	g_SoundManager.Update();
 }
 
 void MenuScene::Render()
@@ -41,5 +44,10 @@ void MenuScene::Render()
 		obj->Render();
 	}
 
-	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Start", 0.5f, 0.7f, Gdiplus::Color::White);
+	g_TextManager.DrawTextByViewport(L"Pixel Adventure", 0.5f, 0.3f, Gdiplus::Color::Black);
+	g_TextManager.DrawTextByViewport(L"조작키", 0.49f, 0.36f, Gdiplus::Color::Black);
+	g_TextManager.DrawTextByViewport(L"이동 : 화살표 좌우", 0.49f, 0.4f, Gdiplus::Color::Black);
+	g_TextManager.DrawTextByViewport(L"점프 : 화살표 위", 0.48f, 0.45f, Gdiplus::Color::Black);
+	g_TextManager.DrawTextByViewport(L"스테이지 재시작 : R", 0.5f, 0.5f, Gdiplus::Color::Black);
+	g_TextManager.DrawTextByViewport(L"[ Space Bar ] - Start", 0.5f, 0.7f, Gdiplus::Color::Black);
 }

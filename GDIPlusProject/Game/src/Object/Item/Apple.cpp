@@ -3,6 +3,7 @@
 
 #include "Manager/ScoreManager.h"
 #include "GDIEngineLib/inc/Manager/GameTime.h"
+#include "Manager/SoundManager.h"
 
 void Apple::Initialize()
 {
@@ -36,6 +37,7 @@ void Apple::OnColliderEnterImpl(GameObject* other)
 	{
 		g_ScoreManager.AddScore();
 		shouldBeDeleted = true;
+		g_SoundManager.PlayEffectSound("./Resource/Sound/Pick.wav");
 	}
 }
 

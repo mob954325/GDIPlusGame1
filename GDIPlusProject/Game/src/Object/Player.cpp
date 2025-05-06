@@ -8,6 +8,7 @@
 #include "Manager/ScoreManager.h"
 #include "Manager/GameManager.h"
 #include "Manager/TextManager.h"
+#include "Manager/SoundManager.h"
 
 #include "Object/GroundObject.h"
 #include "Object/Enemy.h"
@@ -213,10 +214,11 @@ int Player::GetHp()
 
 void Player::OnJump()
 {
-	if (canJump && gravity->GetIsGround()) // -> 누른 만큼 올라감
+	if (canJump && gravity->GetIsGround())
 	{
 		gravity->ApplyForce(Vector2(0.0f, -jumpPower));
 		gravity->SetIsGround(false);
+		g_SoundManager.PlayEffectSound("./Resource/Sound/Jump.wav");
 	}
 }
 

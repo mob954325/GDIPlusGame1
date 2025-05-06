@@ -117,6 +117,9 @@
     <ClInclude Include="inc\Object\Spike.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Manager\SoundManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App\GameApp.cpp">
@@ -183,6 +186,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\Object\Spike.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\SoundManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

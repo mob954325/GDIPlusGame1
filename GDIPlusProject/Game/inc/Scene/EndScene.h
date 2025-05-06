@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "framework.h"
 #include "GDIEngineLib/inc/Utility/Scene.h"
+#include "Manager/SoundManager.h"
 
 class EndScene : public Scene
 {
@@ -12,6 +13,7 @@ public:
 	void Render() override;
 	void Exit() override 
 	{ 
+		g_SoundManager.Release();
 		Clear(); 
 		delete graphics;
 		Gdiplus::GdiplusShutdown(gdiPlusToken); 
