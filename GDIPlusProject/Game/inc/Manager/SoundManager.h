@@ -1,9 +1,9 @@
-#pragma once
+Ôªø#pragma once
 #include <iostream>
 #include <Windows.h>
 
 #include "FMOD/inc/fmod.hpp"
-#pragma comment(lib, "fmod_vc.lib") // ¡æº”º∫ ∏µ≈©
+#pragma comment(lib, "fmod_vc.lib") // Ï¢ÖÏÜçÏÑ± ÎßÅÌÅ¨
 
 class SoundManager
 {
@@ -18,6 +18,8 @@ public:
 protected:
 	FMOD::System* system = nullptr;
 	FMOD::Sound* sound = nullptr;
+	FMOD::Sound* effect = nullptr;
+	FMOD::Sound* music = nullptr;
 	FMOD::Channel* mainMusicChannel = nullptr;
 	FMOD::Channel* effectChannel = nullptr;
 };

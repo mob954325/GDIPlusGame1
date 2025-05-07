@@ -1,12 +1,12 @@
-#include "Manager/SoundManager.h"
+ï»¿#include "Manager/SoundManager.h"
 
 SoundManager g_SoundManager;
 
 void SoundManager::Initialize()
 {
-	// FMOD ½Ã½ºÅÛ ÃÊ±âÈ­
+	// FMOD ì‹œìŠ¤í…œ ì´ˆê¸°í™”
 	if (FMOD::System_Create(&system) != FMOD_OK) {
-		std::cerr << "FMOD ½Ã½ºÅÛ »ý¼º ½ÇÆÐ!" << std::endl;
+		std::cerr << "FMOD ì‹œìŠ¤í…œ ìƒì„± ì‹¤íŒ¨!" << std::endl;
 		return;
 	}
 	system->init(512, FMOD_INIT_NORMAL, nullptr);
@@ -14,47 +14,52 @@ void SoundManager::Initialize()
 
 void SoundManager::Update()
 {
-	// °ÔÀÓ ·çÇÁ³ª ¸ÞÀÎ ·çÇÁ¿¡¼­ ½Ã½ºÅÛ ¾÷µ¥ÀÌÆ® È£Ãâ
+	// ê²Œìž„ ë£¨í”„ë‚˜ ë©”ì¸ ë£¨í”„ì—ì„œ ì‹œìŠ¤í…œ ì—…ë°ì´íŠ¸ í˜¸ì¶œ
 	system->update();
 
-	// ÇÊ¿ä ½Ã Ã¤³Î »óÅÂ¸¦ È®ÀÎÇÏ°í, È¿°úÀ½ÀÌ ³¡³­ ÈÄ¿¡ ´ÙÀ½ ÀÛ¾÷À» ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+	// í•„ìš” ì‹œ ì±„ë„ ìƒíƒœë¥¼ í™•ì¸í•˜ê³ , íš¨ê³¼ìŒì´ ëë‚œ í›„ì— ë‹¤ìŒ ìž‘ì—…ì„ í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
 	bool isEffectPlaying = false;
 	if (effectChannel) {
 		effectChannel->isPlaying(&isEffectPlaying);
 		if (!isEffectPlaying) {
-			//std::cout << "È¿°úÀ½ÀÌ Á¾·áµÇ¾ú½À´Ï´Ù." << std::endl;
+			//std::cout << "íš¨ê³¼ìŒì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤." << std::endl;
 		}
 	}
 }
 
 void SoundManager::PlayEffectSound(const char* fileName)
 {
-	FMOD::Sound* effect = nullptr;
+	if (effect) 
+	{
+		effect->release();  // ì´ì „ ì‚¬ìš´ë“œë¥¼ ë©”ëª¨ë¦¬ì—ì„œ í•´ì œ
+		effect = nullptr;
+	}
+
 	if (system->createSound(fileName, FMOD_DEFAULT, nullptr, &effect) != FMOD_OK) {
-		std::cerr << "È¿°úÀ½ ·Îµå ½ÇÆÐ!" << std::endl;
+		std::cerr << "íš¨ê³¼ìŒ ë¡œë“œ ì‹¤íŒ¨!" << std::endl;
 		return;
 	}
 
-	// È¿°úÀ½Àº »õ·Î¿î Ã¤³Î¿¡¼­ Àç»ý (¸ÞÀÎ À½¾Ç Ã¤³Î°ú ºÐ¸®)
-	FMOD::Channel* newEffectChannel = nullptr;
 	system->playSound(effect, nullptr, false, &effectChannel);
 }
 
 void SoundManager::PlayMainMusic(const char* fileName)
 {
-	FMOD::Sound* music = nullptr;
+	music = nullptr;
 	if (system->createSound(fileName, FMOD_LOOP_NORMAL, nullptr, &music) != FMOD_OK) {
-		std::cerr << "¸ÞÀÎ À½¾Ç ·Îµå ½ÇÆÐ!" << std::endl;
+		std::cerr << "ë©”ì¸ ìŒì•… ë¡œë“œ ì‹¤íŒ¨!" << std::endl;
 		return;
 	}
 
-	// ¸ÞÀÎ À½¾ÇÀ» Àç»ýÇÏ°í, Ã¤³ÎÀ» mainMusicChannel¿¡ ÀúÀå
+	// ë©”ì¸ ìŒì•…ì„ ìž¬ìƒí•˜ê³ , ì±„ë„ì„ mainMusicChannelì— ì €ìž¥
 	system->playSound(music, nullptr, false, &mainMusicChannel);
 }
 
 void SoundManager::Release()
 {
 	sound->release();
+	effect->release();
+	music->release();
 	system->close();
 	system->release();
 }

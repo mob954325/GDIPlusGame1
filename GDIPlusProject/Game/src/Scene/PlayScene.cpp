@@ -122,6 +122,7 @@ void PlayScene::Update()
 	if (g_Input.IsKeyPressed('R'))
 	{
 		g_SceneManager.ChangeScene(1);
+		g_SoundManager.Release();
 		g_GameManager.gameState = GameState::Ready;
 	}
 
