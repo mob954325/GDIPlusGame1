@@ -37,7 +37,7 @@ protected:
 	Vector2 moveDirection = Vector2(0.0f, 0.0f);
 
 	// state
-	int hp = 5;
+	int hp = 3;
 	int playerState = 0;
 	float speed = 220.0f;		 // 플레이어 이동 속도
 	float jumpPower = 600.0f;

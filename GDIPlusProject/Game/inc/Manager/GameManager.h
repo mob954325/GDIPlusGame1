@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "framework.h"
 
 enum GameState
@@ -27,7 +27,7 @@ protected:
 	int currentSceneIndex = 0;
 	float elapsedTime = -1.0f;
 	int stageNum = 1;
-	int maxStageNum = 3;
+	int maxStageNum = 5;
 };
 
 extern GameManager g_GameManager;
