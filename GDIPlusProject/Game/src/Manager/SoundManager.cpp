@@ -57,8 +57,12 @@ void SoundManager::PlayMainMusic(const char* fileName)
 
 void SoundManager::Release()
 {
+	if (effect)
+	{
+		effect->release();
+		effect = nullptr;
+	}
 	sound->release();
-	effect->release();
 	music->release();
 	system->close();
 	system->release();
